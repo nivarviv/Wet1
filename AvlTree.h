@@ -6,42 +6,41 @@
 #define WET1_AVLTREE_H
 
 #include <iostream>
-using namespace std;
-
-struct node {
-    struct node *left;
-    int data;
-    int height;
-    struct node *right;
-};
 
 template<class T>
 class AvlTree {
 
+private:
+
+    struct node {
+        T data;
+        struct node *right;
+        struct node *left;
+    };
+
+    node* root;
+    void deleteTree(node* r);
+
+
 public:
-    struct node * root;
     AvlTree(){
         this->root = NULL;
     }
-    virtual ~AvlTree();
-    virtual T* addToTree(T type);
-    virtual void removeFromTree(T type);
+    ~AvlTree();
+    node* insert(node* r, T value);
+    int height(node* r);
+    int bf(node* r);
+    node* balance(node* r);
 
-    int calHeight(struct node *p);
-    int bf(struct node *n);
-    struct node * llRotation(struct node *n);
-    struct node * rrRotation(struct node *n);
-    struct node * rlRotation(struct node *n);
-    struct node * lrRotation(struct node *n);
 
-    struct node* insert(struct node *r,int data);
 
-    void levelorder_newline();
-    void levelorder_newline(struct node *v);
 
-    struct node * deleteNode(struct node *p,int data);
-    struct node* inpre(struct node* p);
-    struct node* insuc(struct node* p);
+    node * llRotation(struct node *n);
+    node * rrRotation(struct node *n);
+    node * rlRotation(struct node *n);
+    node * lrRotation(struct node *n);
 
+    void delete(struct node *p,T data);
+    T& find(struct node *p,T data);
 
 #endif //WET1_AVLTREE_H
