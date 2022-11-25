@@ -17,22 +17,23 @@ AvlTree::~AvlTree(){
     deleteTree(this->root);
 }
 
-node* AvlTree::insert(node *r, T value){
+node* AvlTree::insert(node *r, T value, K key){
         if (r == NULL)
         {
             r = new node;
             r->data = value;
+            r->key=key;
             r->left = NULL;
             r->right = NULL;
         }
-        else if (value<r->data)
+        else if (key<r->key)
         {
-            r->left = insert(r->left, value);
+            r->left = insert(r->left, value, key);
             r = balance(r);
         }
-        else if (value>=r->data)
+        else if (key<r->key)
         {
-            r->right = insert(r->right, value);
+            r->right = insert(r->right, value, key);
             r = balance(r);
         }
         return r;

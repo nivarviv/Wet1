@@ -7,13 +7,14 @@
 
 #include <iostream>
 
-template<class T>
+template<class T, class K>
 class AvlTree {
 
 private:
 
     struct node {
         T data;
+        K key;
         struct node *right;
         struct node *left;
     };
@@ -27,7 +28,7 @@ public:
         this->root = NULL;
     }
     ~AvlTree();
-    node* insert(node* r, T value);
+    node* insert(node* r, T value, K key);
     int height(node* r);
     int bf(node* r);
     node* balance(node* r);
