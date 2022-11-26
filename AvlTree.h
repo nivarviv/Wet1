@@ -36,12 +36,12 @@ public:
 
 
 
-    node * llRotation(struct node *n);
-    node * rrRotation(struct node *n);
-    node * rlRotation(struct node *n);
-    node * lrRotation(struct node *n);
+    node * llRotation( node *parent);
+    node * rrRotation( node *parent);
+    node * rlRotation( node *parent);
+    node * lrRotation( node *parent);
 
-    void delete(struct node *p,T data);
-    T& find(struct node *p,T data); //or node*
+    void delete( node *p,T data);
+    T& find( node *p,T data); //or node*
 
 #endif //WET1_AVLTREE_H

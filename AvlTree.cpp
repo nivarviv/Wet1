@@ -86,3 +86,37 @@ int AvlTree::bf(node *r)
     int b_factor = l_height - r_height;
     return b_factor;
 }
+
+node* AvlTree::llRotation(node *parent)
+{
+    node* leftSon;
+    leftSon = parent->left;
+    parent->left = leftSon->right;
+    leftSon->right = parent;
+    return leftSon;
+}
+
+node* AvlTree::rrRotation(node *parent)
+{
+    node *rightSon;
+    rightSon = parent->right;
+    parent->right = rightSon->left;
+    rightSon->left = parent;
+    return rightSon;
+}
+
+node* AvlTree::rlRotation( node *parent)
+{
+    node *rightSon;
+    rightSon = parent->right;
+    parent->right = ll_rotat(rightSon);
+    return rr_rotat(parent);
+}
+
+node* AvlTree::lrRotation( node *parent)
+{
+    node *leftSon;
+    leftSon = parent->left;
+    parent->left = rr_rotat(leftSon);
+    return ll_rotat(parent);
+}
