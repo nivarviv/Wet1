@@ -32,10 +32,6 @@ public:
     int height(node* r);
     int bf(node* r);
     node* balance(node* r);
-
-
-
-
     node * llRotation( node *parent);
     node * rrRotation( node *parent);
     node * rlRotation( node *parent);
