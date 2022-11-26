@@ -32,12 +32,14 @@ public:
     int height(node* r);
     int bf(node* r);
     node* balance(node* r);
-    node * llRotation( node *parent);
-    node * rrRotation( node *parent);
-    node * rlRotation( node *parent);
-    node * lrRotation( node *parent);
+    node* findMin(node* t);
+    node* llRotation( node *parent);
+    node* rrRotation( node *parent);
+    node* rlRotation( node *parent);
+    node* lrRotation( node *parent);
+    node* remove(node* node, K key);
 
-    void delete( node *p,T data);
+
     T& find( node *p,T data); //or node*
 
 #endif //WET1_AVLTREE_H

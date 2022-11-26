@@ -63,7 +63,7 @@ node* AvlTree::balance(node* r)
             r=rrRotation(r);
         }
     }
-    return  r;
+    return r;
 }
 
 int AvlTree::height(node *r)
@@ -119,4 +119,50 @@ node* AvlTree::lrRotation( node *parent)
     leftSon = parent->left;
     parent->left = rr_rotat(leftSon);
     return ll_rotat(parent);
+}
+
+node* AvlTree::findMin(node* t)
+{
+    if(t == NULL)
+        return NULL;
+    else if(t->left == NULL)
+        return t;
+    else
+        return findMin(t->left);
+}
+
+node* AvlTree::remove(node* node, K key)
+{
+    // Element not found
+    if(node == NULL)
+    return NULL;
+
+    // Searching for element
+    else if(key<node->key)
+    node->left = remove(node->left, key);
+    else if(key > node->key)
+    node->right = remove(node->right, key);
+
+    // Element found
+    // With 2 children
+    if(node->left && node->right)
+    {
+    temp = findMin(node->right);
+    node->data = temp->data;
+    node->key = temp->key;
+    node->right = remove(node->right, node->key);
+    }
+
+    // With one or zero child
+    else
+    {
+    temp = node;
+    if(node->left == NULL)
+    node = node->right;
+    else if(node->right == NULL)
+    node = node->left;
+    delete temp;
+    }
+    balance(node);
+    return node;
 }
