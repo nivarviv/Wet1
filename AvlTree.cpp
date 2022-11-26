@@ -43,7 +43,7 @@ node* AvlTree::balance(node* r)
 {
     if(bf(r)>1)
     {
-        if(bf(r->left)>0)
+        if(bf(r->left)>=0)
         {
             r= llRotation(r);
         }
@@ -54,7 +54,7 @@ node* AvlTree::balance(node* r)
     }
     else if(bf(r)<-1)
     {
-        if(bf(r->right)>0)
+        if(bf(r->right)=1)
         {
             r = rlRotation(r);
         }

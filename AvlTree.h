@@ -42,6 +42,6 @@ public:
     node * lrRotation(struct node *n);
 
     void delete(struct node *p,T data);
-    T& find(struct node *p,T data);
+    T& find(struct node *p,T data); //or node*
 
 #endif //WET1_AVLTREE_H
