@@ -20,6 +20,7 @@ private:
 
 public:
     team();
+    int getNumGames();
 
 };
 
