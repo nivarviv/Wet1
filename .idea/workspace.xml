@@ -9,12 +9,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="added remove">
+    <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="added player ctor">
       <change beforePath="$PROJECT_DIR$/.idea/Wet1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Wet1.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/player.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/player.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/player.h" beforeDir="false" afterPath="$PROJECT_DIR$/player.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/team.h" beforeDir="false" afterPath="$PROJECT_DIR$/team.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +61,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1669205825963</updated>
-      <workItem from="1669205829216" duration="16769000" />
+      <workItem from="1669205829216" duration="17376000" />
     </task>
     <task id="LOCAL‎00001" summary="added AVL functions">
       <created>1669206420865</created>
@@ -109,7 +105,13 @@
       <option name="presentableId" value="LOCAL‎00007" />
       <updated>1669477952919</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL‎00008" summary="added player ctor">
+      <created>1669481065513</created>
+      <option name="number" value="LOCAL‎00008" />
+      <option name="presentableId" value="LOCAL‎00008" />
+      <updated>1669481065513</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -133,7 +135,8 @@
     <MESSAGE value="fixed balance" />
     <MESSAGE value="added rotations" />
     <MESSAGE value="added remove" />
-    <option name="LAST_COMMIT_MESSAGE" value="added remove" />
+    <MESSAGE value="added player ctor" />
+    <option name="LAST_COMMIT_MESSAGE" value="added player ctor" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -15,3 +15,9 @@ player::player(int playerId, team* playerTeam, int gamesPlayed, int goals, int c
     m_goalKeeper=goalKeeper;
     m_teamGamesWO= playerTeam.getNumGames;
 }
+
+int totalGames(team* playerTeam)
+{
+    int teamGames = playerTeam->getNumGames();
+    return teamGames+m_gamesPlayed-m_teamGamesWO;
+}

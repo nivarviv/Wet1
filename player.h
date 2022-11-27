@@ -22,7 +22,7 @@ public:
     player(const player&) = default;
     ~player() = default;
     player& operator=(const player& other) = default;
-    int totalGames(int playerGames, int teamGames, int gamesWithout);
+    int totalGames(team* playerTeam);
 };
 
 

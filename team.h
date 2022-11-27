@@ -8,19 +8,23 @@
 
 class team {
 private:
-    int num_players;
-    bool has_goalkeeper;
-    int total_goals;
-    int total_cards;
-    int points;
-    int num_games;
+    int m_num_players;
+    bool m_has_goalkeeper;
+    int m_total_goals;
+    int m_total_cards;
+    int m_points;
+    int m_num_games;
+    int m_teamId
     //player* top_scorer;
 
     //
 
 public:
-    team();
+    team(int teamId, int points);
     int getNumGames();
+    player(const player&) = default;
+    ~player() = default;
+    player& operator=(const player& other) = default;
 
 };
 
