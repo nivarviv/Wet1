@@ -9,8 +9,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="added player ctor">
-      <change beforePath="$PROJECT_DIR$/.idea/Wet1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Wet1.iml" afterDir="false" />
+    <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="added team funcs">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvlTree.h" beforeDir="false" afterPath="$PROJECT_DIR$/AvlTree.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/player.h" beforeDir="false" afterPath="$PROJECT_DIR$/player.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +63,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1669205825963</updated>
-      <workItem from="1669205829216" duration="17376000" />
+      <workItem from="1669205829216" duration="18980000" />
     </task>
     <task id="LOCAL‎00001" summary="added AVL functions">
       <created>1669206420865</created>
@@ -111,7 +113,13 @@
       <option name="presentableId" value="LOCAL‎00008" />
       <updated>1669481065513</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL‎00009" summary="added team funcs">
+      <created>1669577265772</created>
+      <option name="number" value="LOCAL‎00009" />
+      <option name="presentableId" value="LOCAL‎00009" />
+      <updated>1669577265772</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -136,7 +144,8 @@
     <MESSAGE value="added rotations" />
     <MESSAGE value="added remove" />
     <MESSAGE value="added player ctor" />
-    <option name="LAST_COMMIT_MESSAGE" value="added player ctor" />
+    <MESSAGE value="added team funcs" />
+    <option name="LAST_COMMIT_MESSAGE" value="added team funcs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

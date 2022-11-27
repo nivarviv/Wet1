@@ -133,6 +133,7 @@ node* AvlTree::findMin(node* t)
 
 node* AvlTree::remove(node* node, K key)
 {
+    node* temp;
     // Element not found
     if(node == NULL)
     return NULL;
@@ -163,6 +164,8 @@ node* AvlTree::remove(node* node, K key)
     node = node->left;
     delete temp;
     }
+    if(t == NULL)
+        return t;
     balance(node);
     return node;
 }
