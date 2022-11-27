@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #include "worldcup23a1.h"
 
 world_cup_t::world_cup_t()
@@ -11,7 +10,7 @@ world_cup_t::~world_cup_t()
 	// TODO: Your code goes here
 }
 
-//updated
+
 StatusType world_cup_t::add_team(int teamId, int points)
 {
     if(teamId <= 0 || points < 0){
@@ -28,7 +27,7 @@ StatusType world_cup_t::add_team(int teamId, int points)
     delete tmp;
 	return StatusType::SUCCESS;
 }
-//updated
+
 StatusType world_cup_t::remove_team(int teamId)
 {
     if(teamId <= 0){
@@ -49,7 +48,7 @@ StatusType world_cup_t::remove_team(int teamId)
         return StatusType::SUCCESS;
     }
 }
-//in here we need to check about top goalscorer
+
 StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
                                    int goals, int cards, bool goalKeeper)
 {
@@ -60,7 +59,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
 	// TODO: Your code goes here
 	return StatusType::SUCCESS;
 }
-//in here we need to check about top goalscorer
+
 StatusType world_cup_t::remove_player(int playerId)
 {
     if(playerId <= 0){
@@ -121,7 +120,7 @@ StatusType world_cup_t::play_match(int teamId1, int teamId2)
     delete team2;
     return StatusType::SUCCESS;
 }
-//updated
+
 output_t<int> world_cup_t::get_num_played_games(int playerId)
 {
     output_t<int> out;
@@ -199,8 +198,35 @@ output_t<int> world_cup_t::get_top_scorer(int teamId)
         //todo
     }
     return 0;
+    else if(teamId < 0){
+        if(total_players <= 0){
+            out.status() = StatusType::FAILURE;
+            return out;
+        }
+        out.ans() = top_scorer->getId();
+        out.status() = StatusType::SUCCESS;
+        return out;
+    }
+    else{
+        team* team1 = new team*;
+        if(!team1){
+            out.status() = StatusType::ALLOCATION_ERROR;
+            delete team1;
+            return out;
+        }
+        team1 = all_teams.find_by_key(teamId);//returns null if the team hasn't found
+        if(!team1){
+            out.status() = StatusType::FAILURE;
+            delete team1;
+            return out;
+        }
+        out.ans() = team1->top_scorer_id;
+        out.status() = StatusType::SUCCESS;
+        delete team1;
+        return out;
+    }
 }
-
+//updated
 output_t<int> world_cup_t::get_all_players_count(int teamId)
 {
     output_t<int> out;
@@ -208,9 +234,29 @@ output_t<int> world_cup_t::get_all_players_count(int teamId)
         out.status() = StatusType::INVALID_INPUT;
         return out;
     }
-	// TODO: Your code goes here
-    static int i = 0;
-    return (i++==0) ? 11 : 2;
+    else if (teamId < 0){
+        out.ans() = total_players;
+        out.status() = StatusType::SUCCESS;
+        return out;
+    }
+    else{
+        team* team1 = new team*;
+        if(!team1){
+            out.status() = StatusType::ALLOCATION_ERROR;
+            delete team1;
+            return out;
+        }
+        team1 = all_teams.find_by_key(teamId);
+        if(!teamId){
+            out.status() = StatusType::FAILURE;
+            delete team1;
+            return out;
+        }
+        out.ans() = team1->num_players;
+        out.status() = StatusType::SUCCESS;
+        delete team1;
+        return out;
+    }
 }
 
 StatusType world_cup_t::get_all_players(int teamId, int *const output)
@@ -241,3 +287,4 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
 	// TODO: Your code goes here
 	return 2;
 }
+
