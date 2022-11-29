@@ -77,7 +77,7 @@ void deleteTree(node *r) {
 
 template<class T, class K>
 AvlTree<T,K>::~AvlTree() {
-        deleteTree(this->root);
+        deleteTree(this->m_root);
     }
 
 template<class T, class K>
