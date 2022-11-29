@@ -4,9 +4,9 @@
 
 #ifndef WET1_TEAM_H
 #define WET1_TEAM_H
-#include "AvlTree.h"
 #include "player.h"
 #include "playerStats.h"
+#include "AvlTree.h"
 
 class team {
 private:
@@ -31,6 +31,7 @@ public:
     team& operator=(const team& other) = default;//we don't want to allow that
     void add_player(int player_id, int games_played, int goals, int cards, bool goalkeeper);
     int top_scorer_id() const;
+    int getNumPlayers();
 };
 
 

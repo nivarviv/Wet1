@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 //
 // Created by 97254 on 21/11/2022.
 //
@@ -15,7 +15,7 @@ team::team(int teamId, int points)
     m_num_games=0;
     m_teamId=teamId;
     m_top_scorer = NULL;
-    m_tree_by_id = AvlTree<player, int>();
+    m_tree_by_id = AvlTree<player, int>(); //check if needed
     m_tree_by_stats = AvlTree<player, playerStats>();
 }
 
@@ -26,4 +26,9 @@ int team::getNumGames(){
 
 int team::top_scorer_id() const{
     return m_top_scorer->m_playerId;
+}
+
+int team::getNumPlayers()
+{
+    return m_num_players;
 }

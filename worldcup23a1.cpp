@@ -1,6 +1,5 @@
 #include "worldcup23a1.h"
 
-//updated
 world_cup_t::world_cup_t()
 {
     m_all_teams = AvlTree<team, int>();
@@ -20,6 +19,7 @@ world_cup_t::~world_cup_t()
     delete m_all_players_id;
     delete m_top_scorer;
 }
+
 //updated
 StatusType world_cup_t::add_team(int teamId, int points)
 {
@@ -205,6 +205,13 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
     if(newTeamId <= 0 || teamId1 <= 0 || teamId2 <= 0 || teamId1 == teamId2){
         return StatusType::INVALID_INPUT;
     }
+
+    team* team1=m_all_teams.find_by_key(teamId1);
+    team* team2=m_all_teams.find_by_key(teamId2);
+
+    int size1=team1.getNumPlayers();
+    //team* arrayTeam1=new team[size1];
+
 	// TODO: Your code goes here
 	return StatusType::SUCCESS;
 }

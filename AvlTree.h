@@ -12,28 +12,23 @@
 
 template<class T, class K>
 class AvlTree {
-
 private:
-
     struct node {
         T data;
         K key;
-        node *right; //struct
-        node *left; //struct
+        node *right;
+        node *left;
+        Node(T value, K key):data(value), key(key), right(NULL), left(NULL) {}
     };
-
     node *m_root;
 
-
 public:
-    AvlTree<T,K>() {
-        this->m_root = NULL;
-    }
 
-/*
-    ~AvlTree<T,K>();
+    AvlTree();
 
-    node *insert(node *r, T value, K key);
+    ~AvlTree();
+
+    node *insert(T value, K key);
 
     int height(node *r);
 
@@ -55,50 +50,59 @@ public:
 
     T *find_by_key(K key);
 
-    //see if needed or remove node* from excisting implementation
+    //see if needed or remove node* from existing implementation
 todo:
     void remove_by_key(K key);
 
 todo:
     void add(T value, K key);
 
-    T &find(node *p, T data); //or node*
+  //  T &find(node *p, T data); //or node*
 
-*/
 
+}
 /////////////////////////////////////////////////////implementation//////////////////////////////////////////////////
 
-    void deleteTree(node *r) {
-        if (r != NULL) {
+template<class T, class K>
+AvlTree<T,K>::AvlTree() : m_root(NULL) {}
+
+template<class T, class K>
+void deleteTree(node *r) {
+    if (r != NULL) {
             deleteTree(r->left);
             deleteTree(r->right);
             delete node;
         }
     }
 
-    ~AvlTree() {
+template<class T, class K>
+AvlTree<T,K>::~AvlTree() {
         deleteTree(this->root);
     }
 
-// PERHAPS REMOVE NODE *R
-    node *insert(node *r, T value, K key) {
-        if (r == NULL) {
-            r = new node;
-            r->data = value;
-            r->key = key;
-            r->left = NULL;
-            r->right = NULL;
-        } else if (key < r->key) {
-            r->left = insert(r->left, value, key);
-            r = balance(r);
-        } else if (key < r->key) {
-            r->right = insert(r->right, value, key);
-            r = balance(r);
+template<class T, class K>
+node *AvlTree<T,K>::insert(T value, K key) {
+        node* node = m_root;
+        if (node==NULL)
+        {
+            node=new node(value, key);
         }
-        return r;
+        else if (key < node->key) {
+            node->left = insert(value, key);
+            node = balance(node);
+        } else if (key < node->key) {
+            node->right = insert(value, key);
+            node = balance(node);
+        }
+        else if(key==node->key)
+        {
+            return NULL
+        }
+        return node;
     }
 
-    node *balance(node *r) {
+template<class T, class K>
+node *AvlTree<T,K>::balance(node *r) {
         if (bf(r) > 1) {
             if (bf(r->left) >= 0) {
                 r = llRotation(r);
@@ -115,7 +119,8 @@ todo:
         return r;
     }
 
-    int height(node *r) {
+template<class T, class K>
+int AvlTree<T,K>::height(node *r) {
         int height = 0;
         if (r != NULL) {
             int l_height = height(r->left);
@@ -126,14 +131,16 @@ todo:
         return height;
     }
 
-    int bf(node *r) {
+template<class T, class K>
+int AvlTree<T,K>::bf(node *r) {
         int l_height = height(r->left);
         int r_height = height(r->right);
         int b_factor = l_height - r_height;
         return b_factor;
     }
 
-    node *llRotation(node *parent) {
+template<class T, class K>
+node *AvlTree<T,K>::llRotation(node *parent) {
         node *leftSon;
         leftSon = parent->left;
         parent->left = leftSon->right;
@@ -141,7 +148,8 @@ todo:
         return leftSon;
     }
 
-    node *rrRotation(node *parent) {
+template<class T, class K>
+node *AvlTree<T,K>::rrRotation(node *parent) {
         node *rightSon;
         rightSon = parent->right;
         parent->right = rightSon->left;
@@ -149,21 +157,24 @@ todo:
         return rightSon;
     }
 
-    node *rlRotation(node *parent) {
+template<class T, class K>
+node *AvlTree<T,K>::rlRotation(node *parent) {
         node *rightSon;
         rightSon = parent->right;
         parent->right = ll_rotat(rightSon);
         return rr_rotat(parent);
     }
 
-    node *lrRotation(node *parent) {
+template<class T, class K>
+node *AvlTree<T,K>::lrRotation(node *parent) {
         node *leftSon;
         leftSon = parent->left;
         parent->left = rr_rotat(leftSon);
         return ll_rotat(parent);
     }
 
-    node *findMin(node *t) {
+template<class T, class K>
+node *AvlTree<T,K>::findMin(node *t) {
         if (t == NULL)
             return NULL;
         else if (t->left == NULL)
@@ -172,7 +183,8 @@ todo:
             return findMin(t->left);
     }
 
-    node *remove(node *node, K key) {
+template<class T, class K>
+node *AvlTree<T,K>::remove(node *node, K key) {
         node * temp;
         // Element not found
         if (node == NULL)
@@ -208,7 +220,8 @@ todo:
         return node;
     }
 
-    T *find_by_key(K key) {
+template<class T, class K>
+T *AvlTree<T,K>::find_by_key(K key) {
         node *node;
         node = m_root;
 
@@ -220,9 +233,10 @@ todo:
             return NULL;
 
         if (key == node->key) {
-            return node;
+            return node->data;
         }
     }
+
 }
 #endif //WET1_AVLTREE_H
 
