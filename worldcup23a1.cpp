@@ -78,7 +78,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
         return StatusType::FAILURE;
     }
     try {
-        tmp_team->add_player(playerId, gamesPlayed, goals, cards, goalKeeper);
+        tmp_team->addPlayer(playerId, gamesPlayed, goals, cards, goalKeeper);
         //closest!!!!!!!!!!!!!!!!! need to check somehow
         delete tmp_team;
     } catch (std::exception e) {
@@ -92,7 +92,16 @@ StatusType world_cup_t::remove_player(int playerId)
     if(playerId <= 0){
         return StatusType::INVALID_INPUT;
     }
-	// TODO: Your code goes here
+    player* player1 = m_all_players_id.find_by_key(playerId);
+    if(player1 == NULL){
+        delete player1;
+        return StatusType::FAILURE;
+    }
+    team* tmp = player1->getMyTeam();
+    tmp->removePlayer(playerId);
+    m_all_players_id.remove_by_key(playerId);
+    m_all_players_goals.remove_by_key(player1->getMyStats());
+	// TODO: closest somehow
 	return StatusType::SUCCESS;
 }
 //todo:

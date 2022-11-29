@@ -5,7 +5,6 @@
 #include "player.h"
 
 
-
 player::player(int playerId, team* playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper){
     m_playerId = playerId;
     m_my_team = playerTeam;
@@ -20,4 +19,12 @@ player::player(int playerId, team* playerTeam, int gamesPlayed, int goals, int c
 
 int player::totalGames() const{
     return m_gamesPlayed + m_my_team->getNumGames() - m_teamGamesWO;
+}
+
+playerStats player::getMyStats() const{
+    return m_stats;
+}
+
+team* player::getMyTeam() const{
+    return m_my_team;
 }

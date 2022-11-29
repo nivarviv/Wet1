@@ -12,7 +12,6 @@ private:
     int m_playerId;
     int m_cards;
     int m_gamesPlayed;//before joining
-    //int totalGames;
     playerStats m_stats;
     int m_goals;
     bool m_goalKeeper;
@@ -22,10 +21,12 @@ private:
 
 public:
     player(int playerId, team* playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper);
-    player(const player&) = default;
+    player(const player&) = default;// I think we need to do it not by default due to there is memory allocation
     ~player() = default;
     player& operator=(const player& other) = default;
     int totalGames() const;
+    team* getMyTeam() const;
+    playerStats getMyStats() const;
 };
 
 
