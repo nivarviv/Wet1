@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 //
 // Created by 97254 on 21/11/2022.
 //
@@ -18,3 +19,4 @@ team::team(int teamId, int points)
 int getNumGames(){
     return m_num_games;
 }
+===

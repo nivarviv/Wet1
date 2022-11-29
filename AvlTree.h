@@ -6,6 +6,9 @@
 #define WET1_AVLTREE_H
 
 #include <iostream>
+#include "team.h"
+#include "player.h"
+#include "playerStats.h"
 
 template<class T, class K>
 class AvlTree {
@@ -50,7 +53,12 @@ public:
     node *lrRotation(node *parent);
 
     node *remove(node *node, K key);
-
+//todo:
+    T* find_by_key(K key);
+//todo:
+    void remove_by_key(K key);
+//todo:
+    void add(T value, K key);
 
     T &find(node *p, T data); //or node*
 }
