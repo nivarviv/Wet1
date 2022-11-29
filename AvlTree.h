@@ -26,12 +26,12 @@ private:
 
 
 public:
-    AvlTree() {
+    AvlTree<T,K>() {
         this->m_root = NULL;
     }
 
 /*
-    ~AvlTree();
+    ~AvlTree<T,K>();
 
     node *insert(node *r, T value, K key);
 

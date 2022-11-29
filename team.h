@@ -29,7 +29,7 @@ public:
     team(const team&) = default;//we don't want to allow that
     ~team() = default;
     team& operator=(const team& other) = default;//we don't want to allow that
-
+    int top_scorer_id() const;
 };
 
 

@@ -2,38 +2,44 @@
 
 world_cup_t::world_cup_t()
 {
+    AvlTree<team, int>
 	// TODO: Your code goes here
 }
-
+//updated
 world_cup_t::~world_cup_t()
 {
-	// TODO: Your code goes here
+    delete m_all_teams;
+    delete m_allowed_to_play_teams;
+    delete m_total_players;
+    delete m_all_players_goals;
+    delete m_all_players_id;
+    delete m_top_scorer;
 }
 
-
+//updated
 StatusType world_cup_t::add_team(int teamId, int points)
 {
     if(teamId <= 0 || points < 0){
         return StatusType::INVALID_INPUT;
     }
-    team* tmp = all_teams.find_by_key(teamId);
-    if(tmp){//it returns null if we havn't found such team
+    team* tmp = m_all_teams.find_by_key(teamId);
+    if(tmp == NULL){//it returns null if we haven't found such team
         delete tmp;
         return StatusType::FAILURE;
     }
     team team1 = team(teamId, points);
     //check for exception
-    all_teams.add(team1, teamId);
+    m_all_teams.add(team1, teamId);
     delete tmp;
 	return StatusType::SUCCESS;
 }
-
+//updated
 StatusType world_cup_t::remove_team(int teamId)
 {
     if(teamId <= 0){
         return StatusType::INVALID_INPUT;
     }
-    team* team1 = all_teams.find_by_key(teamId);
+    team* team1 = m_all_teams.find_by_key(teamId);
     if(!team1){
         delete team1;
         return StatusType::FAILURE;
@@ -43,7 +49,7 @@ StatusType world_cup_t::remove_team(int teamId)
         return StatusType::FAILURE;
     }
     else{
-        all_teams.remove_by_key(teamId);
+        m_all_teams.remove_by_key(teamId);
         delete team1;
         return StatusType::SUCCESS;
     }
@@ -91,8 +97,8 @@ StatusType world_cup_t::play_match(int teamId1, int teamId2)
         delete team2;
         return StatusType::ALLOCATION_ERROR;
     }
-    team1 = all_teams.find_by_key(teamId1);
-    team2 = all_teams.find_by_key(teamId2);
+    team1 = m_all_teams.find_by_key(teamId1);
+    team2 = m_all_teams.find_by_key(teamId2);
     if(!team1 || !team2){
         delete team1;
         delete team2;
@@ -120,7 +126,7 @@ StatusType world_cup_t::play_match(int teamId1, int teamId2)
     delete team2;
     return StatusType::SUCCESS;
 }
-
+//updated
 output_t<int> world_cup_t::get_num_played_games(int playerId)
 {
     output_t<int> out;
@@ -134,8 +140,8 @@ output_t<int> world_cup_t::get_num_played_games(int playerId)
         out.status() = StatusType::ALLOCATION_ERROR;
         return out;
     }
-    player1 = all_players_id.find_by_key(playerId);
-    if(!player1){
+    player1 = all_players_id.find_by_key(playerId);//returns null if haven't found
+    if(player1 == NULL){
         delete player1;
         out.status() = StatusType::FAILURE;
         return out;
@@ -148,7 +154,7 @@ output_t<int> world_cup_t::get_num_played_games(int playerId)
 //updated
 output_t<int> world_cup_t::get_team_points(int teamId)
 {
-    output_t<int> out = new output_t<int>;
+    output_t<int> out;
     if(teamId <= 0){
         out.status() = StatusType::INVALID_INPUT;
         return out;
@@ -161,7 +167,7 @@ output_t<int> world_cup_t::get_team_points(int teamId)
         delete wanted_team;
         return out;
     }
-    wanted_team = searchInTree(teamTree, teamId);//returns NULL if we have not found
+    wanted_team = m_all_teams.find_by_key(teamId);//returns NULL if we have not found
     if(wanted_team == NULL){
         out.status() = StatusType::FAILURE;
         delete wanted_team;
@@ -181,7 +187,7 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
 	// TODO: Your code goes here
 	return StatusType::SUCCESS;
 }
-
+//updated
 output_t<int> world_cup_t::get_top_scorer(int teamId)
 {
     output_t<int> out;
@@ -190,20 +196,11 @@ output_t<int> world_cup_t::get_top_scorer(int teamId)
         return out;
     }
     else if(teamId < 0){
-        out.ans() = top_scorer->m_playerId;
-        out.status() = StatusType::SUCCESS;
-        return out;
-    }
-    else{
-        //todo
-    }
-    return 0;
-    else if(teamId < 0){
         if(total_players <= 0){
             out.status() = StatusType::FAILURE;
             return out;
         }
-        out.ans() = top_scorer->getId();
+        out.ans() = m_top_scorer->m_playerId;
         out.status() = StatusType::SUCCESS;
         return out;
     }
@@ -214,13 +211,13 @@ output_t<int> world_cup_t::get_top_scorer(int teamId)
             delete team1;
             return out;
         }
-        team1 = all_teams.find_by_key(teamId);//returns null if the team hasn't found
-        if(!team1){
+        team1 = m_all_teams.find_by_key(teamId);//returns null if the team hasn't found
+        if(team1 == NULL){
             out.status() = StatusType::FAILURE;
             delete team1;
             return out;
         }
-        out.ans() = team1->top_scorer_id;
+        out.ans() = team1->top_scorer_id();
         out.status() = StatusType::SUCCESS;
         delete team1;
         return out;
@@ -241,13 +238,13 @@ output_t<int> world_cup_t::get_all_players_count(int teamId)
     }
     else{
         team* team1 = new team*;
-        if(!team1){
+        if(team1 == NULL){
             out.status() = StatusType::ALLOCATION_ERROR;
             delete team1;
             return out;
         }
-        team1 = all_teams.find_by_key(teamId);
-        if(!teamId){
+        team1 = m_all_teams.find_by_key(teamId);
+        if(teamId == NULL){
             out.status() = StatusType::FAILURE;
             delete team1;
             return out;

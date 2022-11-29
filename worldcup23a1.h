@@ -25,11 +25,12 @@ private:
 	//
 	// Here you may add anything you want
 	//
-    AvlTree<team, int> all_teams;
-    AvlTree<player, int> all_players_id;
-    AvlTree<player, playerStats> all_players_goals;
-    int total_players;
-    player* top_scorer;
+    AvlTree<team, int> m_all_teams;
+    AvlTree<team, int> m_allowed_to_play_teams;
+    AvlTree<player, int> m_all_players_id;
+    AvlTree<player, playerStats> m_all_players_goals;
+    int m_total_players;
+    player* m_top_scorer;
 	
 public:
 	// <DO-NOT-MODIFY> {

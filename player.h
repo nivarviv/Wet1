@@ -23,9 +23,9 @@ private:
     //num_games+gamesplayed-without
 public:
     player(int playerId, team* playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper);
-    player(const player&) = default;//we don't want to allow that
+    player(const player&) = default;
     ~player() = default;
-    player& operator=(const player& other) = default;//we don't want to allow that = delete
+    player& operator=(const player& other) = default;
     int totalGames(team* playerTeam);
 };
 

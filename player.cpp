@@ -12,5 +12,7 @@ player::player(int playerId, team* playerTeam, int gamesPlayed, int goals, int c
     m_gamesPlayed = gamesPlayed;
     m_goals = goals;
     m_cards = cards;
+    m_goalKeeper = goalKeeper;
+    m_stats = playerStats(playerId, cards, goals);
 
 }
