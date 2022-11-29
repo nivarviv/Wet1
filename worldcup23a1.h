@@ -14,24 +14,23 @@
 
 #ifndef WORLDCUP23A1_H_
 #define WORLDCUP23A1_H_
-#include "teamTree.h"
-#include "playerTreeGoals.h"
-#include "playerTreeId.h"
 #include "team.h"
 #include "player.h"
 #include "wet1util.h"
+#include "AvlTree.h"
+#include "playerStats.h"
+
 
 class world_cup_t {
 private:
 	//
 	// Here you may add anything you want
 	//
-    teamTree all_teams;
-    playerTreeId all_players_id;
-    playerTreeGoals all_players_goals;
+    AvlTree<team, int> all_teams;
+    AvlTree<player, int> all_players_id;
+    AvlTree<player, playerStats> all_players_goals;
     int total_players;
-
-    //player* top_scorer;
+    player* top_scorer;
 	
 public:
 	// <DO-NOT-MODIFY> {
@@ -72,7 +71,7 @@ public:
 	// } </DO-NOT-MODIFY>
 };
 
-team* searchInTree(teamTree teamTree, int teamId);
+
 
 
 

@@ -1,9 +1,10 @@
+<<<<<<< HEAD
 //
 // Created by 97254 on 21/11/2022.
 //
 
 #include "AvlTree.h"
-
+//should move to h file
 
 void AvlTree::deleteTree(node* r){
     if(r != NULL){
@@ -169,3 +170,4 @@ node* AvlTree::remove(node* node, K key)
     balance(node);
     return node;
 }
+=======
