@@ -50,6 +50,8 @@ public:
 
     T *find_by_key(K key);
 
+    void deleteTree(node *r);
+
     //see if needed or remove node* from existing implementation
 todo:
     void remove_by_key(K key);
@@ -65,15 +67,6 @@ todo:
 
 template<class T, class K>
 AvlTree<T,K>::AvlTree() : m_root(NULL) {}
-
-template<class T, class K>
-void deleteTree(node *r) {
-    if (r != NULL) {
-            deleteTree(r->left);
-            deleteTree(r->right);
-            delete node;
-        }
-    }
 
 template<class T, class K>
 AvlTree<T,K>::~AvlTree() {
@@ -239,6 +232,13 @@ T *AvlTree<T,K>::find_by_key(K key) {
         }
     }
 
+template<class T, class K>
+void AvlTree<T, K>::deleteTree(node *r) {
+    if (r != NULL) {
+        deleteTree(r->left);
+        deleteTree(r->right);
+        delete r;
+    }
 }
 #endif //WET1_AVLTREE_H
 
