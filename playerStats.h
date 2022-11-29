@@ -12,6 +12,7 @@ private:
     int m_cards;
     int m_goals;
 public:
+    playerStats() = default;
     playerStats(int id, int cards, int goals): m_id(id), m_cards(cards), m_goals(goals){}
     ~playerStats() = default;
     bool operator<(const playerStats& ps) const;

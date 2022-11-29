@@ -14,5 +14,10 @@ player::player(int playerId, team* playerTeam, int gamesPlayed, int goals, int c
     m_cards = cards;
     m_goalKeeper = goalKeeper;
     m_stats = playerStats(playerId, cards, goals);
+    //m_closest=?
+    m_teamGamesWO = playerTeam->getNumGames();
+}
 
+int player::totalGames() const{
+    return m_gamesPlayed + m_my_team->getNumGames() - m_teamGamesWO;
 }

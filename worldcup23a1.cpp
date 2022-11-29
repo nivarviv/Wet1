@@ -1,4 +1,5 @@
 #include "worldcup23a1.h"
+
 //updated
 world_cup_t::world_cup_t()
 {
@@ -57,7 +58,7 @@ StatusType world_cup_t::remove_team(int teamId)
         return StatusType::SUCCESS;
     }
 }
-//todo:
+//todo: check regarding closest player
 StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
                                    int goals, int cards, bool goalKeeper)
 {
@@ -65,7 +66,24 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
         cards < 0 || (gamesPlayed == 0 && (goals > 0 || cards > 0))){
         return StatusType::INVALID_INPUT;
     }
-	// TODO: Your code goes here
+    player* tmp_player = m_all_players_id.find_by_key(playerId);
+    if(tmp_player != NULL){
+        delete tmp_player;
+        return StatusType::FAILURE;
+    }
+    delete tmp_player;
+    team* tmp_team = m_all_teams.find_by_key(teamId);
+    if(tmp_team == NULL){
+        delete tmp_team;
+        return StatusType::FAILURE;
+    }
+    try {
+        tmp_team->add_player(playerId, gamesPlayed, goals, cards, goalKeeper);
+        //closest!!!!!!!!!!!!!!!!! need to check somehow
+        delete tmp_team;
+    } catch (std::exception e) {
+        return StatusType::ALLOCATION_ERROR;
+    }
 	return StatusType::SUCCESS;
 }
 //todo:

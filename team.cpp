@@ -14,9 +14,16 @@ team::team(int teamId, int points)
     m_points=points;
     m_num_games=0;
     m_teamId=teamId;
+    m_top_scorer = NULL;
+    m_tree_by_id = AvlTree<player, int>();
+    m_tree_by_stats = AvlTree<player, playerStats>();
 }
 
-int getNumGames(){
+int team::getNumGames(){
     return m_num_games;
 }
-===
+
+
+int team::top_scorer_id() const{
+    return m_top_scorer->m_playerId;
+}

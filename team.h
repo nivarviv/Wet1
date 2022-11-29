@@ -17,9 +17,9 @@ private:
     int m_points;
     int m_num_games;
     int m_teamId
-    player* top_scorer;
-    AvlTree<player, int> tree_by_id;
-    AvlTree<player, playerStats> tree_by_stats;
+    player* m_top_scorer;
+    AvlTree<player, int> m_tree_by_id;
+    AvlTree<player, playerStats> m_tree_by_stats;
 
     //
 
@@ -29,6 +29,7 @@ public:
     team(const team&) = default;//we don't want to allow that
     ~team() = default;
     team& operator=(const team& other) = default;//we don't want to allow that
+    void add_player(int player_id, int games_played, int goals, int cards, bool goalkeeper);
     int top_scorer_id() const;
 };
 

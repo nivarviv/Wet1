@@ -18,6 +18,8 @@
 #include "player.h"
 #include "wet1util.h"
 #include "AvlTree.h"
+#include <iostream>
+
 
 
 class world_cup_t {

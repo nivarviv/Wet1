@@ -19,13 +19,13 @@ private:
     int m_teamGamesWO; // num games the team played without him
     player* m_closest;
     team* m_my_team;
-    //num_games+gamesplayed-without
+
 public:
     player(int playerId, team* playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper);
     player(const player&) = default;
     ~player() = default;
     player& operator=(const player& other) = default;
-    int totalGames(team* playerTeam);
+    int totalGames() const;
 };
 
 
