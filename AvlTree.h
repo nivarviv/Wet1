@@ -18,7 +18,7 @@ private:
         K key;
         node *right;
         node *left;
-        Node(T value, K key):data(value), key(key), right(NULL), left(NULL) {}
+        Node(T value, K key):data(value), key(key), right(NULL), left(NULL) {} //maybe add helper function for newNode
     };
     node *m_root;
 
@@ -51,17 +51,6 @@ public:
     T *find_by_key(K key);
 
     void deleteTree(node *r);
-
-    //see if needed or remove node* from existing implementation
-todo:
-    void remove_by_key(K key);
-
-todo:
-    void add(T value, K key);
-
-  //  T &find(node *p, T data); //or node*
-
-
 }
 /////////////////////////////////////////////////////implementation//////////////////////////////////////////////////
 

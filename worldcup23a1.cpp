@@ -1,5 +1,26 @@
 #include "worldcup23a1.h"
 
+///////////////////////////////////////////////////////////
+
+//move to a new file?
+template <class T>
+class DynArray {
+
+protected:
+    int size;
+    T *DynamicArray;
+
+public:
+    DynArray(size_t s) : size(s) {
+        DynamicArray = new T[s];
+    }
+    ~DynArray() {
+        delete []DynamicArray;
+    }
+};
+
+///////////////////////////////////////////////////////////
+
 world_cup_t::world_cup_t()
 {
     m_all_teams = AvlTree<team, int>();
@@ -218,10 +239,11 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
     team* team1=m_all_teams.find_by_key(teamId1);
     team* team2=m_all_teams.find_by_key(teamId2);
 
-    int size1=team1.getNumPlayers();
-    //team* arrayTeam1=new team[size1];
+    DynArray<team> array1(team1->getNumPlayers());
+    DynArray<team> array2(team2->getNumPlayers());
 
-	// TODO: Your code goes here
+
+    // TODO: Your code goes here
 	return StatusType::SUCCESS;
 }
 //updated
