@@ -1,9 +1,13 @@
 #include "worldcup23a1.h"
-
+//updated
 world_cup_t::world_cup_t()
 {
-    AvlTree<team, int>
-	// TODO: Your code goes here
+    m_all_teams = AvlTree<team, int>();
+    m_allowed_to_play_teams = AvlTree<team, int>();
+    m_all_players_id = AvlTree<player, int>();
+    m_all_players_goals = AvlTree<player, playerStats>();
+    m_top_scorer = NULL;
+    m_total_players = 0;
 }
 //updated
 world_cup_t::~world_cup_t()
@@ -15,7 +19,6 @@ world_cup_t::~world_cup_t()
     delete m_all_players_id;
     delete m_top_scorer;
 }
-
 //updated
 StatusType world_cup_t::add_team(int teamId, int points)
 {
@@ -54,7 +57,7 @@ StatusType world_cup_t::remove_team(int teamId)
         return StatusType::SUCCESS;
     }
 }
-
+//todo:
 StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
                                    int goals, int cards, bool goalKeeper)
 {
@@ -65,7 +68,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
 	// TODO: Your code goes here
 	return StatusType::SUCCESS;
 }
-
+//todo:
 StatusType world_cup_t::remove_player(int playerId)
 {
     if(playerId <= 0){
@@ -74,7 +77,7 @@ StatusType world_cup_t::remove_player(int playerId)
 	// TODO: Your code goes here
 	return StatusType::SUCCESS;
 }
-
+//todo:
 StatusType world_cup_t::update_player_stats(int playerId, int gamesPlayed,
                                         int scoredGoals, int cardsReceived)
 {
@@ -178,7 +181,7 @@ output_t<int> world_cup_t::get_team_points(int teamId)
     delete wanted_team;
     return out;
 }
-
+//todo:
 StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
 {
     if(newTeamId <= 0 || teamId1 <= 0 || teamId2 <= 0 || teamId1 == teamId2){
@@ -255,7 +258,7 @@ output_t<int> world_cup_t::get_all_players_count(int teamId)
         return out;
     }
 }
-
+//todo:
 StatusType world_cup_t::get_all_players(int teamId, int *const output)
 {
     if(teamId == 0 || output == NULL){
@@ -266,7 +269,7 @@ StatusType world_cup_t::get_all_players(int teamId, int *const output)
     output[1] = 4002;
 	return StatusType::SUCCESS;
 }
-
+//todo:
 output_t<int> world_cup_t::get_closest_player(int playerId, int teamId)
 {
     if(playerId <= 0 || teamId <= 0){
@@ -275,7 +278,7 @@ output_t<int> world_cup_t::get_closest_player(int playerId, int teamId)
 	// TODO: Your code goes here
 	return 1006;
 }
-
+//todo:
 output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
 {
     if(minTeamId < 0 || maxTeamId < 0 || maxTeamId < minTeamId){

@@ -19,7 +19,6 @@ private:
     int m_teamGamesWO; // num games the team played without him
     player* m_closest;
     team* m_my_team;
-    //pointer to my team
     //num_games+gamesplayed-without
 public:
     player(int playerId, team* playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper);

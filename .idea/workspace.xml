@@ -12,26 +12,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="added team funcs">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/wet1.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/playerStats.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/playerStats.h" afterDir="false" />
+    <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="some extra changes in world cup and few other">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AvlTree.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/AvlTree.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AvlTree.h" beforeDir="false" afterPath="$PROJECT_DIR$/AvlTree.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main23a1.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main23a1.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/player.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/player.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/player.h" beforeDir="false" afterPath="$PROJECT_DIR$/player.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/team.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/team.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/team.h" beforeDir="false" afterPath="$PROJECT_DIR$/team.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.in" beforeDir="false" afterPath="$PROJECT_DIR$/test.in" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/worldcup23a1.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/worldcup23a1.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worldcup23a1.h" beforeDir="false" afterPath="$PROJECT_DIR$/worldcup23a1.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +31,7 @@
   </component>
   <component name="ProjectId" id="2Hwp6LPZlfaf35tfpJ4GGjhgiqD" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <OptionsSetting value="false" id="Update" />
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -143,7 +128,14 @@
       <option name="presentableId" value="LOCAL‎00009" />
       <updated>1669577265772</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="some extra changes in world cup and few other">
+      <created>1669739508406</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1669739508406</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -170,7 +162,8 @@
     <MESSAGE value="added remove" />
     <MESSAGE value="added player ctor" />
     <MESSAGE value="added team funcs" />
-    <option name="LAST_COMMIT_MESSAGE" value="added team funcs" />
+    <MESSAGE value="some extra changes in world cup and few other" />
+    <option name="LAST_COMMIT_MESSAGE" value="some extra changes in world cup and few other" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
