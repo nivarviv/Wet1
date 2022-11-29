@@ -46,7 +46,7 @@ public:
 
     node *lrRotation(node *parent);
 
-    node *remove(node *node, K key);
+    node *remove( K key);
 
     T *find_by_key(K key);
 
@@ -184,15 +184,17 @@ node *AvlTree<T,K>::findMin(node *t) {
     }
 
 template<class T, class K>
-node *AvlTree<T,K>::remove(node *node, K key) {
-        node * temp;
+node *AvlTree<T,K>::remove(K key) {
+    node * node;
+    node * temp;
+    node=this->m_root;
         // Element not found
         if (node == NULL)
             return NULL;
 
             // Searching for element
         else if (key < node->key)
-            node->left = remove(node->left, key);
+            temp->left = remove(node->left, key);
         else if (key > node->key)
             node->right = remove(node->right, key);
 
