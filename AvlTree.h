@@ -22,6 +22,7 @@ private:
     };
     node *m_root;
 
+
 public:
 
     AvlTree();
@@ -51,6 +52,9 @@ public:
     T *find_by_key(K key);
 
     void deleteTree(node *r);
+
+    void storeInOrderRecursive(T **arr1);
+
 }
 /////////////////////////////////////////////////////implementation//////////////////////////////////////////////////
 
@@ -61,6 +65,26 @@ template<class T, class K>
 AvlTree<T,K>::~AvlTree() {
         deleteTree(this->m_root);
     }
+
+
+template<class T, class K>
+void AvlTree<T,K>::storeInOrderRecursive(T **arr1) {
+    node* root= m_root;
+
+    if(root == NULL)
+        return;
+
+    root=root->left
+    storeInOrderRecursive(arr1);
+
+    (*arr1)++ = root1.data;
+
+    root=root->right
+    storeInOrderRecursive(arr1);
+
+    return;
+}
+
 
 template<class T, class K>
 node *AvlTree<T,K>::insert(T value, K key) {
@@ -229,5 +253,6 @@ void AvlTree<T, K>::deleteTree(node *r) {
         delete r;
     }
 }
+
 #endif //WET1_AVLTREE_H
 

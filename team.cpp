@@ -32,3 +32,10 @@ int team::getNumPlayers()
 {
     return m_num_players;
 }
+
+void team::getArray(player** arr1)
+{
+    m_tree_by_stats.storeInOrderRecursive(arr1);
+}
+
+

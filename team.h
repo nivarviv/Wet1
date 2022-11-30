@@ -33,6 +33,8 @@ public:
     void removePlayer(int player_id);
     int top_scorer_id() const;
     int getNumPlayers();
+
+    void getArray(player** arr1);
 };
 
 

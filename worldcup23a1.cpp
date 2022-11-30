@@ -1,25 +1,5 @@
 #include "worldcup23a1.h"
 
-///////////////////////////////////////////////////////////
-
-//move to a new file?
-template <class T>
-class DynArray {
-
-protected:
-    int size;
-    T *DynamicArray;
-
-public:
-    DynArray(size_t s) : size(s) {
-        DynamicArray = new T[s];
-    }
-    ~DynArray() {
-        delete []DynamicArray;
-    }
-};
-
-///////////////////////////////////////////////////////////
 
 world_cup_t::world_cup_t()
 {
@@ -229,6 +209,36 @@ output_t<int> world_cup_t::get_team_points(int teamId)
     delete wanted_team;
     return out;
 }
+
+
+//helper merge-sort
+void mergeArrays(player* arr1[], player* arr2[], int m,int n, player* arr3[]){
+    int i = 0;
+    int j = 0;
+    int k = 0;
+
+    // Traverse both array
+    while (i<m && j <n){
+        // Check if current element of first
+        // array is smaller than current element
+        // of second array. If yes, store first
+        // array element and increment first array
+        // index. Otherwise do same with second array
+        if (arr1[i] < arr2[j])
+            arr3[k++] = arr1[i++];
+        else
+            arr3[k++] = arr2[j++];
+    }
+
+    // Store remaining elements of first array
+    while (i < m)
+        arr3[k++] = arr1[i++];
+
+    // Store remaining elements of second array
+    while (j < n)
+        arr3[k++] = arr2[j++];
+}
+
 //todo:
 StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
 {
@@ -239,13 +249,21 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
     team* team1=m_all_teams.find_by_key(teamId1);
     team* team2=m_all_teams.find_by_key(teamId2);
 
-    DynArray<team> array1(team1->getNumPlayers());
-    DynArray<team> array2(team2->getNumPlayers());
+    player* arr1[team1->getNumPlayers()];
+    player* arr2[team2->getNumPlayers()];
+    player* mergedArr[team2->getNumPlayers()+team1->getNumPlayers()];
 
+    team1->getArray(arr1);
+    team2->getArray(arr2);
+    mergeArrays(arr1,arr2,team1->getNumPlayers(),team2->getNumPlayers(),mergedArr);
+
+//add array to bst helper function in avltree.h continue here!!!!!!!!!
 
     // TODO: Your code goes here
 	return StatusType::SUCCESS;
 }
+
+
 //updated
 output_t<int> world_cup_t::get_top_scorer(int teamId)
 {
