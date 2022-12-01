@@ -239,7 +239,7 @@ void mergeArrays(node<player,playerStats>* arr1[], node<player,playerStats>* arr
         arr3[k++] = arr2[j++];
 }
 
-//todo:
+
 StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
 {
     if(newTeamId <= 0 || teamId1 <= 0 || teamId2 <= 0 || teamId1 == teamId2){
@@ -253,10 +253,6 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
     node<player,playerStats>* arr2[team2->getNumPlayers()];
     node<player,playerStats>* mergedArr[team2->getNumPlayers()+team1->getNumPlayers()];
 
-    /*player* arr1[team1->getNumPlayers()];
-    player* arr2[team2->getNumPlayers()];
-    player* mergedArr[team2->getNumPlayers()+team1->getNumPlayers()];
-*/
     team1->getArray(arr1);
     team2->getArray(arr2);
     mergeArrays(arr1,arr2,team1->getNumPlayers(),team2->getNumPlayers(),mergedArr);
@@ -272,7 +268,6 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
     team newTeam=team(newTeamId,team1->getNumPoints()+team2->getNumPoints());
     newTeam.setTeamTree(unitedTree);
 
-    // TODO: Your code goes here
 	return StatusType::SUCCESS;
 }
 
