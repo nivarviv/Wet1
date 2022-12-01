@@ -61,7 +61,8 @@ public:
     void storeInOrderRecursive(node<T,K> **arr1);
     void arrayToBST(node** arr);
     void makeNearlyEmpty(node* node, int *toDelete);
-    AvlTree<T,K> createEmptyTree(int height);
+    node* createEmptyTree(int height);
+    void setRoot(node* root);
 
 }
 /////////////////////////////////////////////////////implementation//////////////////////////////////////////////////
@@ -309,7 +310,7 @@ void AvlTree<T, K>::makeNearlyEmpty(node *node, int *toDelete) {
     makeNearlyEmpty(node->left,toDelete);
 }
 
-template<class T, class K>
+/*template<class T, class K>
 AvlTree<T, K> AvlTree<T, K>::createEmptyTree(int height) {
     AvlTree<T,K> tree = AvlTree<T,K>;
     node* node=m_root;
@@ -319,7 +320,25 @@ AvlTree<T, K> AvlTree<T, K>::createEmptyTree(int height) {
     node->left = createEmptyTree(height_needed-1);
     node->right = createEmptyTree(height_needed-1);
     return tree;;
+}*/
+
+
+template<class T, class K>
+node* AvlTree<T, K>::createEmptyTree(int height) {
+    node* node=m_root;
+    if(height<=0)
+        return tree;
+    node=new node(T(), K());
+    node->left = createEmptyTree(height-1);
+    node->right = createEmptyTree(height-1);
+    return node;
 }
+
+template<class T, class K>
+void AvlTree<T, K>::setRoot(node *root) {
+m_root=node;
+}
+
 
 /*template<class T, class K>
 AvlTree *AvlTree<T, K>::sortedArrayToBST(node* root, node **A, int start, int end) {

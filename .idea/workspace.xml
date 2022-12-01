@@ -12,12 +12,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="almost done wth unite">
+    <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="fixed math in toDelete">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AvlTree.h" beforeDir="false" afterPath="$PROJECT_DIR$/AvlTree.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/team.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/team.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/team.h" beforeDir="false" afterPath="$PROJECT_DIR$/team.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worldcup23a1.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/worldcup23a1.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +75,7 @@
       <updated>1669205825963</updated>
       <workItem from="1669205829216" duration="18980000" />
       <workItem from="1669727405644" duration="3630000" />
-      <workItem from="1669748706252" duration="14884000" />
+      <workItem from="1669748706252" duration="16676000" />
     </task>
     <task id="LOCAL‎00001" summary="added AVL functions">
       <created>1669206420865</created>
@@ -178,7 +175,19 @@
       <option name="presentableId" value="LOCAL‎00016" />
       <updated>1669845721077</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL‎00017" summary="not quite finished unite">
+      <created>1669928809207</created>
+      <option name="number" value="LOCAL‎00017" />
+      <option name="presentableId" value="LOCAL‎00017" />
+      <updated>1669928809207</updated>
+    </task>
+    <task id="LOCAL‎00018" summary="fixed math in toDelete">
+      <created>1669929304941</created>
+      <option name="number" value="LOCAL‎00018" />
+      <option name="presentableId" value="LOCAL‎00018" />
+      <updated>1669929304941</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -211,7 +220,9 @@
     <MESSAGE value="changed" />
     <MESSAGE value="added dynmaicArray" />
     <MESSAGE value="almost done wth unite" />
-    <option name="LAST_COMMIT_MESSAGE" value="almost done wth unite" />
+    <MESSAGE value="not quite finished unite" />
+    <MESSAGE value="fixed math in toDelete" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed math in toDelete" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -263,7 +263,8 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
 
     int height=log2(team2->getNumPlayers()+team1->getNumPlayers()+1)-1;
     AvlTree<player,playerStats> unitedTree=AvlTree<player,playerStats>();
-    unitedTree.createEmptyTree(height);
+    node<player, playerStats>* root= unitedTree.createEmptyTree(height);
+    unitedTree.setRoot(root);
     int toDelete= pow(2,height)-(team2->getNumPlayers()+team1->getNumPlayers());
     unitedTree.makeNearlyEmpty(NULL, &toDelete);
     unitedTree.arrayToBST(mergedArr);
