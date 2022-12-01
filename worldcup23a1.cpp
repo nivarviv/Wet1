@@ -261,7 +261,7 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
     team2->getArray(arr2);
     mergeArrays(arr1,arr2,team1->getNumPlayers(),team2->getNumPlayers(),mergedArr);
 
-    int height=log2(team2->getNumPlayers()+team1->getNumPlayers()+1)-1;
+    int height=((int)log2(team2->getNumPlayers()+team1->getNumPlayers()+1))-1;
     AvlTree<player,playerStats> unitedTree=AvlTree<player,playerStats>();
     node<player, playerStats>* root= unitedTree.createEmptyTree(height);
     unitedTree.setRoot(root);
@@ -271,8 +271,6 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
 
     team newTeam=team(newTeamId,team1->getNumPoints()+team2->getNumPoints());
     newTeam.setTeamTree(unitedTree);
-
-//add array to bst helper function in avltree.h continue here!!!!!!!!!
 
     // TODO: Your code goes here
 	return StatusType::SUCCESS;
