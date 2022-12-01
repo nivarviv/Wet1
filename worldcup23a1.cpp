@@ -1,5 +1,5 @@
 #include "worldcup23a1.h"
-
+#include <math.h>
 
 world_cup_t::world_cup_t()
 {
@@ -212,7 +212,7 @@ output_t<int> world_cup_t::get_team_points(int teamId)
 
 
 //helper merge-sort
-void mergeArrays(player* arr1[], player* arr2[], int m,int n, player* arr3[]){
+void mergeArrays(node<player,playerStats>* arr1[], node<player,playerStats>* arr2[], int m,int n, node<player,playerStats>* arr3[]){
     int i = 0;
     int j = 0;
     int k = 0;
@@ -249,13 +249,27 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
     team* team1=m_all_teams.find_by_key(teamId1);
     team* team2=m_all_teams.find_by_key(teamId2);
 
-    player* arr1[team1->getNumPlayers()];
+    node<player,playerStats>* arr1[team1->getNumPlayers()];
+    node<player,playerStats>* arr2[team2->getNumPlayers()];
+    node<player,playerStats>* mergedArr[team2->getNumPlayers()+team1->getNumPlayers()];
+
+    /*player* arr1[team1->getNumPlayers()];
     player* arr2[team2->getNumPlayers()];
     player* mergedArr[team2->getNumPlayers()+team1->getNumPlayers()];
-
+*/
     team1->getArray(arr1);
     team2->getArray(arr2);
     mergeArrays(arr1,arr2,team1->getNumPlayers(),team2->getNumPlayers(),mergedArr);
+
+    int height=log2(team2->getNumPlayers()+team1->getNumPlayers()+1)-1;
+    AvlTree<player,playerStats> unitedTree=AvlTree<player,playerStats>();
+    unitedTree.createEmptyTree(height);
+    int toDelete= height-(team2->getNumPlayers()+team1->getNumPlayers());
+    unitedTree.makeNearlyEmpty(NULL, &toDelete);
+    unitedTree.arrayToBST(mergedArr);
+
+    team newTeam=team(newTeamId,team1->getNumPoints()+team2->getNumPoints());
+    newTeam.setTeamTree(unitedTree);
 
 //add array to bst helper function in avltree.h continue here!!!!!!!!!
 

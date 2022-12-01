@@ -12,8 +12,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="added dynmaicArray">
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+    <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="almost done wth unite">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AvlTree.h" beforeDir="false" afterPath="$PROJECT_DIR$/AvlTree.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/team.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/team.cpp" afterDir="false" />
@@ -79,7 +78,7 @@
       <updated>1669205825963</updated>
       <workItem from="1669205829216" duration="18980000" />
       <workItem from="1669727405644" duration="3630000" />
-      <workItem from="1669748706252" duration="9524000" />
+      <workItem from="1669748706252" duration="14884000" />
     </task>
     <task id="LOCAL‎00001" summary="added AVL functions">
       <created>1669206420865</created>
@@ -173,7 +172,13 @@
       <option name="presentableId" value="LOCAL‎00015" />
       <updated>1669760223259</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL‎00016" summary="almost done wth unite">
+      <created>1669845721077</created>
+      <option name="number" value="LOCAL‎00016" />
+      <option name="presentableId" value="LOCAL‎00016" />
+      <updated>1669845721077</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -205,7 +210,8 @@
     <MESSAGE value="changed remove" />
     <MESSAGE value="changed" />
     <MESSAGE value="added dynmaicArray" />
-    <option name="LAST_COMMIT_MESSAGE" value="added dynmaicArray" />
+    <MESSAGE value="almost done wth unite" />
+    <option name="LAST_COMMIT_MESSAGE" value="almost done wth unite" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

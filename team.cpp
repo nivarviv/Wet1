@@ -23,6 +23,9 @@ int team::getNumGames(){
     return m_num_games;
 }
 
+int team::getNumPoints(){
+    return m_points;
+}
 
 int team::top_scorer_id() const{
     return m_top_scorer->m_playerId;
@@ -33,9 +36,13 @@ int team::getNumPlayers()
     return m_num_players;
 }
 
-void team::getArray(player** arr1)
+void team::getArray(node<player,playerStats>** arr1)
 {
     m_tree_by_stats.storeInOrderRecursive(arr1);
+}
+
+void team::setTeamTree(AvlTree<player, playerStats> tree) {
+    m_tree_by_stats=tree;
 }
 
 

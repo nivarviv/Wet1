@@ -11,15 +11,18 @@
 #include "playerStats.h"
 
 template<class T, class K>
+struct node {
+    T data;
+    K key;
+    node *right;
+    node *left;
+    node(T value, K key):data(value), key(key), right(NULL), left(NULL) {} //maybe add helper function for newNode
+};
+
+template<class T, class K>
 class AvlTree {
 private:
-    struct node {
-        T data;
-        K key;
-        node *right;
-        node *left;
-        Node(T value, K key):data(value), key(key), right(NULL), left(NULL) {} //maybe add helper function for newNode
-    };
+
     node *m_root;
 
 
@@ -53,7 +56,12 @@ public:
 
     void deleteTree(node *r);
 
-    void storeInOrderRecursive(T **arr1);
+    //AvlTree* sortedArrayToBST(node* A[], int start, int end);
+
+    void storeInOrderRecursive(node<T,K> **arr1);
+    void arrayToBST(node** arr);
+    void makeNearlyEmpty(node* node, int *toDelete);
+    AvlTree<T,K> createEmptyTree(int height);
 
 }
 /////////////////////////////////////////////////////implementation//////////////////////////////////////////////////
@@ -66,6 +74,24 @@ AvlTree<T,K>::~AvlTree() {
         deleteTree(this->m_root);
     }
 
+template<class T, class K>
+void AvlTree<T,K>::storeInOrderRecursive(node<T,K> **arr1) {
+    node* node= m_root;
+
+    if(node == NULL)
+        return;
+
+    node=node->left
+    storeInOrderRecursive(arr1);
+
+    (*arr1)++ = node;
+
+    node=node->right
+    storeInOrderRecursive(arr1);
+
+    return;
+}
+/*
 
 template<class T, class K>
 void AvlTree<T,K>::storeInOrderRecursive(T **arr1) {
@@ -84,6 +110,7 @@ void AvlTree<T,K>::storeInOrderRecursive(T **arr1) {
 
     return;
 }
+*/
 
 
 template<class T, class K>
@@ -254,5 +281,63 @@ void AvlTree<T, K>::deleteTree(node *r) {
     }
 }
 
-#endif //WET1_AVLTREE_H
+template<class T, class K>
+void AvlTree<T, K>::arrayToBST(node **arr) {
+    node= m_root;
+    if(node=NULL)
+        return;
+    arrayToBST(node->left);
+    node->data=*arr->data;
+    node->key=*arr->key;
+    arrayToBST(node->right);
+}
 
+template<class T, class K>
+void AvlTree<T, K>::makeNearlyEmpty(node *node, int *toDelete) {
+
+    node= m_root;
+    if(node=NULL)
+        return;
+    if(*toDelete==0){
+        return;
+    }
+    makeNearlyEmpty(node->right,toDelete);
+    if(node->right==NULL && node->left==NULL){
+        delete node;
+    }
+    *toDelete--;
+    makeNearlyEmpty(node->left,toDelete);
+}
+
+template<class T, class K>
+AvlTree<T, K> AvlTree<T, K>::createEmptyTree(int height) {
+    AvlTree<T,K> tree = AvlTree<T,K>;
+    node* node=m_root;
+    if(height<=0)
+        return tree;
+    node=NULL;
+    node->left = createEmptyTree(height_needed-1);
+    node->right = createEmptyTree(height_needed-1);
+    return tree;;
+}
+
+/*template<class T, class K>
+AvlTree *AvlTree<T, K>::sortedArrayToBST(node* root, node **A, int start, int end) {
+    // continue while this branch has values to process
+    if(start > end)
+        return NULL;
+    AvlTree<T,K>* newTree = AvlTree<T,K>();
+    // Get the middle element and make it root
+    int mid = start + (end - start)/2;
+    root = newTree.insert(*A[mid]->data, *A[mid]->key);
+    // Recursively construct the left subtree
+    // and make it left child of root
+    sortedArrayToBST_helper(A, start, mid - 1);
+    // Recursively construct the right subtree
+    // and make it right child of root
+    sortedArrayToBST_helper(A, mid + 1, end);
+    return newTree;
+}*/
+
+
+#endif //WET1_AVLTREE_H
