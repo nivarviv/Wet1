@@ -59,10 +59,10 @@ public:
     //AvlTree* sortedArrayToBST(node* A[], int start, int end);
 
     void storeInOrderRecursive(node<T,K> **arr1);
-    void arrayToBST(node** arr);
-    void makeNearlyEmpty(node* node, int *toDelete);
-    node* createEmptyTree(int height);
-    void setRoot(node* root);
+    void arrayToBST(node<T,K>** arr);
+    void makeNearlyEmpty(node<T,K>* node, int *toDelete);
+    node<T,K>* createEmptyTree(int height);
+    void setRoot(node<T,K>* root);
 
 }
 /////////////////////////////////////////////////////implementation//////////////////////////////////////////////////
@@ -283,7 +283,7 @@ void AvlTree<T, K>::deleteTree(node *r) {
 }
 
 template<class T, class K>
-void AvlTree<T, K>::arrayToBST(node **arr) {
+void AvlTree<T, K>::arrayToBST(node<T,K> **arr) {
     node= m_root;
     if(node=NULL)
         return;
@@ -294,7 +294,7 @@ void AvlTree<T, K>::arrayToBST(node **arr) {
 }
 
 template<class T, class K>
-void AvlTree<T, K>::makeNearlyEmpty(node *node, int *toDelete) {
+void AvlTree<T, K>::makeNearlyEmpty(node<T,K> *node, int *toDelete) {
 
     node= m_root;
     if(node=NULL)
@@ -324,7 +324,7 @@ AvlTree<T, K> AvlTree<T, K>::createEmptyTree(int height) {
 
 
 template<class T, class K>
-node* AvlTree<T, K>::createEmptyTree(int height) {
+node<T,K>* AvlTree<T, K>::createEmptyTree(int height) {
     node* node=m_root;
     if(height<=0)
         return tree;
@@ -335,7 +335,7 @@ node* AvlTree<T, K>::createEmptyTree(int height) {
 }
 
 template<class T, class K>
-void AvlTree<T, K>::setRoot(node *root) {
+void AvlTree<T, K>::setRoot(node<T,K> *root) {
 m_root=node;
 }
 
