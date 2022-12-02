@@ -16,6 +16,8 @@ player::player(int playerId, team* playerTeam, int gamesPlayed, int goals, int c
     m_stats = playerStats(playerId, cards, goals);
     //m_closest=?
     m_teamGamesWO = playerTeam->getNumGames();
+    m_pre=NULL;
+    m_suc=NULL;
 }
 
 int player::totalGames() const{
@@ -45,4 +47,25 @@ player *player::closestOfTwo(player *pre, player *suc) {
         return suc;
     else
         return (pre->m_playerId > suc->m_playerId) ? pre : suc;
+}
+
+void player::setPre(player *player) {
+    m_pre=player;
+}
+
+void player::setSuc(player *player) {
+    m_suc=player;
+
+}
+
+player *player::getPre() {
+    return m_pre;
+}
+
+player *player::getSuc() {
+    return m_suc;
+}
+
+player *player::getClosest() {
+    return m_closest;
 }

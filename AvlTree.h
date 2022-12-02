@@ -63,7 +63,7 @@ public:
     void setRoot(node<T,K>* root);
     node<T,K>* getRoot();
 
-    T* findSuc(node<T,K>* node,K key);
+    T* findSuc(node<T,K>* node,K stats);
     T* findPre(node<T,K>* node,K key);
 
     void storeInOrderRecursive(node<T, K> *pNode, node<T, K> **pNode1);
@@ -335,11 +335,11 @@ void AvlTree<T, K>::storeInOrderRecursive(node *pNode, node **pNode1) {
 }
 
 template<class T, class K>
-T *AvlTree<T, K>::findPre(node<T, K> *node, K key) {
+T *AvlTree<T, K>::findPre(node<T, K> *node, K stats) {
     // Base case
     if (node == NULL) return NULL;
     // If key is present at root
-    if (node->key == key) {
+    if (node->key == stats) {
         // the maximum value in left subtree is predecessor
         if (node->left != NULL) {
             node * tmp = node->left;
@@ -350,13 +350,13 @@ T *AvlTree<T, K>::findPre(node<T, K> *node, K key) {
             return NULL;
     }
     // If key is smaller than root's key, go to left subtree
-    if (root->key > key)
+    if (root->key > stats)
     {
-        findPre(node->left,key);
+        findPre(node->left,stats);
     }
     else // go to right subtree
     {
-        findPre(node->right,key);
+        findPre(node->right,stats);
     }
 }
 

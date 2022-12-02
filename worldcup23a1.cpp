@@ -82,8 +82,10 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
         (*tmp_team).addPlayer(playerId, gamesPlayed, goals, cards, goalKeeper);
         m_all_players_stats.insert(m_all_players_stats.getRoot(),newPlayer,newPlayerStats);
         m_all_players_id.insert(m_all_players_id.getRoot(),newPlayer,newPlayerStats);
-        player* pre=findPre(m_all_players_stats.getRoot(),newPlayerStats);
-        player* suc=findSuc(m_all_players_stats.getRoot(),newPlayerStats);
+        player* pre=m_all_players_stats.findPre(m_all_players_stats.getRoot(),newPlayerStats);
+        player* suc=m_all_players_stats.findSuc(m_all_players_stats.getRoot(),newPlayerStats);
+        newPlayer.setPre(pre);
+        newPlayer.setSuc(suc);
         newPlayer.setClosest(newPlayer.closestOfTwo(pre,suc));
         //closest!!!!!!!!!!!!!!!!! need to check somehow
         delete tmp_team;
@@ -98,16 +100,34 @@ StatusType world_cup_t::remove_player(int playerId)
     if(playerId <= 0){
         return StatusType::INVALID_INPUT;
     }
-    player* player1 = m_all_players_id.find_by_key(playerId);
-    if(player1 == NULL){
-        delete player1;
+    player* playerToDelete = m_all_players_id.find_by_key(m_all_players_id.getRoot(),playerId);
+    if(playerToDelete == NULL){
+        delete playerToDelete;
         return StatusType::FAILURE;
     }
-    team* tmp = player1->getMyTeam();
+    team* tmp = playerToDelete->getMyTeam();
+    player* pre=playerToDelete->getPre();
+    player* suc=playerToDelete->getSuc();
+    if(pre->getClosest()==playerToDelete){ //create helper function to avoid duplications
+        player* pre1=m_all_players_stats.findPre(m_all_players_stats.getRoot(),pre->getMyStats());
+        player* suc1=m_all_players_stats.findSuc(m_all_players_stats.getRoot(),pre->getMyStats());
+        (*pre).setPre(pre1);
+        (*pre).setSuc(suc1);
+        (*pre).setClosest((*pre).closestOfTwo(pre1,suc1));
+    }
+    if(suc->getClosest()==playerToDelete){
+        player* pre2=m_all_players_stats.findPre(m_all_players_stats.getRoot(),newPlayerStats);
+        player* suc2=m_all_players_stats.findSuc(m_all_players_stats.getRoot(),newPlayerStats);
+        (*suc).setPre(pre2);
+        (*suc).setSuc(suc2);
+        (*suc).setClosest((*suc).closestOfTwo(pre2,suc2));
+    }
     tmp->removePlayer(playerId);
     m_all_players_id.remove(m_all_players_id.getRoot(),playerId);
-    m_all_players_goals.remove(m_all_players_id.getRoot(),player1->getMyStats());
+    m_all_players_goals.remove(m_all_players_id.getRoot(),playerToDelete->getMyStats());
 	// TODO: closest somehow
+
+
 	return StatusType::SUCCESS;
 }
 //todo:
@@ -377,4 +397,5 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
 	// TODO: Your code goes here
 	return 2;
 }
+
 

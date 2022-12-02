@@ -17,6 +17,8 @@ private:
     bool m_goalKeeper;
     int m_teamGamesWO; // num games the team played without him
     player* m_closest;
+    player* m_pre;
+    player* m_suc;
     team* m_my_team;
 
 public:
@@ -29,6 +31,13 @@ public:
     playerStats getMyStats() const;
     player* closestOfTwo(player* pre, player* suc);
     void setClosest(player* player);
+    void setPre(player* player);
+    void setSuc(player* player);
+    player* getPre();
+    player* getSuc();
+    player* getClosest();
+
+
 };
 
 
