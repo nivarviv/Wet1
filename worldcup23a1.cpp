@@ -78,7 +78,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
         delete tmp_team;
         return StatusType::FAILURE;
     }
-    try {
+    try { //create newPlayer, newPlayerStats
         (*tmp_team).addPlayer(playerId, gamesPlayed, goals, cards, goalKeeper);
         m_all_players_stats.insert(m_all_players_stats.getRoot(),newPlayer,newPlayerStats);
         m_all_players_id.insert(m_all_players_id.getRoot(),newPlayer,newPlayerStats);
