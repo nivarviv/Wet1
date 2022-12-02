@@ -32,7 +32,7 @@ public:
 
     ~AvlTree();
 
-    node *insert(T value, K key);
+    node *insert(node<T,K>* node,T value, K key);
 
     int height(node *r);
 
@@ -50,19 +50,25 @@ public:
 
     node *lrRotation(node *parent);
 
-    node *remove( K key);
+    node *remove(node<T,K>* node, K key);
 
-    T *find_by_key(K key);
+    T *find_by_key(node<T,K>* node,K key);
 
     void deleteTree(node *r);
 
     //AvlTree* sortedArrayToBST(node* A[], int start, int end);
 
-    void storeInOrderRecursive(node<T,K> **arr1);
-    void arrayToBST(node<T,K>** arr);
     void makeNearlyEmpty(node<T,K>* node, int *toDelete);
-    node<T,K>* createEmptyTree(int height);
+    node<T,K>* createEmptyTree(node<T,K> *node,int height);
     void setRoot(node<T,K>* root);
+    node<T,K>* getRoot();
+
+    T* findSuc(K key);
+    T* findPre(K key);
+
+    void storeInOrderRecursive(node<T, K> *pNode, node<T, K> **pNode1);
+
+    void arrayToBST(node<T, K> *pNode, node<T, K> *pNode1[]);
 
 }
 /////////////////////////////////////////////////////implementation//////////////////////////////////////////////////
@@ -75,23 +81,6 @@ AvlTree<T,K>::~AvlTree() {
         deleteTree(this->m_root);
     }
 
-template<class T, class K>
-void AvlTree<T,K>::storeInOrderRecursive(node<T,K> **arr1) {
-    node* node= m_root;
-
-    if(node == NULL)
-        return;
-
-    node=node->left
-    storeInOrderRecursive(arr1);
-
-    (*arr1)++ = node;
-
-    node=node->right
-    storeInOrderRecursive(arr1);
-
-    return;
-}
 /*
 
 template<class T, class K>
@@ -115,17 +104,16 @@ void AvlTree<T,K>::storeInOrderRecursive(T **arr1) {
 
 
 template<class T, class K>
-node *AvlTree<T,K>::insert(T value, K key) {
-        node* node = m_root;
+node *AvlTree<T,K>::insert(node<T,K>* node,T value, K key) {
         if (node==NULL)
         {
             node=new node(value, key);
         }
         else if (key < node->key) {
-            node->left = insert(value, key);
+            insert(node->left,value, key);
             node = balance(node);
         } else if (key < node->key) {
-            node->right = insert(value, key);
+            insert(node->right,value, key);
             node = balance(node);
         }
         else if(key==node->key)
@@ -218,17 +206,15 @@ node *AvlTree<T,K>::findMin(node *t) {
     }
 
 template<class T, class K>
-node *AvlTree<T,K>::remove(K key) {
-    node * node;
+node *AvlTree<T,K>::remove(node<T,K>* node,K key) {
     node * temp;
-    node=this->m_root;
         // Element not found
         if (node == NULL)
             return NULL;
 
             // Searching for element
         else if (key < node->key)
-            temp->left = remove(node->left, key);
+            node->left = remove(node->left, key);
         else if (key > node->key)
             node->right = remove(node->right, key);
 
@@ -257,14 +243,11 @@ node *AvlTree<T,K>::remove(K key) {
     }
 
 template<class T, class K>
-T *AvlTree<T,K>::find_by_key(K key) {
-        node *node;
-        node = m_root;
-
+T *AvlTree<T,K>::find_by_key(node<T,K>* node,K key) {
         if (key < node->key)
-            node->left = find_by_key(key);
+            find_by_key(node->left,key);
         else if (key > node->key)
-            node->right = find_by_key(key);
+            find_by_key(node->right,key);
         else
             return NULL;
 
@@ -283,20 +266,18 @@ void AvlTree<T, K>::deleteTree(node *r) {
 }
 
 template<class T, class K>
-void AvlTree<T, K>::arrayToBST(node<T,K> **arr) {
-    node= m_root;
-    if(node=NULL)
+void AvlTree<T, K>::arrayToBST(node<T,K>* pNode, node<T,K> *pNode1[]) {
+    if(pNode=NULL)
         return;
-    arrayToBST(node->left);
-    node->data=*arr->data;
-    node->key=*arr->key;
-    arrayToBST(node->right);
+    arrayToBST(pNode->left,pNode1);
+    pNode->data=**pNode1->data;
+    pNode->key=**pNode1->key;
+    *pNode1++;
+    arrayToBST(pNode->right,pNode1);
 }
 
 template<class T, class K>
 void AvlTree<T, K>::makeNearlyEmpty(node<T,K> *node, int *toDelete) {
-
-    node= m_root;
     if(node=NULL)
         return;
     if(*toDelete==0){
@@ -324,13 +305,12 @@ AvlTree<T, K> AvlTree<T, K>::createEmptyTree(int height) {
 
 
 template<class T, class K>
-node<T,K>* AvlTree<T, K>::createEmptyTree(int height) {
-    node* node=m_root;
+node<T,K>* AvlTree<T, K>::createEmptyTree(node<T,K> *node,int height) {
     if(height<=0)
-        return tree;
+        return node;
     node=new node(T(), K());
-    node->left = createEmptyTree(height-1);
-    node->right = createEmptyTree(height-1);
+    createEmptyTree(node->left,height-1);
+    createEmptyTree(node->right,height-1);
     return node;
 }
 
@@ -338,6 +318,22 @@ template<class T, class K>
 void AvlTree<T, K>::setRoot(node<T,K> *root) {
 m_root=node;
 }
+
+template<class T, class K>
+node<T,K>* *AvlTree<T, K>::getRoot() {
+    return m_root;
+}
+
+template<class T, class K>
+void AvlTree<T, K>::storeInOrderRecursive(node *pNode, node **pNode1) {
+    if(pNode == NULL)
+        return;
+    storeInOrderRecursive(pNode->left,pNode1);
+    (*arr1)++ = node;
+    storeInOrderRecursive(pNode->right,pNode1);
+    return;
+}
+
 
 
 /*template<class T, class K>

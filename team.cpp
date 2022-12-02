@@ -38,11 +38,16 @@ int team::getNumPlayers()
 
 void team::getArray(node<player,playerStats>** arr1)
 {
-    m_tree_by_stats.storeInOrderRecursive(arr1);
+    node<player,playerStats>* root=m_tree_by_stats.getRoot();
+    m_tree_by_stats.storeInOrderRecursive(root,arr1);
 }
 
 void team::setTeamTree(AvlTree<player, playerStats> tree) {
     m_tree_by_stats=tree;
+}
+
+player* team::findPlayerById(int id) {
+    return m_tree_by_id.find_by_key(id);
 }
 
 

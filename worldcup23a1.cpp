@@ -44,7 +44,7 @@ StatusType world_cup_t::remove_team(int teamId)
     if(teamId <= 0){
         return StatusType::INVALID_INPUT;
     }
-    team* team1 = m_all_teams.find_by_key(teamId);
+    team* team1 = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
     if(!team1){
         delete team1;
         return StatusType::FAILURE;
@@ -54,7 +54,7 @@ StatusType world_cup_t::remove_team(int teamId)
         return StatusType::FAILURE;
     }
     else{
-        m_all_teams.remove_by_key(teamId);
+        m_all_teams.remove(m_all_teams.getRoot(),teamId);
         delete team1;
         return StatusType::SUCCESS;
     }
@@ -100,8 +100,8 @@ StatusType world_cup_t::remove_player(int playerId)
     }
     team* tmp = player1->getMyTeam();
     tmp->removePlayer(playerId);
-    m_all_players_id.remove_by_key(playerId);
-    m_all_players_goals.remove_by_key(player1->getMyStats());
+    m_all_players_id.remove(m_all_players_id.getRoot(),playerId);
+    m_all_players_goals.remove(m_all_players_id.getRoot(),player1->getMyStats());
 	// TODO: closest somehow
 	return StatusType::SUCCESS;
 }
@@ -128,8 +128,8 @@ StatusType world_cup_t::play_match(int teamId1, int teamId2)
         delete team2;
         return StatusType::ALLOCATION_ERROR;
     }
-    team1 = m_all_teams.find_by_key(teamId1);
-    team2 = m_all_teams.find_by_key(teamId2);
+    team1 = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId1);
+    team2 = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId2);
     if(!team1 || !team2){
         delete team1;
         delete team2;
@@ -259,12 +259,12 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
 
     int height=((int)log2(team2->getNumPlayers()+team1->getNumPlayers()+1))-1;
     AvlTree<player,playerStats> unitedTree=AvlTree<player,playerStats>();
-    node<player, playerStats>* root= unitedTree.createEmptyTree(height);
+    node<player, playerStats>* root= unitedTree.getRoot();
+    unitedTree.createEmptyTree(root,height);
     unitedTree.setRoot(root);
     int toDelete= pow(2,height)-(team2->getNumPlayers()+team1->getNumPlayers());
-    unitedTree.makeNearlyEmpty(NULL, &toDelete);
-    unitedTree.arrayToBST(mergedArr);
-
+    unitedTree.makeNearlyEmpty(root, &toDelete);
+    unitedTree.arrayToBST(root,mergedArr);
     team newTeam=team(newTeamId,team1->getNumPoints()+team2->getNumPoints());
     newTeam.setTeamTree(unitedTree);
 
@@ -357,6 +357,9 @@ output_t<int> world_cup_t::get_closest_player(int playerId, int teamId)
     if(playerId <= 0 || teamId <= 0){
         return output_t<int>(StatusType::INVALID_INPUT);
     }
+    team* team = m_all_teams.find_by_key(teamId);
+    player* player = team->findPlayerById(playerId);
+
 	// TODO: Your code goes here
 	return 1006;
 }
