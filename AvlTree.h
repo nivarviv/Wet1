@@ -63,8 +63,8 @@ public:
     void setRoot(node<T,K>* root);
     node<T,K>* getRoot();
 
-    T* findSuc(K key);
-    T* findPre(K key);
+    T* findSuc(node<T,K>* node,K key);
+    T* findPre(node<T,K>* node,K key);
 
     void storeInOrderRecursive(node<T, K> *pNode, node<T, K> **pNode1);
 
@@ -333,6 +333,62 @@ void AvlTree<T, K>::storeInOrderRecursive(node *pNode, node **pNode1) {
     storeInOrderRecursive(pNode->right,pNode1);
     return;
 }
+
+template<class T, class K>
+T *AvlTree<T, K>::findPre(node<T, K> *node, K key) {
+    // Base case
+    if (node == NULL) return NULL;
+    // If key is present at root
+    if (node->key == key) {
+        // the maximum value in left subtree is predecessor
+        if (node->left != NULL) {
+            node * tmp = node->left;
+            while (tmp->right)
+                tmp = tmp->right;
+            return tmp->data;
+        } else
+            return NULL;
+    }
+    // If key is smaller than root's key, go to left subtree
+    if (root->key > key)
+    {
+        findPre(node->left,key);
+    }
+    else // go to right subtree
+    {
+        findPre(node->right,key);
+    }
+}
+
+
+    template<class T, class K>
+    T * AvlTree<T, K>::findSuc(node < T, K > *node, K key){
+        // Base case
+        if (node == NULL)  return NULL;
+        // If key is present at root
+        if (node->key == key) {
+            // the minimum value in right subtree is successor
+            if (node->right != NULL) {
+                node * tmp = node->right;
+                while (tmp->left)
+                    tmp = tmp->left;
+                return tmp->data;
+            } else
+                return NULL;
+        }
+            // If key is smaller than root's key, go to left subtree
+            if (root->key > key)
+            {
+                findSuc(node->left,key);
+            }
+            else // go to right subtree
+            {
+                findSuc(node->right,key);
+            }
+    }
+
+
+
 
 
 

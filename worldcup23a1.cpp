@@ -6,7 +6,7 @@ world_cup_t::world_cup_t()
     m_all_teams = AvlTree<team, int>();
     m_allowed_to_play_teams = AvlTree<team, int>();
     m_all_players_id = AvlTree<player, int>();
-    m_all_players_goals = AvlTree<player, playerStats>();
+    m_all_players_stats = AvlTree<player, playerStats>();
     m_top_scorer = NULL;
     m_total_players = 0;
 }
@@ -16,7 +16,7 @@ world_cup_t::~world_cup_t()
     delete m_all_teams;
     delete m_allowed_to_play_teams;
     delete m_total_players;
-    delete m_all_players_goals;
+    delete m_all_players_stats;
     delete m_all_players_id;
     delete m_top_scorer;
 }
@@ -79,7 +79,12 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
         return StatusType::FAILURE;
     }
     try {
-        tmp_team->addPlayer(playerId, gamesPlayed, goals, cards, goalKeeper);
+        (*tmp_team).addPlayer(playerId, gamesPlayed, goals, cards, goalKeeper);
+        m_all_players_stats.insert(m_all_players_stats.getRoot(),newPlayer,newPlayerStats);
+        m_all_players_id.insert(m_all_players_id.getRoot(),newPlayer,newPlayerStats);
+        player* pre=findPre(m_all_players_stats.getRoot(),newPlayerStats);
+        player* suc=findSuc(m_all_players_stats.getRoot(),newPlayerStats);
+        newPlayer.setClosest(closestOfTwo(pre,suc));
         //closest!!!!!!!!!!!!!!!!! need to check somehow
         delete tmp_team;
     } catch (std::exception e) {

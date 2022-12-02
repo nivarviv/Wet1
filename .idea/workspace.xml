@@ -15,9 +15,6 @@
     <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="updated">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AvlTree.h" beforeDir="false" afterPath="$PROJECT_DIR$/AvlTree.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/team.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/team.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/team.h" beforeDir="false" afterPath="$PROJECT_DIR$/team.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worldcup23a1.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/worldcup23a1.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +75,7 @@
       <updated>1669205825963</updated>
       <workItem from="1669205829216" duration="18980000" />
       <workItem from="1669727405644" duration="3630000" />
-      <workItem from="1669748706252" duration="23121000" />
+      <workItem from="1669748706252" duration="24028000" />
     </task>
     <task id="LOCAL‎00001" summary="added AVL functions">
       <created>1669206420865</created>
@@ -214,7 +211,13 @@
       <option name="presentableId" value="LOCAL‎00022" />
       <updated>1669931049870</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL‎00023" summary="updated">
+      <created>1670018537835</created>
+      <option name="number" value="LOCAL‎00023" />
+      <option name="presentableId" value="LOCAL‎00023" />
+      <updated>1670018537835</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

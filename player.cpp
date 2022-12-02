@@ -28,3 +28,7 @@ playerStats player::getMyStats() const{
 team* player::getMyTeam() const{
     return m_my_team;
 }
+
+void player::setClosest(player* player) {
+    m_closest=player;
+}

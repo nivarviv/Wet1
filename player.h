@@ -27,6 +27,8 @@ public:
     int totalGames() const;
     team* getMyTeam() const;
     playerStats getMyStats() const;
+    player* closestOfTwo(player* pre, player* suc);
+    void setClosest(player* player);
 };
 
 
