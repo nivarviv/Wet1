@@ -63,8 +63,11 @@ public:
     void setRoot(node<T,K>* root);
     node<T,K>* getRoot();
 
+    //change to player and playerStats only?
     T* findSuc(node<T,K>* node,K stats);
     T* findPre(node<T,K>* node,K key);
+
+  //  player* findSuc(node<T,K>* node, playerStats key);
 
     void storeInOrderRecursive(node<T, K> *pNode, node<T, K> **pNode1);
 
@@ -387,6 +390,35 @@ T *AvlTree<T, K>::findPre(node<T, K> *node, K stats) {
             }
     }
 
+/*
+
+template<class T, class K>
+player *AvlTree<T, K>::findSuc(node *node, playerStats key) {
+// Base case
+    if (node == NULL)  return NULL;
+    // If key is present at root
+    if (node->key == key) {
+        // the minimum value in right subtree is successor
+        if (node->right != NULL) {
+            node * tmp = node->right;
+            while (tmp->left)
+                tmp = tmp->left;
+            return tmp->data;
+        } else
+            return NULL;
+    }
+    // If key is smaller than root's key, go to left subtree
+    if (root->key > key)
+    {
+        findSuc(node->left,key);
+    }
+    else // go to right subtree
+    {
+        findSuc(node->right,key);
+    }
+}
+
+*/
 
 
 

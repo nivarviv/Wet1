@@ -71,7 +71,8 @@ public:
 	output_t<int> knockout_winner(int minTeamId, int maxTeamId);
 	
 	// } </DO-NOT-MODIFY>
-    player *findPre(node<T, K> *node, K stats);
+
+    void fixClosest(player* player);
 };
 
 
