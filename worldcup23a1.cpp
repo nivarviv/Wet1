@@ -84,7 +84,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
         m_all_players_id.insert(m_all_players_id.getRoot(),newPlayer,newPlayerStats);
         player* pre=findPre(m_all_players_stats.getRoot(),newPlayerStats);
         player* suc=findSuc(m_all_players_stats.getRoot(),newPlayerStats);
-        newPlayer.setClosest(closestOfTwo(pre,suc));
+        newPlayer.setClosest(newPlayer.closestOfTwo(pre,suc));
         //closest!!!!!!!!!!!!!!!!! need to check somehow
         delete tmp_team;
     } catch (std::exception e) {

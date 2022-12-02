@@ -3,6 +3,7 @@
 //
 
 #include "player.h"
+#include <math.h>
 
 
 player::player(int playerId, team* playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper){
@@ -31,4 +32,17 @@ team* player::getMyTeam() const{
 
 void player::setClosest(player* player) {
     m_closest=player;
+}
+
+player *player::closestOfTwo(player *pre, player *suc) {
+    if(abs(this->m_goals-pre->m_goals)<abs(this->m_goals-suc->m_goals))
+        return pre;
+    else if(abs(this->m_goals-pre->m_goals)>abs(this->m_goals-suc->m_goals))
+        return suc;
+    else if(abs(this->m_cards-pre->m_cards)<abs(this->m_cards-suc->m_cards))
+        return pre;
+    else if(abs(this->m_cards-pre->m_cards)>abs(this->m_cards-suc->m_cards))
+        return suc;
+    else
+        return (pre->m_playerId > suc->m_playerId) ? pre : suc;
 }
