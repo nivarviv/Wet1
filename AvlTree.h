@@ -9,6 +9,7 @@
 #include "team.h"
 #include "player.h"
 #include "playerStats.h"
+#include <variant>
 
 template<class T, class K>
 struct node {
@@ -65,7 +66,7 @@ public:
 
     //change to player and playerStats only?
     T* findSuc(node<T,K>* node,K stats);
-    T* findPre(node<T,K>* node,K key);
+    T* findPre(node<T,K>* node,K stats);
 
   //  player* findSuc(node<T,K>* node, playerStats key);
 
@@ -115,15 +116,15 @@ void AvlTree<T,K>::insert(node<T,K>* node,T value, K key) {
         else if (key < node->key) {
             insert(node->left,value, key);
             node = balance(node);
-        } else if (key < node->key) {
+        }
+        else if (key < node->key) {
             insert(node->right,value, key);
             node = balance(node);
         }
-        else if(key == node->key)
-        {
+        else if (<K>key==node->key) {
             return;
         }
-        return;
+    return;
     }
 
 template<class T, class K>
@@ -343,7 +344,7 @@ T *AvlTree<T, K>::findPre(node<T, K> *node, K stats) {
     // Base case
     if (node == NULL) return NULL;
     // If key is present at root
-    if (node->key == stats) {
+    if (node->key == <K>stats) {
         // the maximum value in left subtree is predecessor
         if (node->left != NULL) {
             node * tmp = node->left;
@@ -366,11 +367,11 @@ T *AvlTree<T, K>::findPre(node<T, K> *node, K stats) {
 
 
     template<class T, class K>
-    T * AvlTree<T, K>::findSuc(node < T, K > *node, K key){
+    T * AvlTree<T, K>::findSuc(node < T, K > *node, K stats){
         // Base case
-        if (node == NULL)  return NULL;
+        if (node == NULL) return NULL;
         // If key is present at root
-        if (node->key == key) {
+        if (node->key == <K>stats) {
             // the minimum value in right subtree is successor
             if (node->right != NULL) {
                 node * tmp = node->right;
@@ -381,15 +382,32 @@ T *AvlTree<T, K>::findPre(node<T, K> *node, K stats) {
                 return NULL;
         }
             // If key is smaller than root's key, go to left subtree
-            if (root->key > key)
+            if (root->key > stats)
             {
-                findSuc(node->left,key);
+                findSuc(node->left,stats);
             }
             else // go to right subtree
             {
-                findSuc(node->right,key);
+                findSuc(node->right,stats);
             }
     }
+
+template<class T, class K>
+bool AvlTree<T, K>::compareStats(node<T, K> *node, playerStats key) {
+    if(key==node->key){
+        return true;
+    }
+    return false;
+}
+
+template<class T, class K>
+bool AvlTree<T, K>::compareId(node<T, K> *node, int key) {
+    if(key==node->key){
+        return true;
+    }
+    return false;
+}
+
 
 /*
 
