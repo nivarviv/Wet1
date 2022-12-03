@@ -77,7 +77,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
     }
     delete tmp_player;
     // team does not exist
-    team* tmp_team = m_all_teams.find_by_key(teamId);
+    team* tmp_team = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
     if(tmp_team == NULL){
         delete tmp_team;
         return StatusType::FAILURE;
