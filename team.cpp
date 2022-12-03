@@ -17,6 +17,7 @@ team::team(int teamId, int points)
     m_top_scorer = NULL;
     m_tree_by_id = AvlTree<player, int>();
     m_tree_by_stats = AvlTree<player, playerStats>();
+    m_numGoalKeepers=0;
 }
 
 int team::getNumGames(){
@@ -64,6 +65,18 @@ bool team::isTeamValid() const {
         return true;
     }
     return false;
+}
+
+void team::removePlayer(playerStats stats, int id) {
+    m_tree_by_stats.remove(m_tree_by_stats.getRoot(),stats);
+    m_tree_by_id.remove(m_tree_by_id.getRoot(),id);
+    m_num_players--;
+    if((*player).isGoalKeeper()){
+        m_numGoalKeepers--;
+        if(m_numGoalKeepers==0){
+            m_has_goalkeeper= false;
+        }
+    }
 }
 
 

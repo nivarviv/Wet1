@@ -20,6 +20,7 @@ private:
     player* m_top_scorer;
     AvlTree<player, int> m_tree_by_id;
     AvlTree<player, playerStats> m_tree_by_stats;
+    int m_numGoalKeepers;
 
     //
 
@@ -30,7 +31,7 @@ public:
     ~team() = default;
     team& operator=(const team& other) = default;//we don't want to allow that
     void addPlayer(player* player, playerStats stats,int id);
-    void removePlayer(int player_id);
+    void removePlayer(playerStats stats, int id);
     int top_scorer_id() const;
     int getNumPlayers();
     int getNumPoints();

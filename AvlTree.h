@@ -23,57 +23,33 @@ struct node {
 template<class T, class K>
 class AvlTree {
 private:
-
     node *m_root;
 
-
 public:
-
     AvlTree();
-
     ~AvlTree();
-
     void insert(node<T,K>* node,T value, K key);
-
     int height(node *r);
-
     int bf(node *r);
-
     node *balance(node *r);
-
     node *findMin(node *t);
-
     node *llRotation(node *parent);
-
     node *rrRotation(node *parent);
-
     node *rlRotation(node *parent);
-
     node *lrRotation(node *parent);
-
-    node *remove(node<T,K>* node, K key);
-
+    void remove(node<T,K>* node, K key);
     T *find_by_key(node<T,K>* node,K key);
-
     void deleteTree(node *r);
-
-    //AvlTree* sortedArrayToBST(node* A[], int start, int end);
-
     void makeNearlyEmpty(node<T,K>* node, int *toDelete);
     node<T,K>* createEmptyTree(node<T,K> *node,int height);
     void setRoot(node<T,K>* root);
     node<T,K>* getRoot();
-
     //change to player and playerStats only?
     T* findSuc(node<T,K>* node,K stats);
     T* findPre(node<T,K>* node,K stats);
-
   //  player* findSuc(node<T,K>* node, playerStats key);
-
     void storeInOrderRecursive(node<T, K> *pNode, node<T, K> **pNode1);
-
     void arrayToBST(node<T, K> *pNode, node<T, K> *pNode1[]);
-
 }
 /////////////////////////////////////////////////////implementation//////////////////////////////////////////////////
 
@@ -210,25 +186,23 @@ node *AvlTree<T,K>::findMin(node *t) {
     }
 
 template<class T, class K>
-node *AvlTree<T,K>::remove(node<T,K>* node,K key) {
+void AvlTree<T,K>::remove(node<T,K>* node,K key) {
     node * temp;
         // Element not found
         if (node == NULL)
-            return NULL;
-
+            return;
             // Searching for element
         else if (key < node->key)
-            node->left = remove(node->left, key);
+            remove(node->left, key);
         else if (key > node->key)
-            node->right = remove(node->right, key);
-
+            remove(node->right, key);
         // Element found
         // With 2 children
         if (node->left && node->right) {
             temp = findMin(node->right);
             node->data = temp->data;
             node->key = temp->key;
-            node->right = remove(node->right, node->key);
+            remove(node->right, node->key);
         }
 
             // With one or zero child
@@ -240,10 +214,10 @@ node *AvlTree<T,K>::remove(node<T,K>* node,K key) {
                 node = node->left;
             delete temp;
         }
-        if (t == NULL)
-            return t;
+        if (node == NULL)
+            return;
         balance(node);
-        return node;
+        return;
     }
 
 template<class T, class K>

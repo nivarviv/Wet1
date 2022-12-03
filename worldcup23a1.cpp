@@ -82,7 +82,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
         delete tmp_team;
         return StatusType::FAILURE;
     }
-    try { //problem with playerStats in funcs
+    try {
 
         player newPlayer;
         newPlayer.addNewPlayer(playerId,tmp_team,gamesPlayed,goals,cards,goalKeeper);
@@ -143,14 +143,12 @@ StatusType world_cup_t::remove_player(int playerId)
     if(suc->getClosest()==playerToDelete){
         fixClosest(suc);
     }
-    tmp->removePlayer(playerId);
+    (*tmp).removePlayer((*playerToDelete).getMyStats(),playerId);
     m_all_players_id.remove(m_all_players_id.getRoot(),playerId);
-    m_all_players_stats.remove(m_all_players_id.getRoot(),playerToDelete->getMyStats());
-	// TODO: closest somehow
-
-
+    m_all_players_stats.remove(m_all_players_stats.getRoot(),(*playerToDelete).getMyStats());
 	return StatusType::SUCCESS;
 }
+
 //todo:
 StatusType world_cup_t::update_player_stats(int playerId, int gamesPlayed,
                                         int scoredGoals, int cardsReceived)
