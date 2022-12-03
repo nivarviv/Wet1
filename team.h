@@ -37,6 +37,7 @@ public:
     void setTeamTree( AvlTree<player, playerStats> tree);
     void getArray(node<player,playerStats>** arr1);
     player* findPlayerById(int id);
+    bool isTeamValid() const;
 };
 
 

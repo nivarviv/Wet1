@@ -37,6 +37,7 @@ public:
     player* getPre();
     player* getSuc();
     player* getClosest();
+    bool isGoalKeeper();
 };
 
 

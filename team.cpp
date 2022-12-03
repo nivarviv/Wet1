@@ -53,6 +53,17 @@ player* team::findPlayerById(int id) {
 void team::addPlayer(player* player, playerStats stats,int id) {
     m_tree_by_stats.insert(m_tree_by_stats.getRoot(),(*player),stats);
     m_tree_by_id.insert(m_tree_by_id.getRoot(),(*player),id);
+    m_num_players++;
+    if((*player).isGoalKeeper()){
+        m_has_goalkeeper=true;
+    }
+}
+
+bool team::isTeamValid() const {
+    if(m_has_goalkeeper && m_num_players >= 11){
+        return true;
+    }
+    return false;
 }
 
 

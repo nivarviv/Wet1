@@ -71,3 +71,7 @@ player player::addNewPlayer(int playerId, team *playerTeam, int gamesPlayed, int
     player newPlayer=player(playerId, playerTeam, gamesPlayed, goals, cards, goalKeeper);
     return newPlayer;
 }
+
+bool player::isGoalKeeper() {
+    return m_goalKeeper;
+}
