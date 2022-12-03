@@ -27,14 +27,14 @@ StatusType world_cup_t::add_team(int teamId, int points)
     if(teamId <= 0 || points < 0){
         return StatusType::INVALID_INPUT;
     }
-    team* tmp = m_all_teams.find_by_key(teamId);
+    team* tmp = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
     if(tmp == NULL){//it returns null if we haven't found such team
         delete tmp;
         return StatusType::FAILURE;
     }
     team team1 = team(teamId, points);
     //check for exception
-    m_all_teams.add(team1, teamId);
+    m_all_teams.insert(team1, teamId);
     delete tmp;
 	return StatusType::SUCCESS;
 }
@@ -49,7 +49,7 @@ StatusType world_cup_t::remove_team(int teamId)
         delete team1;
         return StatusType::FAILURE;
     }
-    if(team1->m_num_players){
+    if((*team1).getNumPlayers()){
         delete team1;
         return StatusType::FAILURE;
     }
@@ -69,27 +69,36 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
         cards < 0 || (gamesPlayed == 0 && (goals > 0 || cards > 0))){
         return StatusType::INVALID_INPUT;
     }
-    player* tmp_player = m_all_players_id.find_by_key(playerId);
+    player* tmp_player = m_all_players_id.find_by_key(m_all_players_id.getRoot(),playerId);
+    // player already exist
     if(tmp_player != NULL){
         delete tmp_player;
         return StatusType::FAILURE;
     }
     delete tmp_player;
+    // team does not exist
     team* tmp_team = m_all_teams.find_by_key(teamId);
     if(tmp_team == NULL){
         delete tmp_team;
         return StatusType::FAILURE;
     }
-    try { //create newPlayer, newPlayerStats
+    try { //create newPlayer, newPlayerStats, check if team is allowed to play- if so add
         (*tmp_team).addPlayer(playerId, gamesPlayed, goals, cards, goalKeeper);
+
+        player* newPlayer=new player;
+        (*newPlayer).addNewPlayer(playerId,tmp_team,gamesPlayed,goals,cards,goalKeeper);
+        playerStats newPlayerStats= (*newPlayer).getMyStats();
+
         m_all_players_stats.insert(m_all_players_stats.getRoot(),newPlayer,newPlayerStats);
-        m_all_players_id.insert(m_all_players_id.getRoot(),newPlayer,newPlayerStats);
+        m_all_players_id.insert(m_all_players_id.getRoot(),newPlayer,playerId);
+
         player* pre=m_all_players_stats.findPre(m_all_players_stats.getRoot(),newPlayerStats);
         player* suc=m_all_players_stats.findSuc(m_all_players_stats.getRoot(),newPlayerStats);
-        newPlayer.setPre(pre);
-        newPlayer.setSuc(suc);
-        newPlayer.setClosest(newPlayer.closestOfTwo(pre,suc));
-        //closest!!!!!!!!!!!!!!!!! need to check somehow
+        (*newPlayer).setPre(pre);
+        (*newPlayer).setSuc(suc);
+        (*newPlayer).setClosest(newPlayer.closestOfTwo(pre,suc));
+
+        //closest!!!!!!!!!!!!!!!!! need to update pre and suc
         delete tmp_team;
     } catch (std::exception e) {
         return StatusType::ALLOCATION_ERROR;
@@ -120,7 +129,7 @@ StatusType world_cup_t::remove_player(int playerId)
     team* tmp = playerToDelete->getMyTeam();
     player* pre=playerToDelete->getPre();
     player* suc=playerToDelete->getSuc();
-    if(pre->getClosest()==playerToDelete){ //create helper function to avoid duplications
+    if(pre->getClosest()==playerToDelete){
         fixClosest(pre);
     }
     if(suc->getClosest()==playerToDelete){
@@ -294,9 +303,10 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
     int toDelete= pow(2,height)-(team2->getNumPlayers()+team1->getNumPlayers());
     unitedTree.makeNearlyEmpty(root, &toDelete);
     unitedTree.arrayToBST(root,mergedArr);
+
     team newTeam=team(newTeamId,team1->getNumPoints()+team2->getNumPoints());
     newTeam.setTeamTree(unitedTree);
-
+//update team stats, put inside tree, delete old trees
 	return StatusType::SUCCESS;
 }
 

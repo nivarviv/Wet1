@@ -15,7 +15,7 @@ team::team(int teamId, int points)
     m_num_games=0;
     m_teamId=teamId;
     m_top_scorer = NULL;
-    m_tree_by_id = AvlTree<player, int>(); //check if needed
+    m_tree_by_id = AvlTree<player, int>();
     m_tree_by_stats = AvlTree<player, playerStats>();
 }
 
@@ -47,7 +47,12 @@ void team::setTeamTree(AvlTree<player, playerStats> tree) {
 }
 
 player* team::findPlayerById(int id) {
-    return m_tree_by_id.find_by_key(id);
+    return m_tree_by_id.find_by_key(m_tree_by_id.getRoot(),id);
+}
+
+void team::addPlayer(int player_id, int games_played, int goals, int cards, bool goalkeeper) {
+    m_tree_by_stats.insert();
+    m_tree_by_id.insert();
 }
 
 

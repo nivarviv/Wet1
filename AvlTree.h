@@ -255,7 +255,8 @@ T *AvlTree<T,K>::find_by_key(node<T,K>* node,K key) {
             return NULL;
 
         if (key == node->key) {
-            return node->data;
+            T* tPtr= &(node->data);
+            return tPtr;
         }
     }
 

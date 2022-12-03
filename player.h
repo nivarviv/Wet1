@@ -10,20 +10,21 @@
 class player {
 private:
     int m_playerId;
-    int m_cards;
+    team* m_my_team;
     int m_gamesPlayed;//before joining
-    playerStats m_stats;
     int m_goals;
+    int m_cards;
     bool m_goalKeeper;
-    int m_teamGamesWO; // num games the team played without him
+    playerStats m_stats;
     player* m_closest;
     player* m_pre;
     player* m_suc;
-    team* m_my_team;
+    int m_teamGamesWO; // num games the team played without him
 
 public:
     player(int playerId, team* playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper);
-    player(const player&) = default;// I think we need to do it not by default due to there is memory allocation
+    player addNewPlayer(int playerId, team* playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper);
+    //player(const player&) = default;// I think we need to do it not by default due to there is memory allocation
     ~player() = default;
     player& operator=(const player& other) = default;
     int totalGames() const;
@@ -36,8 +37,6 @@ public:
     player* getPre();
     player* getSuc();
     player* getClosest();
-
-
 };
 
 
