@@ -82,7 +82,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
         delete tmp_team;
         return StatusType::FAILURE;
     }
-    try { //create newPlayer, newPlayerStats, check if team is allowed to play- if so add
+    try { //check if team is allowed to play- if so add, problem with playerStats in funcs
 
         player* newPlayer=new player;
         (*newPlayer).addNewPlayer(playerId,tmp_team,gamesPlayed,goals,cards,goalKeeper);
@@ -98,7 +98,10 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
         (*newPlayer).setSuc(suc);
         (*newPlayer).setClosest((*newPlayer).closestOfTwo(pre,suc));
 
-        //closest!!!!!!!!!!!!!!!!! need to update pre and suc
+        //changing pre and suc closest if needed
+        (*pre).setClosest((*pre).closestOfTwo(pre->getClosest(),newPlayer));
+        (*suc).setClosest((*suc).closestOfTwo(suc->getClosest(),newPlayer));
+
         delete tmp_team;
     } catch (std::exception e) {
         return StatusType::ALLOCATION_ERROR;
