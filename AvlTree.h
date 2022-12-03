@@ -32,7 +32,7 @@ public:
 
     ~AvlTree();
 
-    node *insert(node<T,K>* node,T value, K key);
+    void insert(node<T,K>* node,T value, K key);
 
     int height(node *r);
 
@@ -107,7 +107,7 @@ void AvlTree<T,K>::storeInOrderRecursive(T **arr1) {
 
 
 template<class T, class K>
-node *AvlTree<T,K>::insert(node<T,K>* node,T value, K key) {
+void AvlTree<T,K>::insert(node<T,K>* node,T value, K key) {
         if (node==NULL)
         {
             node=new node(value, key);
@@ -119,11 +119,11 @@ node *AvlTree<T,K>::insert(node<T,K>* node,T value, K key) {
             insert(node->right,value, key);
             node = balance(node);
         }
-        else if(key==node->key)
+        else if(key == node->key)
         {
-            return NULL
+            return;
         }
-        return node;
+        return;
     }
 
 template<class T, class K>

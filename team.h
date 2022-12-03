@@ -29,7 +29,7 @@ public:
     team(const team&) = default;//we don't want to allow that
     ~team() = default;
     team& operator=(const team& other) = default;//we don't want to allow that
-    void addPlayer(int player_id, int games_played, int goals, int cards, bool goalkeeper);
+    void addPlayer(player* player, playerStats stats,int id);
     void removePlayer(int player_id);
     int top_scorer_id() const;
     int getNumPlayers();

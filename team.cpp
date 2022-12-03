@@ -50,9 +50,9 @@ player* team::findPlayerById(int id) {
     return m_tree_by_id.find_by_key(m_tree_by_id.getRoot(),id);
 }
 
-void team::addPlayer(int player_id, int games_played, int goals, int cards, bool goalkeeper) {
-    m_tree_by_stats.insert();
-    m_tree_by_id.insert();
+void team::addPlayer(player* player, playerStats stats,int id) {
+    m_tree_by_stats.insert(m_tree_by_stats.getRoot(),(*player),stats);
+    m_tree_by_id.insert(m_tree_by_id.getRoot(),(*player),id);
 }
 
 

@@ -83,20 +83,20 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
         return StatusType::FAILURE;
     }
     try { //create newPlayer, newPlayerStats, check if team is allowed to play- if so add
-        (*tmp_team).addPlayer(playerId, gamesPlayed, goals, cards, goalKeeper);
 
         player* newPlayer=new player;
         (*newPlayer).addNewPlayer(playerId,tmp_team,gamesPlayed,goals,cards,goalKeeper);
         playerStats newPlayerStats= (*newPlayer).getMyStats();
 
-        m_all_players_stats.insert(m_all_players_stats.getRoot(),newPlayer,newPlayerStats);
-        m_all_players_id.insert(m_all_players_id.getRoot(),newPlayer,playerId);
+        (*tmp_team).addPlayer(newPlayer,newPlayerStats,playerId);
+        m_all_players_stats.insert(m_all_players_stats.getRoot(),(*newPlayer),newPlayerStats);
+        m_all_players_id.insert(m_all_players_id.getRoot(),(*newPlayer),playerId);
 
         player* pre=m_all_players_stats.findPre(m_all_players_stats.getRoot(),newPlayerStats);
         player* suc=m_all_players_stats.findSuc(m_all_players_stats.getRoot(),newPlayerStats);
         (*newPlayer).setPre(pre);
         (*newPlayer).setSuc(suc);
-        (*newPlayer).setClosest(newPlayer.closestOfTwo(pre,suc));
+        (*newPlayer).setClosest((*newPlayer).closestOfTwo(pre,suc));
 
         //closest!!!!!!!!!!!!!!!!! need to update pre and suc
         delete tmp_team;
