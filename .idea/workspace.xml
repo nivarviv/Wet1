@@ -12,7 +12,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="started on closest">
+    <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="added dynmaicArray">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -257,7 +257,14 @@
       <option name="presentableId" value="LOCAL‎00031" />
       <updated>1670067240371</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="added dynmaicArray">
+      <created>1670160673677</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1670160673677</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -288,13 +295,13 @@
     <MESSAGE value="added con and des in world cup" />
     <MESSAGE value="changed remove" />
     <MESSAGE value="changed" />
-    <MESSAGE value="added dynmaicArray" />
     <MESSAGE value="almost done wth unite" />
     <MESSAGE value="not quite finished unite" />
     <MESSAGE value="fixed math in toDelete" />
     <MESSAGE value="updated" />
     <MESSAGE value="started on closest" />
-    <option name="LAST_COMMIT_MESSAGE" value="started on closest" />
+    <MESSAGE value="added dynmaicArray" />
+    <option name="LAST_COMMIT_MESSAGE" value="added dynmaicArray" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
