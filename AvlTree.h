@@ -9,7 +9,7 @@
 #include "team.h"
 #include "player.h"
 #include "playerStats.h"
-#include <variant>
+#include "playerStatsDifferentOrder.h"
 
 template<class T, class K>
 struct node {
@@ -17,7 +17,11 @@ struct node {
     K key;
     node *right;
     node *left;
-    node(T value, K key):data(value), key(key), right(NULL), left(NULL) {} //maybe add helper function for newNode
+    node(T value, K key):data(value), key(key), right(NULL), left(NULL) {}
+    ~node(){
+        delete left;
+        delete right;
+    }
 };
 
 template<class T, class K>

@@ -79,10 +79,14 @@ void team::removePlayer(playerStats stats, int id) {
     }
 }
 
-
-AvlTree<player, int>* getTree() const{
-    return &m_tree_by_id;
+team::~team() {
+    delete m_top_scorer;
 }
+
+const AvlTree<player, int> team::getTree() const {
+    return m_tree_by_id;
+}
+
 
 
 AvlTree<player, playerStats>* getTree() const;

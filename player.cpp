@@ -87,3 +87,10 @@ void player::addCards(int cards) {
 void player::addGames(int games_played) {
     m_gamesPlayed += games_played;
 }
+
+player::~player() {
+    delete m_closest;
+    delete m_pre;
+    delete m_suc;
+    delete m_my_team;
+}

@@ -29,7 +29,7 @@ public:
     team(int teamId, int points);
     int getNumGames();
     team(const team&) = default;//we don't want to allow that
-    ~team() = default;
+    ~team();
     team& operator=(const team& other) = default;//we don't want to allow that
     void addPlayer(player* player, playerStats stats,int id);
     void removePlayer(playerStats stats, int id);
@@ -40,9 +40,9 @@ public:
     void getArray(node<player,playerStats>** arr1);
     player* findPlayerById(int id);
     bool isTeamValid() const;
-    AvlTree<player, int>* getTree() const;
-    AvlTree<player, playerStats>* getTree() const;
-    AvlTree<player, playerStatsDifferentOrder>* getTree() const;
+    const AvlTree<player, int> getTree() const;
+    const AvlTree<player, playerStats> getTree() const;
+    const AvlTree<player, playerStatsDifferentOrder> getTree() const;
 };
 
 
