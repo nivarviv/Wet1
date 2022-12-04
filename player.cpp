@@ -75,3 +75,15 @@ player player::addNewPlayer(int playerId, team *playerTeam, int gamesPlayed, int
 bool player::isGoalKeeper() {
     return m_goalKeeper;
 }
+
+void player::addGoals(int goals){
+    m_goals += goals;
+}
+
+void player::addCards(int cards) {
+    m_cards += cards;
+}
+
+void player::addGames(int games_played) {
+    m_gamesPlayed += games_played;
+}
