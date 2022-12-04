@@ -9,4 +9,4 @@ add_executable(wet1
         main23a1.cpp
         wet1util.h
         worldcup23a1.cpp
-        worldcup23a1.h team.cpp team.h player.cpp player.h AvlTree.cpp AvlTree.h playerStats.cpp playerStats.h)
+        worldcup23a1.h team.cpp team.h player.cpp player.h AvlTree.cpp AvlTree.h playerStats.cpp playerStats.h playerStatsDifferentOrder.cpp playerStatsDifferentOrder.h)

@@ -80,3 +80,10 @@ void team::removePlayer(playerStats stats, int id) {
 }
 
 
+AvlTree<player, int>* getTree() const{
+    return &m_tree_by_id;
+}
+
+
+AvlTree<player, playerStats>* getTree() const;
+AvlTree<player, playerStatsDifferentOrder>* getTree() const;

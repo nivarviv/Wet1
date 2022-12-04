@@ -156,8 +156,23 @@ StatusType world_cup_t::update_player_stats(int playerId, int gamesPlayed,
     if(playerId <= 0 || gamesPlayed < 0 || scoredGoals < 0 || cardsReceived < 0){
         return StatusType::INVALID_INPUT;
     }
-	// TODO: Your code goes here
-	return StatusType::SUCCESS;
+    player* tmp_player = new player*;
+    if(!tmp_player){
+        delete tmp_player;
+        return StatusType::ALLOCATION_ERROR;
+    }
+    tmp_player = m_all_players_id.find_by_key(playerId);
+    if(tmp_player == NULL){
+        delete tmp_player;
+        return StatusType::FAILURE;
+    }
+    tmp_player->addCards(cardsReceived);
+    tmp_player->addGames(gamesPlayed);
+    tmp_player->addGoals(scoredGoals);
+    //change the tree that associated with goals? have to do it somehow
+	//maybe to remove the player and then add it back?
+    delete tmp_player;
+    return StatusType::SUCCESS;
 }
 //updated
 StatusType world_cup_t::play_match(int teamId1, int teamId2)
@@ -297,6 +312,10 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
     node<player,playerStats>* arr2[team2->getNumPlayers()];
     node<player,playerStats>* mergedArr[team2->getNumPlayers()+team1->getNumPlayers()];
 
+    /*player* arr1[team1->getNumPlayers()];
+    player* arr2[team2->getNumPlayers()];
+    player* mergedArr[team2->getNumPlayers()+team1->getNumPlayers()];
+*/
     team1->getArray(arr1);
     team2->getArray(arr2);
     mergeArrays(arr1,arr2,team1->getNumPlayers(),team2->getNumPlayers(),mergedArr);
@@ -385,16 +404,28 @@ output_t<int> world_cup_t::get_all_players_count(int teamId)
         return out;
     }
 }
-//todo:
 StatusType world_cup_t::get_all_players(int teamId, int *const output)
 {
     if(teamId == 0 || output == NULL){
         return StatusType::INVALID_INPUT;
     }
-	// TODO: Your code goes here
-    output[0] = 4001;
-    output[1] = 4002;
-	return StatusType::SUCCESS;
+    if(teamId > 0){
+        team* tmp_team = new team*;
+        if(tmp_team == NULL){
+            delete tmp_team;
+            return StatusType::ALLOCATION_ERROR;
+        }
+        tmp_team = m_all_teams.find_by_key(teamId);
+        if(tmp_team == NULL){
+            delete tmp_team;
+            return StatusType::FAILURE;
+        }
+        tmp_team->getTree()->storeInOrderRecursive(tmp_team->getTree()->getRoot(), output);
+        delete tmp_team;
+    }
+    else
+        m_all_players_different_order.storeInOrderRecursive(m_all_players_different_order.getRoot(), output);
+    return StatusType::SUCCESS;
 }
 //todo:
 output_t<int> world_cup_t::get_closest_player(int playerId, int teamId)

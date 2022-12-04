@@ -12,6 +12,7 @@ private:
     int m_playerId;
     team* m_my_team;
     int m_gamesPlayed;//before joining
+    playerStats m_stats;
     int m_goals;
     int m_cards;
     bool m_goalKeeper;
@@ -38,6 +39,9 @@ public:
     player* getSuc();
     player* getClosest();
     bool isGoalKeeper();
+    void addGoals(int goals);
+    void addGames(int games_played);
+    void addCards(int cards);
 };
 
 

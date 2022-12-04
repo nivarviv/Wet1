@@ -21,6 +21,7 @@ private:
     AvlTree<player, int> m_tree_by_id;
     AvlTree<player, playerStats> m_tree_by_stats;
     int m_numGoalKeepers;
+    AvlTree<player, playerStatsDifferentOrder> m_tree_for_all_players;
 
     //
 
@@ -39,6 +40,9 @@ public:
     void getArray(node<player,playerStats>** arr1);
     player* findPlayerById(int id);
     bool isTeamValid() const;
+    AvlTree<player, int>* getTree() const;
+    AvlTree<player, playerStats>* getTree() const;
+    AvlTree<player, playerStatsDifferentOrder>* getTree() const;
 };
 
 
