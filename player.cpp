@@ -8,7 +8,7 @@
 
 player::player(int playerId, team* playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper) :
                 m_playerId(playerId), m_my_team(playerTeam), m_gamesPlayed(gamesPlayed), m_goals(goals), m_cards(cards), m_goalKeeper(goalKeeper),
-                m_stats(playerStats(playerId, cards, goals)), m_closest(NULL), m_pre(NULL), m_suc(NULL), m_teamGamesWO(0)
+                m_stats(playerStats(playerId, cards, goals)), m_closest(NULL), m_pre(NULL), m_suc(NULL), m_teamGamesWO(0), m_stats_different(playerId, cards, goals)
                 {
     m_teamGamesWO = (*m_my_team).getNumGames();
                 }
@@ -29,7 +29,7 @@ void player::setClosest(player* player) {
     m_closest=player;
 }
 //need to check according to the new instructions
-player *player::closestOfTwo(player *pre, player *suc) {
+player *player::closestOfTwo(player *pre, player *suc) const{
     if(abs(this->m_goals-pre->m_goals)<abs(this->m_goals-suc->m_goals)){
         return pre;
     }
@@ -55,15 +55,15 @@ void player::setSuc(player *player) {
     m_suc=player;
 }
 
-player *player::getPre() {
+player *player::getPre() const{
     return m_pre;
 }
 
-player *player::getSuc() {
+player *player::getSuc() const{
     return m_suc;
 }
 
-player *player::getClosest() {
+player *player::getClosest() const{
     return m_closest;
 }
 
@@ -72,7 +72,7 @@ player player::addNewPlayer(int playerId, team *playerTeam, int gamesPlayed, int
     return newPlayer;
 }
 
-bool player::isGoalKeeper() {
+bool player::isGoalKeeper() const{
     return m_goalKeeper;
 }
 

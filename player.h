@@ -6,6 +6,7 @@
 #define WET1_PLAYER_H
 #include "playerStats.h"
 #include "team.h"
+#include "playerStatsDifferentOrder.h"
 
 class player {
 private:
@@ -16,7 +17,7 @@ private:
     int m_goals;
     int m_cards;
     bool m_goalKeeper;
-    playerStats m_stats;
+    playerStatsDifferentOrder m_stats_different;
     player* m_closest;
     player* m_pre;
     player* m_suc;
@@ -31,14 +32,14 @@ public:
     int totalGames() const;
     team* getMyTeam() const;
     playerStats getMyStats() const;
-    player* closestOfTwo(player* pre, player* suc);
+    player* closestOfTwo(player* pre, player* suc) const;
     void setClosest(player* player);
     void setPre(player* player);
     void setSuc(player* player);
-    player* getPre();
-    player* getSuc();
-    player* getClosest();
-    bool isGoalKeeper();
+    player* getPre() const;
+    player* getSuc() const;
+    player* getClosest() const;
+    bool isGoalKeeper() const;
     void addGoals(int goals);
     void addGames(int games_played);
     void addCards(int cards);
