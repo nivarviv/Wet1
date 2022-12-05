@@ -32,9 +32,9 @@ private:
     AvlTree<player, int> m_all_players_id;
     AvlTree<player, playerStats> m_all_players_goals;
     AvlTree<player, playerStatsDifferentOrder> m_all_players_different_order;
-    int m_total_players;
     player* m_top_scorer;
-	
+    int m_total_players;
+
 public:
 	// <DO-NOT-MODIFY> {
 	
