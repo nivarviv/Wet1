@@ -54,7 +54,8 @@ public:
   //  player* findSuc(node<T,K>* node, playerStats key);
     void storeInOrderRecursive(node<T, K> *pNode, node<T, K> **pNode1);
     void arrayToBST(node<T, K> *pNode, node<T, K> *pNode1[]);
-}
+    void successorPredecessor(node < T, K > * root, K val, T* pre, T* suc);
+    }
 /////////////////////////////////////////////////////implementation//////////////////////////////////////////////////
 
 template<class T, class K>
@@ -318,7 +319,48 @@ void AvlTree<T, K>::storeInOrderRecursive(node *pNode, node **pNode1) {
 }
 
 template<class T, class K>
-T *AvlTree<T, K>::findPre(node<T, K> *node, K stats) {
+void AvlTree<T, K>::successorPredecessor(node<T, K> *root, K val, T *pre, T *suc) {
+    if (root != NULL) {
+        if (root->key == <K>val) {
+            // go to the right most element in the left subtree, it will the
+            // predecessor.
+            if (root->left != NULL) {
+                node* t = root->left;
+                while (t->right != NULL) {
+                    t = t->right;
+                }
+                pre = t->data;
+            }
+            if (root->right != NULL) {
+                // go to the left most element in the right subtree, it will
+                // the successor.
+                node* t = root->right;
+                while (t->left != NULL) {
+                    t = t->left;
+                }
+                suc = t->data;
+            }
+        } else if (root->key > val) {
+            // we make the root as successor because we might have a
+            // situation when value matches with the root, it wont have
+            // right subtree to find the successor, in that case we need
+            // parent to be the successor
+            suc = root->data;
+            successorPredecessor(root->left,val,pre,suc);
+        } else if (root->key < val) {
+            // we make the root as predecessor because we might have a
+            // situation when value matches with the root, it wont have
+            // left subtree to find the predecessor, in that case we need
+            // parent to be the predecessor.
+            pre = root->data;
+            successorPredecessor(root.right,val,pre,suc);
+        }
+    }
+}
+
+/*
+template<class T, class K>
+T *AvlTree<T, K>::findPre(node<T, K> *node, K stats,node<T, K> *pre) {
     // Base case
     if (node == NULL) return NULL;
     // If key is present at root
@@ -369,6 +411,8 @@ T *AvlTree<T, K>::findPre(node<T, K> *node, K stats) {
                 findSuc(node->right,stats);
             }
     }
+*/
+
 
 template<class T, class K>
 bool AvlTree<T, K>::compareStats(node<T, K> *node, playerStats key) {

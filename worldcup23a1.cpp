@@ -95,8 +95,9 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
         m_all_players_id.insert(m_all_players_id.getRoot(),newPlayer,playerId);
         m_all_players_different_order.insert(m_all_players_different_order.getRoot(),newPlayer,newPlayerDiffStats);
 
-        player* pre=m_all_players_goals.findPre(m_all_players_goals.getRoot(),newPlayerStats);
-        player* suc=m_all_players_goals.findSuc(m_all_players_goals.getRoot(),newPlayerStats);
+        player* pre;
+        player* suc;
+        m_all_players_goals.successorPredecessor(m_all_players_goals.getRoot(),newPlayerStats,pre,suc);
         newPlayer.setPre(pre);
         newPlayer.setSuc(suc);
         newPlayer.setClosest(newPlayer.closestOfTwo(pre,suc));
@@ -118,9 +119,10 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
 }
 
 
-void world_cup_t::fixClosest(player *player) {
-    class player* pre1=m_all_players_goals.findPre(m_all_players_goals.getRoot(),player->getMyStats());
-    class player* suc1=m_all_players_goals.findSuc(m_all_players_goals.getRoot(),player->getMyStats());
+void world_cup_t::fixClosest(player *player) { //fix here?
+    class player* pre1;
+    class player* suc1;
+    m_all_players_goals.successorPredecessor(m_all_players_goals.getRoot(),player->getMyStats(),pre1,suc1);
     (*player).setPre(pre1);
     (*player).setSuc(suc1);
     (*player).setClosest((*player).closestOfTwo(pre1,suc1));
