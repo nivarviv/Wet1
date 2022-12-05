@@ -42,6 +42,7 @@ public:
     void addGoals(int goals);
     void addGames(int games_played);
     void addCards(int cards);
+    int getID();
 };
 
 

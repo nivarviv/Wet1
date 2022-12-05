@@ -198,23 +198,23 @@ StatusType world_cup_t::play_match(int teamId1, int teamId2)
         delete team2;
         return StatusType::FAILURE;
     }
-    int sum1 = team1->m_points + team1->m_goals - team1->m_cards; //fix this whole section - can't access private fields of team
-    int sum2 = team2->m_points + team2->m_goals - team2->m_cards;
+    int sum1 = team1->getNumPoints() + team1->getNumGoals() - team1->getNumCards();
+    int sum2 = team2->getNumPoints() + team2->getNumGoals() - team2->getNumCards();
     if(sum1 > sum2){
-        team1->m_points += 3;
-        team1->m_num_games++;
-        team2->m_num_games++;
+        team1->updatePoints(3);
+        team1->addGamePlayed();
+        team2->addGamePlayed();
     }
     else if(sum2>sum1){
-        team1->m_points += 3;
-        team1->m_num_games++;
-        team2->m_num_games++;
+        team1->updatePoints(3);
+        team1->addGamePlayed();
+        team2->addGamePlayed();
     }
     else{
-        team1->m_points++;
-        team2->m_points++;
-        team1->m_num_games++;
-        team2->m_num_games++;
+        team1->updatePoints(1);
+        team2->updatePoints(1);
+        team1->addGamePlayed();
+        team2->addGamePlayed();
     }
     delete team1;
     delete team2;
@@ -240,8 +240,8 @@ output_t<int> world_cup_t::get_num_played_games(int playerId)
         out.status() = StatusType::FAILURE; //fix
         return out;
     }
-    out.ans() = player1->m_gamesPlayed; //can't accesses private fields
-    out.status() = StatusType::SUCCESS;
+    out.ans() = player1->totalGames(); //fix
+    out.status() = StatusType::SUCCESS; //fix
     delete player1;
 	return out;
 }
@@ -267,7 +267,7 @@ output_t<int> world_cup_t::get_team_points(int teamId)
         delete wanted_team;
         return out;
     }
-    out.ans() = wanted_team->m_points; //can't accesses private fields
+    out.ans() = wanted_team->getNumPoints(); //fix
     out.status() = StatusType::SUCCESS; //fix
     delete wanted_team;
     return out;
@@ -350,7 +350,7 @@ output_t<int> world_cup_t::get_top_scorer(int teamId)
             out.status() = StatusType::FAILURE; //fix
             return out;
         }
-        out.ans() = m_top_scorer->m_playerId; //private
+        out.ans() = m_top_scorer->getID(); //fix
         out.status() = StatusType::SUCCESS; //fix
         return out;
     }
@@ -399,7 +399,7 @@ output_t<int> world_cup_t::get_all_players_count(int teamId)
             delete team1;
             return out;
         }
-        out.ans() = team1->m_num_players; //private
+        out.ans() = team1->getNumPlayers(); //fix
         out.status() = StatusType::SUCCESS; //fix
         delete team1;
         return out;

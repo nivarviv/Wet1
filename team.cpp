@@ -87,6 +87,21 @@ const AvlTree<player, int> team::getTree() const {
     return m_tree_by_id;
 }
 
+int team::getNumGoals() {
+    return m_total_goals;
+}
+
+int team::getNumCards() {
+    return m_total_cards;
+}
+
+void team::updatePoints(int pointsToAdd) {
+    m_points+=pointsToAdd;
+}
+
+void team::addGamePlayed() {
+    m_num_games++;
+}
 
 
 AvlTree<player, playerStats>* getTree() const;

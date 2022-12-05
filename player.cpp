@@ -94,3 +94,7 @@ player::~player() {
     delete m_suc;
     delete m_my_team;
 }
+
+int player::getID() {
+    return m_playerId;
+}

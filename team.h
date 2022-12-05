@@ -43,6 +43,10 @@ public:
     const AvlTree<player, int> getTree() const;
     const AvlTree<player, playerStats> getTree() const;
     const AvlTree<player, playerStatsDifferentOrder> getTree() const;
+    int getNumGoals();
+    int getNumCards();
+    void updatePoints(int pointsToAdd);
+    void addGamePlayed();
 };
 
 
