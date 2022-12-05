@@ -320,31 +320,34 @@ void AvlTree<T, K>::storeInOrderRecursive(node *pNode, node **pNode1) {
 
 template<class T, class K>
 void AvlTree<T, K>::successorPredecessor(node<T, K> *root, K val, T *pre, T *suc) {
-    if (root != NULL) {
-        if (root->key == <K>val) {
-            // go to the right most element in the left subtree, it will the
-            // predecessor.
-            if (root->left != NULL) {
-                node* t = root->left;
-                while (t->right != NULL) {
-                    t = t->right;
-                }
-                pre = t->data;
+    // Base case
+    if (root == NULL)  return ;
+    if (root->key == <K>val) {
+        // go to the right most element in the left subtree, it will the
+        // predecessor.
+        if (root->left != NULL) {
+            node *t = root->left;
+            while (t->right != NULL) {
+                t = t->right;
             }
-            if (root->right != NULL) {
-                // go to the left most element in the right subtree, it will
-                // the successor.
-                node* t = root->right;
-                while (t->left != NULL) {
-                    t = t->left;
-                }
-                suc = t->data;
+            pre = t->data;
+        }
+        if (root->right != NULL) {
+            // go to the left most element in the right subtree, it will
+            // the successor.
+            node *t = root->right;
+            while (t->left != NULL) {
+                t = t->left;
             }
-        } else if (root->key > val) {
-            // we make the root as successor because we might have a
-            // situation when value matches with the root, it wont have
-            // right subtree to find the successor, in that case we need
-            // parent to be the successor
+            suc = t->data;
+        }
+        return;
+    }
+    if (root->key > val) {
+        // we make the root as successor because we might have a
+        // situation when value matches with the root, it wont have
+        // right subtree to find the successor, in that case we need
+        // parent to be the successor
             suc = root->data;
             successorPredecessor(root->left,val,pre,suc);
         } else if (root->key < val) {
@@ -356,7 +359,6 @@ void AvlTree<T, K>::successorPredecessor(node<T, K> *root, K val, T *pre, T *suc
             successorPredecessor(root.right,val,pre,suc);
         }
     }
-}
 
 /*
 template<class T, class K>
