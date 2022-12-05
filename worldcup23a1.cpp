@@ -6,7 +6,7 @@ world_cup_t::world_cup_t()
     m_all_teams = AvlTree<team, int>();
     m_allowed_to_play_teams = AvlTree<team, int>();
     m_all_players_id = AvlTree<player, int>();
-    m_all_players_stats = AvlTree<player, playerStats>();
+    m_all_players_goals = AvlTree<player, playerStats>();
     m_all_players_different_order=AvlTree<player,playerStatsDifferentOrder>();
     m_top_scorer = NULL;
     m_total_players = 0;
@@ -17,7 +17,7 @@ world_cup_t::~world_cup_t()
     delete m_all_teams;
     delete m_allowed_to_play_teams;
     delete m_total_players;
-    delete m_all_players_stats;
+    delete m_all_players_goals;
     delete m_all_players_id;
     delete m_top_scorer;
 }
@@ -353,7 +353,7 @@ output_t<int> world_cup_t::get_top_scorer(int teamId)
             out.status() = StatusType::FAILURE; //fix
             return out;
         }
-        out.ans() = m_top_scorer->getID(); //fix
+        out.ans() = m_top_scorer->getID(); //fix - something with this field to scorer
         out.status() = StatusType::SUCCESS; //fix
         return out;
     }

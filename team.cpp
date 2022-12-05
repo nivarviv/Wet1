@@ -14,7 +14,7 @@ team::team(int teamId, int points)
     m_points=points;
     m_num_games=0;
     m_teamId=teamId;
-    m_top_scorer = NULL;
+    m_top_scorer = NULL; ///to do
     m_tree_by_id = AvlTree<player, int>();
     m_tree_by_stats = AvlTree<player, playerStats>();
     m_numGoalKeepers=0;
