@@ -312,7 +312,7 @@ void AvlTree<T, K>::storeInOrderRecursive(node *pNode, node **pNode1) {
     if(pNode == NULL)
         return;
     storeInOrderRecursive(pNode->left,pNode1);
-    (*arr1)++ = node;
+    (*arr1)++ = node; /// todo: is this right? or **arr
     storeInOrderRecursive(pNode->right,pNode1);
     return;
 }
