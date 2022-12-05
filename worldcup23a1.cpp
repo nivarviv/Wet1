@@ -309,8 +309,8 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
         return StatusType::INVALID_INPUT;
     }
 
-    team* team1=m_all_teams.find_by_key(teamId1);
-    team* team2=m_all_teams.find_by_key(teamId2);
+    team* team1=m_all_teams.find_by_key(m_all_teams.getRoot(),teamId1);
+    team* team2=m_all_teams.find_by_key(m_all_teams.getRoot(),teamId2);
 
     node<player,playerStats>* arr1[team1->getNumPlayers()];
     node<player,playerStats>* arr2[team2->getNumPlayers()];
