@@ -224,6 +224,7 @@ output_t<int> world_cup_t::get_num_played_games(int playerId)
         out.status() = StatusType::INVALID_INPUT;
         return out;
     }
+    //todo: maybe put all under try and catch??
     player* player1 = new player*;
     if(!player1){
         delete player1;
@@ -404,6 +405,7 @@ output_t<int> world_cup_t::get_all_players_count(int teamId)
         return out;
     }
 }
+//updated
 StatusType world_cup_t::get_all_players(int teamId, int *const output)
 {
     if(teamId == 0 || output == NULL){
@@ -427,17 +429,30 @@ StatusType world_cup_t::get_all_players(int teamId, int *const output)
         m_all_players_different_order.storeInOrderRecursive(m_all_players_different_order.getRoot(), output);
     return StatusType::SUCCESS;
 }
-//todo:
+//updated
 output_t<int> world_cup_t::get_closest_player(int playerId, int teamId)
 {
     if(playerId <= 0 || teamId <= 0){
         return output_t<int>(StatusType::INVALID_INPUT);
     }
-    team* team = m_all_teams.find_by_key(teamId);
-    player* player = team->findPlayerById(playerId);
-
-	// TODO: Your code goes here
-	return 1006;
+    output_t<int> out;
+    team* team1 = m_all_teams.find_by_key(teamId);
+    if(team1 == NULL){
+        delete team1;
+        out.status() = StatusType::FAILURE;
+        return out;
+    }
+    player* player1 = team1->findPlayerById(playerId);
+    delete team1;
+    if(player1 == NULL){
+        delete player1;
+        out.status() = StatusType::FAILURE;
+        return out;
+    }
+    out.ans() = player1->getClosest()->getId();
+    out.status() = StatusType::SUCCESS;
+    delete player1;
+    return out;
 }
 //todo:
 output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)

@@ -28,7 +28,7 @@ team* player::getMyTeam() const{
 void player::setClosest(player* player) {
     m_closest=player;
 }
-
+//need to check according to the new instructions
 player *player::closestOfTwo(player *pre, player *suc) {
     if(abs(this->m_goals-pre->m_goals)<abs(this->m_goals-suc->m_goals)){
         return pre;
@@ -86,4 +86,8 @@ void player::addCards(int cards) {
 
 void player::addGames(int games_played) {
     m_gamesPlayed += games_played;
+}
+
+int player::getId() const{
+    return m_playerId;
 }
