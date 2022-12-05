@@ -88,7 +88,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
         player newPlayer;
         newPlayer.addNewPlayer(playerId,tmp_team,gamesPlayed,goals,cards,goalKeeper);
         playerStats newPlayerStats= newPlayer.getMyStats();
-        playerStatsDifferentOrder newPlayerDiffStats = newPlayer.getDiffStats(); //add this helper func
+        playerStatsDifferentOrder newPlayerDiffStats = newPlayer.getDiffStats(); //add this helper function
 
         (*tmp_team).addPlayer(&newPlayer,newPlayerStats,playerId);
         m_all_players_goals.insert(m_all_players_goals.getRoot(),newPlayer,newPlayerStats);
