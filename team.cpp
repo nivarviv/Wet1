@@ -103,10 +103,13 @@ void team::addGamePlayed() {
     m_num_games++;
 }
 
-
 AvlTree<player, playerStats>* team::getTreeStats() const{
-    return &m_tree_by_stats;
+    return m_tree_by_stats;
 }
 AvlTree<player, playerStatsDifferentOrder>* team::getTreeDiffStats() const{
-    return &m_tree_for_all_players;
+    return m_tree_for_all_players;
+}
+
+int team::getId() const {
+    return m_teamId;
 }

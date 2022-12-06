@@ -47,6 +47,7 @@ public:
     int getNumCards();
     void updatePoints(int pointsToAdd);
     void addGamePlayed();
+    int getId() const;
 };
 
 
