@@ -44,6 +44,7 @@ public:
     void addGames(int games_played);
     void addCards(int cards);
     int getId() const;
+    playerStatsDifferentOrder getDiffStats() const;
 };
 
 

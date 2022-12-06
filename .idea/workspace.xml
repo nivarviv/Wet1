@@ -14,8 +14,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="update player - added remove from trees and re-insert">
-      <change beforePath="$PROJECT_DIR$/worldcup23a1.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/worldcup23a1.cpp" afterDir="false" />
+    <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="changed pre and suc funcs">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +28,7 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -330,13 +331,7 @@
       <option name="presentableId" value="LOCAL‎00040" />
       <updated>1670275294615</updated>
     </task>
-    <task id="LOCAL‎00041" summary="update player - added remove from trees and re-insert">
-      <created>1670333800729</created>
-      <option name="number" value="LOCAL‎00041" />
-      <option name="presentableId" value="LOCAL‎00041" />
-      <updated>1670333800729</updated>
-    </task>
-    <option name="localTasksCounter" value="42" />
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -377,8 +372,7 @@
     <MESSAGE value="mostly comments" />
     <MESSAGE value="fixed access to private fields" />
     <MESSAGE value="changed pre and suc funcs" />
-    <MESSAGE value="update player - added remove from trees and re-insert" />
-    <option name="LAST_COMMIT_MESSAGE" value="update player - added remove from trees and re-insert" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed pre and suc funcs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
