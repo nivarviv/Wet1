@@ -457,73 +457,79 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
         return out;
     }
     //todo: wrap it up in try and catch and in the catch return ALLOCATION
-    //team* arr_team[m_num_eligible_to_play_teams];
-    team* arr_team = NULL;
-    arr_team = new team*[m_num_eligible_to_play_teams];
-    for(int i = 0; i < m_num_eligible_to_play_teams; i++){
-        arr_team[i] = NULL;
-    }
-    m_allowed_to_play_teams.storeInOrderRecursiveByTerms(minTeamId, maxTeamId, m_allowed_to_play_teams.getRoot(), arr_teams);//probably need to implement in avltree unless there is a better soultion
-    AvlTree<team, int> knock_out_tree;
-    int num_eligible_in_terms_teams = 0;
-    for(int i = 0; i < m_num_eligible_to_play_teams; i++){
-        if(arr_team[i] != NULL){
-            knock_out_tree.insert(knock_out_tree.getRoot(), arr_team[i], arr_team[i]->getId());
-            num_eligible_in_terms_teams++;
+    try {
+        team* arr_team = NULL;
+        arr_team = new team*[m_num_eligible_to_play_teams];
+        for(int i = 0; i < m_num_eligible_to_play_teams; i++){
+            arr_team[i] = NULL;
         }
-        else{
-            break;
+        m_allowed_to_play_teams.storeInOrderRecursiveByTerms(minTeamId, maxTeamId, m_allowed_to_play_teams.getRoot(), arr_teams);//probably need to implement in avltree unless there is a better soultion
+        AvlTree<team, int> knock_out_tree;
+        int num_eligible_in_terms_teams = 0;
+        for(int i = 0; i < m_num_eligible_to_play_teams; i++){
+            if(arr_team[i] != NULL){
+                knock_out_tree.insert(knock_out_tree.getRoot(), arr_team[i], arr_team[i]->getId());
+                num_eligible_in_terms_teams++;
+            }
+            else{
+                break;
+            }
         }
-    }
-    if(!m_num_eligible_to_play_teams){
-        output_t<int> out(StatusType::FAILURE);
-        delete[] arr_team;
-        return out;
-    }
-    int playing_teams = num_eligible_in_terms_teams;
-    while(playing_teams > 1){
-        for(int curr_team = 0; curr_team < playing_teams-1; curr_team += 2){
-            while (arr_team[curr_team] == NULL && curr_team < playing_teams-1){
-                curr_team++;
-            }
-            int first_team = curr_team;
-            while (arr_team[curr_team+1] == NULL && curr_team + 1 < playing_teams){
-                curr_team++;
-            }
-            int second_team = curr_team+1;
-            int team1_points = arr_team[first_team]->getNumPoints(),
-                team2_points = arr_team[second_team]->getNumPoints();
-            int team1_id = arr_team[first_team]->getId(),
-                team2_id = arr_team[second_team]->getId();
-            play_match(team1_id, team2_id);
-            int curr_points_team1 = arr_team[first_team]->getNumPoints(),
-                curr_points_team2 = arr_team[second_team]->getNumPoints();
-            if(team1_points + 3 == curr_points_team1 && team2_points == curr_points_team2){
-                unite_teams(team1_id, team2_id, team1_id);
-                arr_team[second_team] = NULL;//maybe need to create new array each while iteration in size/2
-                playing_teams--;//or put a for that take the next eligible team for the game? I think that's better
-                continue;
-            }
-            else if(team2_points + 3 == curr_points_team2 && team1_points == curr_points_team1){
-                unite_teams(team1_id, team2_id, team2_id);
-                arr_team[first_team] = NULL;
-                playing_teams--;
-                continue;
-            }
-            else if(team1_points + 1 == curr_points_team1 && team2_points + 1 == curr_points_team2){
-                if(team1_id > team2_id) {
+        if(!m_num_eligible_to_play_teams){
+            output_t<int> out(StatusType::FAILURE);
+            delete[] arr_team;
+            return out;
+        }
+        int playing_teams = num_eligible_in_terms_teams;
+        while(playing_teams > 1){
+            for(int curr_team = 0; curr_team < playing_teams-1; curr_team += 2){
+                while (arr_team[curr_team] == NULL && curr_team < playing_teams-1){
+                    curr_team++;
+                }
+                int first_team = curr_team;
+                while (arr_team[curr_team+1] == NULL && curr_team + 1 < playing_teams){
+                    curr_team++;
+                }
+                int second_team = curr_team+1;
+                int team1_points = arr_team[first_team]->getNumPoints(),
+                    team2_points = arr_team[second_team]->getNumPoints();
+                int team1_id = arr_team[first_team]->getId(),
+                    team2_id = arr_team[second_team]->getId();
+                play_match(team1_id, team2_id);
+                int curr_points_team1 = arr_team[first_team]->getNumPoints(),
+                    curr_points_team2 = arr_team[second_team]->getNumPoints();
+                if(team1_points + 3 == curr_points_team1 && team2_points == curr_points_team2){
                     unite_teams(team1_id, team2_id, team1_id);
-                    playing_teams--;
-                    arr_team[second_team] = NULL;
-                    arr_team[first_team]->updatePoints(2);
+                    arr_team[second_team] = NULL;//maybe need to create new array each while iteration in size/2
+                    playing_teams--;//or put a for that take the next eligible team for the game? I think that's better
                     continue;
                 }
-                else if(team2_id > team1_id){
+                else if(team2_points + 3 == curr_points_team2 && team1_points == curr_points_team1){
                     unite_teams(team1_id, team2_id, team2_id);
-                    playing_teams--;
                     arr_team[first_team] = NULL;
-                    arr_team[second_team]->updatePoints(2);
+                    playing_teams--;
                     continue;
+                }
+                else if(team1_points + 1 == curr_points_team1 && team2_points + 1 == curr_points_team2){
+                    if(team1_id > team2_id) {
+                        unite_teams(team1_id, team2_id, team1_id);
+                        playing_teams--;
+                        arr_team[second_team] = NULL;
+                        arr_team[first_team]->updatePoints(2);
+                        continue;
+                    }
+                    else if(team2_id > team1_id){
+                        unite_teams(team1_id, team2_id, team2_id);
+                        playing_teams--;
+                        arr_team[first_team] = NULL;
+                        arr_team[second_team]->updatePoints(2);
+                        continue;
+                    }
+                    else{
+                        output_t<int> out(StatusType::FAILURE);
+                        delete[] arr_team;
+                        return out;
+                    }
                 }
                 else{
                     output_t<int> out(StatusType::FAILURE);
@@ -531,23 +537,22 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
                     return out;
                 }
             }
-            else{
-                output_t<int> out(StatusType::FAILURE);
-                delete[] arr_team;
-                return out;
+
+        }
+        int winner;
+        for (int curr = 0; curr < num_eligible_in_terms_teams; curr++){
+            if(arr_team[curr] != NULL){
+                winner = arr_team[curr]->getId();
+                break;
             }
         }
-
+        delete[] arr_team;
+        output_t<int> out(winner);
+        return out;
     }
-    int winner;
-    for (int curr = 0; curr < num_eligible_in_terms_teams; curr++){
-        if(arr_team[curr] != NULL){
-            winner = arr_team[curr]->getId();
-            break;
-        }
+    catch (std::exception& e) {
+        output_t<int> out(StatusType::ALLOCATION_ERROR);
+        return out;
     }
-    delete[] arr_team;
-    output_t<int> out(winner);
-    return out;
 }
 

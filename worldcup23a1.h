@@ -19,6 +19,7 @@
 #include "wet1util.h"
 #include "AvlTree.h"
 #include <iostream>
+#include <exception>
 
 
 
