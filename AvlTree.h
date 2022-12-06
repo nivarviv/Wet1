@@ -53,8 +53,11 @@ public:
     T* findPre(node<T,K>* node,K stats);*/
   //  player* findSuc(node<T,K>* node, playerStats key);
     void storeInOrderRecursive(node<T, K> *pNode, node<T, K> **pNode1);
+    void storeInOrderRecursiveByTerms(int min, int max,node<T, K> *pNode, node<T, K> **pNode1);
+    void storeInOrderRecursiveByTermsHelper(int min, int max,node<T, K> *pNode, node<T, K> **pNode1);
     void arrayToBST(node<T, K> *pNode, node<T, K> *pNode1[]);
     void successorPredecessor(node < T, K > * root, K val, T* pre, T* suc);
+    node<T,K>* findBiggerThan(node<T, K> *node, node<T, K> *closest, int min);
     }
 /////////////////////////////////////////////////////implementation//////////////////////////////////////////////////
 
@@ -314,7 +317,7 @@ void AvlTree<T, K>::storeInOrderRecursive(node *pNode, node **pNode1) {
     if(pNode == NULL)
         return;
     storeInOrderRecursive(pNode->left,pNode1);
-    (*arr1)++ = node; /// todo: is this right? or **arr
+    (*arr1)++ = node;
     storeInOrderRecursive(pNode->right,pNode1);
     return;
 }
@@ -360,6 +363,41 @@ void AvlTree<T, K>::successorPredecessor(node<T, K> *root, K val, T *pre, T *suc
             successorPredecessor(root.right,val,pre,suc);
         }
     }
+
+template<class T, class K>
+void AvlTree<T, K>::storeInOrderRecursiveByTerms(int min, int max, node<T, K> *pNode, node<T, K> **pNode1) {
+    node<T,K>* closest=NULL;
+    node<T,K>* minNode=findBiggerThan(node,closest,min);
+    storeInOrderRecursiveByTermsHelper(min,max,minNode,pNode1);
+}
+
+template<class T, class K>
+void AvlTree<T, K>::storeInOrderRecursiveByTermsHelper(int min, int max, node<T, K> *pNode, node<T, K> **pNode1) {
+    if(pNode == NULL || pNode->key>max || pNode->key<min)
+        return;
+    storeInOrderRecursive(pNode->left,pNode1);
+    (*arr1)++ = node;
+    storeInOrderRecursive(pNode->right,pNode1);
+    return;
+}
+
+template<class T, class K>
+node<T, K> *AvlTree<T, K>::findBiggerThan(node<T, K> *node, node<T, K> *closest, int min) {
+    if(node==NULL){
+        return closest;
+    }
+    if(node->key==min){
+        return node;
+    }
+    else if(node->key<min){
+        return(node->right,closest,min);
+    }
+    else if(node->key>min){
+        closest=node;
+        return(node->left,closest,min);
+    }
+}
+
 
 /*
 template<class T, class K>
