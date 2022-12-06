@@ -194,7 +194,6 @@ StatusType world_cup_t::update_player_stats(int playerId, int gamesPlayed,
 
     return StatusType::SUCCESS;
 }
-
 //updated
 StatusType world_cup_t::play_match(int teamId1, int teamId2)
 {
@@ -281,8 +280,6 @@ output_t<int> world_cup_t::get_team_points(int teamId)
     output_t<int> out(wanted_team->getNumPoints());
     return out;
 }
-
-
 //helper merge-sort
 void mergeArrays(node<player,playerStats>* arr1[], node<player,playerStats>* arr2[], int m,int n, node<player,playerStats>* arr3[]){
     int i = 0;
@@ -310,8 +307,6 @@ void mergeArrays(node<player,playerStats>* arr1[], node<player,playerStats>* arr
     while (j < n)
         arr3[k++] = arr2[j++];
 }
-
-
 StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
 {
     if(newTeamId <= 0 || teamId1 <= 0 || teamId2 <= 0 || teamId1 == teamId2){
@@ -344,8 +339,6 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
 //update team stats, put inside tree, delete old trees
 	return StatusType::SUCCESS;
 }
-
-
 //updated out
 output_t<int> world_cup_t::get_top_scorer(int teamId)
 {
@@ -409,7 +402,6 @@ output_t<int> world_cup_t::get_all_players_count(int teamId)
     }
 }
 //updated
-
 StatusType world_cup_t::get_all_players(int teamId, int *const output)
 {
     if(teamId == 0 || output == NULL){
@@ -457,8 +449,7 @@ output_t<int> world_cup_t::get_closest_player(int playerId, int teamId)
     delete player1;
     return out;
 }
-
-//todo:
+//updated
 output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
 {
     if(minTeamId < 0 || maxTeamId < 0 || maxTeamId < minTeamId){
@@ -466,7 +457,9 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
         return out;
     }
     //todo: wrap it up in try and catch and in the catch return ALLOCATION
-    team* arr_team[m_num_eligible_to_play_teams];
+    //team* arr_team[m_num_eligible_to_play_teams];
+    team* arr_team = NULL;
+    arr_team = new team*[m_num_eligible_to_play_teams];
     for(int i = 0; i < m_num_eligible_to_play_teams; i++){
         arr_team[i] = NULL;
     }
@@ -484,6 +477,7 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
     }
     if(!m_num_eligible_to_play_teams){
         output_t<int> out(StatusType::FAILURE);
+        delete[] arr_team;
         return out;
     }
     int playing_teams = num_eligible_in_terms_teams;
@@ -533,11 +527,13 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
                 }
                 else{
                     output_t<int> out(StatusType::FAILURE);
+                    delete[] arr_team;
                     return out;
                 }
             }
             else{
                 output_t<int> out(StatusType::FAILURE);
+                delete[] arr_team;
                 return out;
             }
         }
@@ -550,6 +546,7 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
             break;
         }
     }
+    delete[] arr_team;
     output_t<int> out(winner);
     return out;
 }
