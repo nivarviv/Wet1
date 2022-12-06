@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
-    <generated>
-      <config projectName="wet1" targetName="wet1" />
-    </generated>
+    <generated />
   </component>
   <component name="CMakeSettings">
     <configurations>
@@ -14,9 +12,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="changes to insert and remove">
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment=".">
+      <change beforePath="$PROJECT_DIR$/playerStats.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/playerStats.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/team.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/team.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/worldcup23a1.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/worldcup23a1.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -27,10 +25,8 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -62,18 +58,6 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
   </component>
-  <component name="RunManager">
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="wet1" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="wet1" TARGET_NAME="wet1" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="wet1" RUN_TARGET_NAME="wet1">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -84,7 +68,7 @@
       <updated>1669205825963</updated>
       <workItem from="1669205829216" duration="18980000" />
       <workItem from="1669727405644" duration="3630000" />
-      <workItem from="1669748706252" duration="40245000" />
+      <workItem from="1669748706252" duration="35160000" />
     </task>
     <task id="LOCAL‎00001" summary="added AVL functions">
       <created>1669206420865</created>
@@ -274,85 +258,28 @@
       <option name="presentableId" value="LOCAL‎00031" />
       <updated>1670067240371</updated>
     </task>
-    <task id="LOCAL‎00032" summary="updated insert">
-      <created>1670077194115</created>
-      <option name="number" value="LOCAL‎00032" />
-      <option name="presentableId" value="LOCAL‎00032" />
-      <updated>1670077194115</updated>
+    <task id="LOCAL-00032" summary="added dynmaicArray">
+      <created>1670160673677</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1670160673677</updated>
     </task>
-    <task id="LOCAL‎00033" summary="updated insert">
-      <created>1670080351544</created>
-      <option name="number" value="LOCAL‎00033" />
-      <option name="presentableId" value="LOCAL‎00033" />
-      <updated>1670080351544</updated>
+    <task id="LOCAL-00033" summary="added dynmaicArray">
+      <created>1670176969379</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1670176969379</updated>
     </task>
-    <task id="LOCAL‎00034" summary="updated insert">
-      <created>1670094240131</created>
-      <option name="number" value="LOCAL‎00034" />
-      <option name="presentableId" value="LOCAL‎00034" />
-      <updated>1670094240131</updated>
+    <task id="LOCAL-00034" summary=".">
+      <created>1670335009562</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1670335009562</updated>
     </task>
-    <task id="LOCAL‎00035" summary="mostly comments">
-      <created>1670191314476</created>
-      <option name="number" value="LOCAL‎00035" />
-      <option name="presentableId" value="LOCAL‎00035" />
-      <updated>1670191314476</updated>
-    </task>
-    <task id="LOCAL‎00036" summary="mostly comments">
-      <created>1670231238133</created>
-      <option name="number" value="LOCAL‎00036" />
-      <option name="presentableId" value="LOCAL‎00036" />
-      <updated>1670231238133</updated>
-    </task>
-    <task id="LOCAL‎00037" summary="mostly comments">
-      <created>1670231447280</created>
-      <option name="number" value="LOCAL‎00037" />
-      <option name="presentableId" value="LOCAL‎00037" />
-      <updated>1670231447280</updated>
-    </task>
-    <task id="LOCAL‎00038" summary="fixed access to private fields">
-      <created>1670233525835</created>
-      <option name="number" value="LOCAL‎00038" />
-      <option name="presentableId" value="LOCAL‎00038" />
-      <updated>1670233525835</updated>
-    </task>
-    <task id="LOCAL‎00039" summary="changed pre and suc funcs">
-      <created>1670275087830</created>
-      <option name="number" value="LOCAL‎00039" />
-      <option name="presentableId" value="LOCAL‎00039" />
-      <updated>1670275087830</updated>
-    </task>
-    <task id="LOCAL‎00040" summary="changed pre and suc funcs">
-      <created>1670275294615</created>
-      <option name="number" value="LOCAL‎00040" />
-      <option name="presentableId" value="LOCAL‎00040" />
-      <updated>1670275294615</updated>
-    </task>
-    <task id="LOCAL‎00041" summary="added storeInOrderRecursiveByTerms">
-      <created>1670337992930</created>
-      <option name="number" value="LOCAL‎00041" />
-      <option name="presentableId" value="LOCAL‎00041" />
-      <updated>1670337992930</updated>
-    </task>
-    <task id="LOCAL‎00042" summary="changes to insert and remove">
-      <created>1670340840653</created>
-      <option name="number" value="LOCAL‎00042" />
-      <option name="presentableId" value="LOCAL‎00042" />
-      <updated>1670340840653</updated>
-    </task>
-    <task id="LOCAL‎00043" summary="changes to insert and remove">
-      <created>1670341330497</created>
-      <option name="number" value="LOCAL‎00043" />
-      <option name="presentableId" value="LOCAL‎00043" />
-      <updated>1670341330497</updated>
-    </task>
-    <task id="LOCAL‎00044" summary="changes to insert and remove">
-      <created>1670341346405</created>
-      <option name="number" value="LOCAL‎00044" />
-      <option name="presentableId" value="LOCAL‎00044" />
-      <updated>1670341346405</updated>
-    </task>
-    <option name="localTasksCounter" value="45" />
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -383,19 +310,14 @@
     <MESSAGE value="added con and des in world cup" />
     <MESSAGE value="changed remove" />
     <MESSAGE value="changed" />
-    <MESSAGE value="added dynmaicArray" />
     <MESSAGE value="almost done wth unite" />
     <MESSAGE value="not quite finished unite" />
     <MESSAGE value="fixed math in toDelete" />
     <MESSAGE value="updated" />
     <MESSAGE value="started on closest" />
-    <MESSAGE value="updated insert" />
-    <MESSAGE value="mostly comments" />
-    <MESSAGE value="fixed access to private fields" />
-    <MESSAGE value="changed pre and suc funcs" />
-    <MESSAGE value="added storeInOrderRecursiveByTerms" />
-    <MESSAGE value="changes to insert and remove" />
-    <option name="LAST_COMMIT_MESSAGE" value="changes to insert and remove" />
+    <MESSAGE value="added dynmaicArray" />
+    <MESSAGE value="." />
+    <option name="LAST_COMMIT_MESSAGE" value="." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
