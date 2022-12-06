@@ -18,6 +18,7 @@ team::team(int teamId, int points)
     m_tree_by_id = AvlTree<player, int>();
     m_tree_by_stats = AvlTree<player, playerStats>();
     m_numGoalKeepers=0;
+    m_tree_by_diff_stats=AvlTree<player, playerStatsDifferentOrder>();
 }
 
 int team::getNumGames(){
@@ -37,7 +38,7 @@ int team::getNumPlayers()
     return m_num_players;
 }
 
-void team::getArray(node<player,playerStats>** arr1)
+void team::getArrayStats(node<player,playerStats>** arr1)
 {
     node<player,playerStats>* root=m_tree_by_stats.getRoot();
     m_tree_by_stats.storeInOrderRecursive(root,arr1);
@@ -83,9 +84,9 @@ team::~team() {
     delete m_top_scorer;
 }
 
-const AvlTree<player, int>* team::getTreeId() const {
+/*const AvlTree<player, int>* team::getTreeId() const {
     return &m_tree_by_id;
-}
+}*/
 
 int team::getNumGoals() {
     return m_total_goals;
@@ -103,13 +104,18 @@ void team::addGamePlayed() {
     m_num_games++;
 }
 
-AvlTree<player, playerStats>* team::getTreeStats() const{
+/*AvlTree<player, playerStats>* team::getTreeStats() const{
     return m_tree_by_stats;
 }
 AvlTree<player, playerStatsDifferentOrder>* team::getTreeDiffStats() const{
     return m_tree_for_all_players;
-}
+}*/
 
 int team::getId() const {
     return m_teamId;
+}
+
+void team::getArrayDiffStats(int const *arr1) {
+    node<player,playerStatsDifferentOrder>* root=m_tree_by_diff_stats.getRoot();
+    m_tree_by_diff_stats.storeInOrderRecursiveKey(root,arr1);
 }

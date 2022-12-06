@@ -44,6 +44,7 @@ public:
     void setRoot(node<T,K>* root);
     node<T,K>* getRoot();
     void storeInOrderRecursive(node<T, K> *pNode, node<T, K> **pNode1);
+    void storeInOrderRecursiveKey(node<T, K> *pNode, int const *pNode1);
     void storeInOrderRecursiveByTerms(int min, int max,node<T, K> *pNode, node<T, K> **pNode1);
     void storeInOrderRecursiveByTermsHelper(int min, int max,node<T, K> *pNode, node<T, K> **pNode1);
     void arrayToBST(node<T, K> *pNode, node<T, K> *pNode1[]);
@@ -303,7 +304,7 @@ T *AvlTree<T,K>::find_by_key(node<T,K>* node,K key) {
         return NULL;
     }
     if (key == node->key) {
-        return node->data;
+        return &node->data;
     }
     else{
         if (key < node->key)
@@ -444,9 +445,9 @@ template<class T, class K>
 void AvlTree<T, K>::storeInOrderRecursiveByTermsHelper(int min, int max, node<T, K> *pNode, node<T, K> **pNode1) {
     if(pNode == NULL || pNode->key>max || pNode->key<min)
         return;
-    storeInOrderRecursive(pNode->left,pNode1);
+    storeInOrderRecursiveByTermsHelper(pNode->left,pNode1);
     (*arr1)++ = node;
-    storeInOrderRecursive(pNode->right,pNode1);
+    storeInOrderRecursiveByTermsHelper(pNode->right,pNode1);
     return;
 }
 
@@ -594,7 +595,15 @@ node<T, K> *AvlTree<T, K>::insert(node<T,K> *node, T data, K key) {
     return node;
 }
 
-
+template<class T, class K>
+void AvlTree<T, K>::storeInOrderRecursiveKey(node<T, K> *pNode, int const *pNode1) {
+    if(pNode == NULL)
+        return;
+    storeInOrderRecursiveKey(pNode->left,pNode1);
+    (*arr1)++ = node->key;
+    storeInOrderRecursiveKey(pNode->right,pNode1);
+    return;
+}
 
 
 /*

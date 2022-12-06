@@ -21,7 +21,7 @@ private:
     AvlTree<player, int> m_tree_by_id;
     AvlTree<player, playerStats> m_tree_by_stats;
     int m_numGoalKeepers;
-    AvlTree<player, playerStatsDifferentOrder> m_tree_for_all_players;
+    AvlTree<player, playerStatsDifferentOrder> m_tree_by_diff_stats;
 
     //
 
@@ -37,17 +37,20 @@ public:
     int getNumPlayers();
     int getNumPoints();
     void setTeamTree( AvlTree<player, playerStats> tree);
-    void getArray(node<player,playerStats>** arr1);
+    void getArrayStats(node<player,playerStats>** arr1);
+    void getArrayDiffStats(int const *arr1);
     player* findPlayerById(int id);
     bool isTeamValid() const;
-    AvlTree<player, int>* getTreeId() const;
-    AvlTree<player, playerStats>* getTreeStats() const;
-    AvlTree<player, playerStatsDifferentOrder>* getTreeDiffStats() const;
     int getNumGoals();
     int getNumCards();
     void updatePoints(int pointsToAdd);
     void addGamePlayed();
     int getId() const;
+
+    /* AvlTree<player, int>* getTreeId() const;
+    AvlTree<player, playerStats>* getTreeStats() const;
+    AvlTree<player, playerStatsDifferentOrder>* getTreeDiffStats() const;*/
+
 };
 
 

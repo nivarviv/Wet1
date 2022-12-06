@@ -87,7 +87,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
         player newPlayer;
         newPlayer.addNewPlayer(playerId,tmp_team,gamesPlayed,goals,cards,goalKeeper);
         playerStats newPlayerStats= newPlayer.getMyStats();
-        playerStatsDifferentOrder newPlayerDiffStats = newPlayer.getDiffStats(); //add this helper function
+        playerStatsDifferentOrder newPlayerDiffStats = newPlayer.getDiffStats();
 
         (*tmp_team).addPlayer(&newPlayer,newPlayerStats,playerId);
         m_all_players_goals.insert(m_all_players_goals.getRoot(),newPlayer,newPlayerStats);
@@ -140,19 +140,31 @@ StatusType world_cup_t::remove_player(int playerId)
         delete playerToDelete;
         return StatusType::FAILURE;
     }
+
     team* tmp = playerToDelete->getMyTeam();
     player* pre=playerToDelete->getPre();
     player* suc=playerToDelete->getSuc();
+
+    //fix deleted players pre and suc closest:
     if(pre->getClosest()==playerToDelete){
         fixClosest(pre);
     }
     if(suc->getClosest()==playerToDelete){
         fixClosest(suc);
     }
+
+    //if team is not valid to play anymore - remove from tree and update the num of valid teams:
     (*tmp).removePlayer((*playerToDelete).getMyStats(),playerId);
+    if(!tmp->isTeamValid()){
+        m_allowed_to_play_teams.remove(m_allowed_to_play_teams.getRoot(),tmp->getId());
+        m_num_eligible_to_play_teams--;
+    }
+
+    //remove player from other trees:
     m_all_players_id.remove(m_all_players_id.getRoot(),playerId);
     m_all_players_goals.remove(m_all_players_goals.getRoot(),(*playerToDelete).getMyStats());
-    m_all_players_different_order.remove(m_all_players_different_order.getRoot(),(*playerToDelete).getDiffStats()); // add this helper func
+    m_all_players_different_order.remove(m_all_players_different_order.getRoot(),(*playerToDelete).getDiffStats());
+
     return StatusType::SUCCESS;
 }
 
@@ -162,13 +174,14 @@ StatusType world_cup_t::update_player_stats(int playerId, int gamesPlayed,
     if(playerId <= 0 || gamesPlayed < 0 || scoredGoals < 0 || cardsReceived < 0){
         return StatusType::INVALID_INPUT;
     }
-    player* tmp_player = new player;
+    ///to do: see how to handle bad alloc
+  /*  auto* tmp_player = new player;
     if(!tmp_player){
         delete tmp_player;
         return StatusType::ALLOCATION_ERROR;
-    }
+    }*/
 
-    tmp_player = m_all_players_id.find_by_key(m_all_players_id.getRoot(),playerId);
+    player* tmp_player = m_all_players_id.find_by_key(m_all_players_id.getRoot(),playerId);
     if(tmp_player == NULL){
         delete tmp_player;
         return StatusType::FAILURE;
@@ -234,50 +247,56 @@ StatusType world_cup_t::play_match(int teamId1, int teamId2)
 //updated out
 output_t<int> world_cup_t::get_num_played_games(int playerId)
 {
-    output_t<int> out;
+
     if(playerId <= 0){
         output_t<int> out(StatusType::INVALID_INPUT);
         return out;
     }
-    //todo: maybe put all under try and catch??
-    player* player1 = new player*;
+    //todo: see how to handle bad alloc
+   /* player* player1 = new player*; ///alloc?
     if(!player1){
         delete player1;
         output_t<int> out(StatusType::ALLOCATION_ERROR);
         return out;
-    }
-    player1 = m_all_players_id.find_by_key(m_all_players_id.getRoot(),playerId);//returns null if haven't found
+    }*/
+
+    player* player1 = m_all_players_id.find_by_key(m_all_players_id.getRoot(),playerId);//returns null if haven't found
     if(player1 == NULL){
         delete player1;
         output_t<int> out(StatusType::FAILURE);
         return out;
     }
+
     output_t<int> out(player1->totalGames());
     delete player1;
 	return out;
 }
-//updated out
+
+
 output_t<int> world_cup_t::get_team_points(int teamId)
 {
     if(teamId <= 0){
         output_t<int> out(StatusType::INVALID_INPUT);
- //       out.status() = StatusType::INVALID_INPUT; //fix
         return out;
     }
 
+    ///to do: see how to handle bad alloc
     //these two might throw exceptions
-    team* wanted_team = new team; //fix
+/*    wanted_team = new team;
+    team* wanted_team = new team; ///alloc?
     if(!wanted_team){
         output_t<int> out(StatusType::ALLOCATION_ERROR); //fix
         delete wanted_team;
         return out;
-    }
-    wanted_team = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);//returns NULL if we have not found
+    }*/
+
+    team* wanted_team = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
     if(wanted_team == NULL){
-        output_t<int> out(StatusType::FAILURE); //fix
+        output_t<int> out(StatusType::FAILURE);
         delete wanted_team;
         return out;
     }
+
     delete wanted_team;
     output_t<int> out(wanted_team->getNumPoints());
     return out;
@@ -326,8 +345,8 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
     node<player,playerStats>* arr2[team2->getNumPlayers()];
     node<player,playerStats>* mergedArr[team2->getNumPlayers()+team1->getNumPlayers()];
 
-    team1->getArray(arr1);
-    team2->getArray(arr2);
+    team1->getArrayStats(arr1);
+    team2->getArrayStats(arr2);
     mergeArrays(arr1,arr2,team1->getNumPlayers(),team2->getNumPlayers(),mergedArr);
 
     int height=((int)log2(team2->getNumPlayers()+team1->getNumPlayers()+1))-1;
@@ -359,17 +378,18 @@ output_t<int> world_cup_t::get_top_scorer(int teamId)
             output_t<int> out(StatusType::FAILURE);
             return out;
         }
-        output_t<int> out(m_top_scorer->getID());
+        output_t<int> out(m_top_scorer->getId());
         return out;
     }
     else{
-        team* team1 = new team; //fix
+        ///to do: see how to handle bad alloc
+        /*team* team1 = new team; //fix
         if(!team1){
             output_t<int> out(StatusType::ALLOCATION_ERROR);
             delete team1;
             return out;
-        }
-        team1 = m_all_teams.find_by_key(teamId);//returns null if the team hasn't found
+        }*/
+        team* team1 = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);//returns null if the team hasn't found
         if(team1 == NULL){
             output_t<int> out(StatusType::FAILURE);
             delete team1;
@@ -392,13 +412,14 @@ output_t<int> world_cup_t::get_all_players_count(int teamId)
         return out;
     }
     else{
-        team* team1 = new team; //fix
+        ///to do: see how to handle bad alloc
+        /*team* team1 = new team; //fix
         if(team1 == NULL){
             output_t<int> out(StatusType::ALLOCATION_ERROR);
             delete team1;
             return out;
-        }
-        team1 = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
+        }*/
+        team* team1 = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
         if(teamId == NULL){
             output_t<int> out(StatusType::FAILURE);
             delete team1;
@@ -416,24 +437,28 @@ StatusType world_cup_t::get_all_players(int teamId, int *const output)
     if(teamId == 0 || output == NULL){
         return StatusType::INVALID_INPUT;
     }
-    if(teamId > 0){
-        team* tmp_team = new team;//??
-        if(tmp_team == NULL){
+    if(teamId > 0) {
+        ///to do: see how to handle bad alloc
+        /*team *tmp_team = new team;//??
+        if (tmp_team == NULL) {
             delete tmp_team;
             return StatusType::ALLOCATION_ERROR;
-        }
-        tmp_team = m_all_teams.find_by_key(teamId);
-        if(tmp_team == NULL){
+        }*/
+
+        team *tmp_team = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
+        if (tmp_team == NULL) {
             delete tmp_team;
             return StatusType::FAILURE;
         }
-        tmp_team->getTree()->storeInOrderRecursive(tmp_team->getTree()->getRoot(), output); //??
+
+        tmp_team->getArrayDiffStats(output);
         delete tmp_team;
     }
     else
-        m_all_players_different_order.storeInOrderRecursive(m_all_players_different_order.getRoot(), output); //??
+        m_all_players_different_order.storeInOrderRecursiveKey(m_all_players_different_order.getRoot(), output);
     return StatusType::SUCCESS;
 }
+
 //updated out
 output_t<int> world_cup_t::get_closest_player(int playerId, int teamId)
 {
@@ -441,7 +466,7 @@ output_t<int> world_cup_t::get_closest_player(int playerId, int teamId)
         output_t<int> out(StatusType::INVALID_INPUT);
         return out;
     }
-    team* team1 = m_all_teams.find_by_key(teamId);
+    team* team1 = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
     if(team1 == NULL){
         delete team1;
         output_t<int> out(StatusType::FAILURE);
@@ -467,7 +492,8 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
         return out;
     }
     AvlTree<team, int> knockout_tree = m_allowed_to_play_teams;// c'py c'tor
-    team* arr_teams = new team[];
+    team* arr[m_num_eligible_to_play_teams];
+
     knockout_tree.storeInOrderRecursiveByTerms(minTeamId, maxTeamId, knockout_tree.getRoot(), arr_teams);//probably need to implement in avltree unless there is a better soultion
 
 
