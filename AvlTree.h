@@ -48,7 +48,7 @@ public:
     node<T,K>* createEmptyTree(node<T,K> *node,int height);
     void setRoot(node<T,K>* root);
     node<T,K>* getRoot();
-    //change to player and playerStats only?
+
  /*   T* findSuc(node<T,K>* node,K stats);
     T* findPre(node<T,K>* node,K stats);*/
   //  player* findSuc(node<T,K>* node, playerStats key);
