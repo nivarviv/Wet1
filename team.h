@@ -31,8 +31,8 @@ public:
     team(const team&) = default;//we don't want to allow that!!
     ~team();
     team& operator=(const team& other) = default;//we don't want to allow that
-    void addPlayer(player* player, playerStats stats,int id);
-    void removePlayer(playerStats stats, int id);
+    void addPlayer(player* player, playerStats stats,int id,playerStatsDifferentOrder diffStats);
+    void removePlayer((playerStats stats, int id, playerStatsDifferentOrder diffStats);
     int top_scorer_id() const;
     int getNumPlayers();
     int getNumPoints();
@@ -46,6 +46,7 @@ public:
     void updatePoints(int pointsToAdd);
     void addGamePlayed();
     int getId() const;
+    void deleteTeam();
 
     /* AvlTree<player, int>* getTreeId() const;
     AvlTree<player, playerStats>* getTreeStats() const;

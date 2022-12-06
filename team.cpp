@@ -52,7 +52,8 @@ player* team::findPlayerById(int id) {
     return m_tree_by_id.find_by_key(m_tree_by_id.getRoot(),id);
 }
 
-void team::addPlayer(player* player, playerStats stats,int id) {
+void team::addPlayer(player* player, playerStats stats,int id, playerStatsDifferentOrder diffStats) {
+    m_tree_by_diff_stats.insert(m_tree_by_diff_stats.getRoot(),(*player),diffStats);
     m_tree_by_stats.insert(m_tree_by_stats.getRoot(),(*player),stats);
     m_tree_by_id.insert(m_tree_by_id.getRoot(),(*player),id);
     m_num_players++;
@@ -68,9 +69,10 @@ bool team::isTeamValid() const {
     return false;
 }
 
-void team::removePlayer(playerStats stats, int id) {
+void team::removePlayer(playerStats stats, int id, playerStatsDifferentOrder diffStats) {
     m_tree_by_stats.remove(m_tree_by_stats.getRoot(),stats);
     m_tree_by_id.remove(m_tree_by_id.getRoot(),id);
+    m_tree_by_diff_stats.remove(m_tree_by_diff_stats.getRoot(),diffStats)
     m_num_players--;
     if((*player).isGoalKeeper()){
         m_numGoalKeepers--;
@@ -118,4 +120,11 @@ int team::getId() const {
 void team::getArrayDiffStats(int const *arr1) {
     node<player,playerStatsDifferentOrder>* root=m_tree_by_diff_stats.getRoot();
     m_tree_by_diff_stats.storeInOrderRecursiveKey(root,arr1);
+}
+
+void team::deleteTeam() {
+m_tree_by_stats.deleteTree(m_tree_by_stats.getRoot());
+m_tree_by_diff_stats.deleteTree(m_tree_by_diff_stats.getRoot());
+m_tree_by_id.deleteTree(m_tree_by_id.getRoot());
+m_num_players=0;
 }

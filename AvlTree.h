@@ -28,7 +28,7 @@ struct node {
 template<class T, class K>
 class AvlTree {
 private:
-    node *m_root;
+    node<T,K> *m_root;
 
 public:
     AvlTree();
@@ -38,7 +38,7 @@ public:
     node<T,K> * removeHelper(node<T,K>* node, K key);
 
     T *find_by_key(node<T,K>* node,K key);
-    void deleteTree(node *r);
+    //void deleteTree(node *r);
     void makeNearlyEmpty(node<T,K>* node, int *toDelete);
     node<T,K>* createEmptyTree(node<T,K> *node,int height);
     void setRoot(node<T,K>* root);
@@ -55,6 +55,7 @@ public:
     node<T,K> *leftRotate(node<T,K> *x);
     int getBalance(node<T,K> *N);
     node<T,K>* insert(node<T,K>* node, T data, K key);
+    void deleteTree(node<T,K> *r);
 
     /*  int height(node *r);
 int bf(node *r);
@@ -68,6 +69,7 @@ node *balance(node *r);*/
     //  player* findSuc(node<T,K>* node, playerStats key);
 
     void remove(node<T, K> *node, K key);
+
 }
 /////////////////////////////////////////////////////implementation//////////////////////////////////////////////////
 
@@ -387,7 +389,7 @@ void AvlTree<T, K>::storeInOrderRecursive(node *pNode, node **pNode1) {
     if(pNode == NULL)
         return;
     storeInOrderRecursive(pNode->left,pNode1);
-    (*arr1)++ = node;
+    (*pNode1)++ = node;
     storeInOrderRecursive(pNode->right,pNode1);
     return;
 }
@@ -600,9 +602,14 @@ void AvlTree<T, K>::storeInOrderRecursiveKey(node<T, K> *pNode, int const *pNode
     if(pNode == NULL)
         return;
     storeInOrderRecursiveKey(pNode->left,pNode1);
-    (*arr1)++ = node->key;
+    (*pNode1)++ = node->data->getId();
     storeInOrderRecursiveKey(pNode->right,pNode1);
     return;
+}
+
+template<class T, class K>
+void AvlTree<T, K>::deleteTree() {
+
 }
 
 
