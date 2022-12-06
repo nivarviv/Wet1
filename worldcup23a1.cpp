@@ -61,7 +61,7 @@ StatusType world_cup_t::remove_team(int teamId)
 }
 
 
-//todo: check regarding closest player
+//updated
 StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
                                    int goals, int cards, bool goalKeeper)
 {
@@ -468,7 +468,7 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
     }
     AvlTree<team, int> knockout_tree = m_allowed_to_play_teams;// c'py c'tor
     team* arr_teams = new team[];
-    knockout_tree.storeInOrderRecursive()
+    knockout_tree.storeInOrderRecursiveByTerms(minTeamId, maxTeamId, knockout_tree.getRoot(), arr_teams);//probably need to implement in avltree unless there is a better soultion
 
 
 

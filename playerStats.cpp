@@ -24,6 +24,7 @@ bool playerStats::operator<(const playerStats& ps) const{
            else if(this->m_id > ps.m_id){
                return false;
            }
+           return true;
        }
     }
 }

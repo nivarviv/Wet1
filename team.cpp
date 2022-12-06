@@ -83,8 +83,8 @@ team::~team() {
     delete m_top_scorer;
 }
 
-const AvlTree<player, int> team::getTree() const {
-    return m_tree_by_id;
+const AvlTree<player, int>* team::getTreeId() const {
+    return &m_tree_by_id;
 }
 
 int team::getNumGoals() {
@@ -104,5 +104,9 @@ void team::addGamePlayed() {
 }
 
 
-AvlTree<player, playerStats>* getTree() const;
-AvlTree<player, playerStatsDifferentOrder>* getTree() const;
+AvlTree<player, playerStats>* team::getTreeStats() const{
+    return &m_tree_by_stats;
+}
+AvlTree<player, playerStatsDifferentOrder>* team::getTreeDiffStats() const{
+    return &m_tree_for_all_players;
+}
