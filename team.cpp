@@ -30,7 +30,7 @@ int team::getNumPoints(){
 }
 
 int team::top_scorer_id() const{
-    return m_top_scorer->m_playerId;
+    return m_top_scorer->getId();
 }
 
 int team::getNumPlayers()
@@ -84,7 +84,7 @@ team::~team() {
     delete m_top_scorer;
 }
 
-/*const AvlTree<player, int>* team::getTreeId() const {
+/*const AvlTree<player, int>* team::getTreeId() const {!
     return &m_tree_by_id;
 }*/
 

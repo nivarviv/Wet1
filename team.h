@@ -28,7 +28,7 @@ private:
 public:
     team(int teamId, int points);
     int getNumGames();
-    team(const team&) = default;//we don't want to allow that
+    team(const team&) = default;//we don't want to allow that!
     ~team();
     team& operator=(const team& other) = default;//we don't want to allow that
     void addPlayer(player* player, playerStats stats,int id);
