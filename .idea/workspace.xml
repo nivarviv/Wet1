@@ -16,6 +16,7 @@
   <component name="ChangeListManager">
     <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="changed pre and suc funcs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/worldcup23a1.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/worldcup23a1.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -331,7 +332,13 @@
       <option name="presentableId" value="LOCAL‎00040" />
       <updated>1670275294615</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL‎00041" summary="changed pre and suc funcs">
+      <created>1670276043301</created>
+      <option name="number" value="LOCAL‎00041" />
+      <option name="presentableId" value="LOCAL‎00041" />
+      <updated>1670276043301</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -14,11 +14,6 @@ world_cup_t::world_cup_t()
 //updated
 world_cup_t::~world_cup_t()
 {
-    delete m_all_teams;
-    delete m_allowed_to_play_teams;
-    delete m_total_players;
-    delete m_all_players_goals;
-    delete m_all_players_id;
     delete m_top_scorer;
 }
 
@@ -167,19 +162,34 @@ StatusType world_cup_t::update_player_stats(int playerId, int gamesPlayed,
         delete tmp_player;
         return StatusType::ALLOCATION_ERROR;
     }
+
     tmp_player = m_all_players_id.find_by_key(m_all_players_id.getRoot(),playerId);
     if(tmp_player == NULL){
         delete tmp_player;
         return StatusType::FAILURE;
     }
+
+    team* tmp_team = m_all_teams.find_by_key(m_all_teams.getRoot(),tmp_player->getMyTeam());
+    if(tmp_team == NULL) {
+        delete tmp_team;
+        return StatusType::FAILURE;
+    }
+
+    m_all_players_goals.remove(m_all_players_goals.getRoot(),tmp_player->getMyStats());
+    tmp_team->removePlayer(tmp_player->getMyStats(),playerId);
+
     tmp_player->addCards(cardsReceived);
     tmp_player->addGames(gamesPlayed);
     tmp_player->addGoals(scoredGoals);
-    //change the tree that associated with goals? have to do it somehow
-	//maybe to remove the player and then add it back?
+    m_all_players_goals.insert(m_all_players_goals.getRoot(),(*tmp_player),tmp_player->getMyStats());
+    tmp_team->addPlayer(tmp_player,tmp_player->getMyStats(),playerId);
+
     delete tmp_player;
+    delete tmp_team;
+
     return StatusType::SUCCESS;
 }
+
 //updated
 StatusType world_cup_t::play_match(int teamId1, int teamId2)
 {
