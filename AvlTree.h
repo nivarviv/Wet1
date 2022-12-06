@@ -15,9 +15,10 @@ template<class T, class K>
 struct node {
     T data;
     K key;
+    int height;
     node *right;
     node *left;
-    node(T value, K key):data(value), key(key), right(NULL), left(NULL) {}
+    node(T value, K key):data(value), key(key), height(1), right(NULL), left(NULL) {}
     ~node(){
         delete left;
         delete right;
@@ -33,14 +34,7 @@ public:
     AvlTree();
     ~AvlTree();
     void insert(node<T,K>* node,T value, K key);
-    int height(node *r);
-    int bf(node *r);
-    node *balance(node *r);
-    node *findMin(node *t);
-    node *llRotation(node *parent);
-    node *rrRotation(node *parent);
-    node *rlRotation(node *parent);
-    node *lrRotation(node *parent);
+    node<T,K> * minValueNode(node<T,K>* node)
     void remove(node<T,K>* node, K key);
     T *find_by_key(node<T,K>* node,K key);
     void deleteTree(node *r);
@@ -48,17 +42,30 @@ public:
     node<T,K>* createEmptyTree(node<T,K> *node,int height);
     void setRoot(node<T,K>* root);
     node<T,K>* getRoot();
-
- /*   T* findSuc(node<T,K>* node,K stats);
-    T* findPre(node<T,K>* node,K stats);*/
-  //  player* findSuc(node<T,K>* node, playerStats key);
     void storeInOrderRecursive(node<T, K> *pNode, node<T, K> **pNode1);
     void storeInOrderRecursiveByTerms(int min, int max,node<T, K> *pNode, node<T, K> **pNode1);
     void storeInOrderRecursiveByTermsHelper(int min, int max,node<T, K> *pNode, node<T, K> **pNode1);
     void arrayToBST(node<T, K> *pNode, node<T, K> *pNode1[]);
     void successorPredecessor(node < T, K > * root, K val, T* pre, T* suc);
     node<T,K>* findBiggerThan(node<T, K> *node, node<T, K> *closest, int min);
-    }
+    node<T,K>* newNode(T data, K key);
+    node<T,K> *rightRotate(node<T,K> *y);
+    node<T,K> *leftRotate(node<T,K> *x);
+    int getBalance(node<T,K> *N);
+    node<T,K>* insert(node<T,K>* node, T data, K key);
+
+    /*  int height(node *r);
+int bf(node *r);
+node *balance(node *r);*/
+    /*  node *llRotation(node *parent);
+      node *rrRotation(node *parent);
+      node *rlRotation(node *parent);
+      node *lrRotation(node *parent);*/
+    /*   T* findSuc(node<T,K>* node,K stats);
+       T* findPre(node<T,K>* node,K stats);*/
+    //  player* findSuc(node<T,K>* node, playerStats key);
+
+}
 /////////////////////////////////////////////////////implementation//////////////////////////////////////////////////
 
 template<class T, class K>
@@ -68,28 +75,7 @@ template<class T, class K>
 AvlTree<T,K>::~AvlTree() {
         deleteTree(this->m_root);
     }
-
 /*
-
-template<class T, class K>
-void AvlTree<T,K>::storeInOrderRecursive(T **arr1) {
-    node* root= m_root;
-
-    if(root == NULL)
-        return;
-
-    root=root->left
-    storeInOrderRecursive(arr1);
-
-    (*arr1)++ = root1.data;
-
-    root=root->right
-    storeInOrderRecursive(arr1);
-
-    return;
-}
-*/
-
 
 template<class T, class K>
 void AvlTree<T,K>::insert(node<T,K>* node,T value, K key) {
@@ -131,15 +117,17 @@ node *AvlTree<T,K>::balance(node *r) {
 
 template<class T, class K>
 int AvlTree<T,K>::height(node *r) {
-        int height = 0;
-        if (r != NULL) {
-            int l_height = height(r->left);
-            int r_height = height(r->right);
-            int max_height = (l_height > r_height) ? l_height : r_height;
-            height = max_height + 1;
-        }
-        return height;
+        if (r == NULL)
+            return 0;
+        return r->height;
     }
+*/
+
+int max(int a, int b)
+{
+    return (a > b)? a : b;
+}
+/*
 
 template<class T, class K>
 int AvlTree<T,K>::bf(node *r) {
@@ -182,50 +170,129 @@ node *AvlTree<T,K>::lrRotation(node *parent) {
         parent->left = rr_rotat(leftSon);
         return ll_rotat(parent);
     }
+*/
 
+/* Given a non-empty binary search tree,
+return the node with minimum key value
+found in that tree. Note that the entire
+tree does not need to be searched. */
 template<class T, class K>
-node *AvlTree<T,K>::findMin(node *t) {
-        if (t == NULL)
-            return NULL;
-        else if (t->left == NULL)
-            return t;
-        else
-            return findMin(t->left);
-    }
+node<T, K> *AvlTree<T, K>::minValueNode(node<T,K> *node) {
+    node* current = node;
 
+    /* loop down to find the leftmost leaf */
+    while (current->left != NULL)
+        current = current->left;
+
+    return current;
+}
+
+// Recursive function to delete a node
+// with given key from subtree with
+// given root. It returns root of the
+// modified subtree.
 template<class T, class K>
 void AvlTree<T,K>::remove(node<T,K>* node,K key) {
-    node * temp;
-        // Element not found
-        if (node == NULL)
-            return;
-            // Searching for element
-        else if (key < node->key)
-            remove(node->left, key);
-        else if (key > node->key)
-            remove(node->right, key);
-        // Element found
-        // With 2 children
-        if (node->left && node->right) {
-            temp = findMin(node->right);
-            node->data = temp->data;
-            node->key = temp->key;
-            remove(node->right, node->key);
-        }
 
-            // With one or zero child
-        else {
-            temp = node;
-            if (node->left == NULL)
-                node = node->right;
-            else if (node->right == NULL)
-                node = node->left;
-            delete temp;
+    // STEP 1: PERFORM STANDARD BST DELETE
+    if (root == NULL)
+        return root;
+
+    // If the key to be deleted is smaller
+    // than the root's key, then it lies
+    // in left subtree
+    if ( key < root->key )
+        root->left = remove(root->left, key);
+
+        // If the key to be deleted is greater
+        // than the root's key, then it lies
+        // in right subtree
+    else if( key > root->key )
+        root->right = remove(root->right, key);
+
+        // if key is same as root's key, then
+        // This is the node to be deleted
+    else
+    {
+        // node with only one child or no child
+        if( (root->left == NULL) ||
+            (root->right == NULL) )
+        {
+            Node *temp = root->left ?
+                         root->left :
+                         root->right;
+
+            // No child case
+            if (temp == NULL)
+            {
+                temp = root;
+                root = NULL;
+            }
+            else // One child case
+                *root = *temp; // Copy the contents of
+            // the non-empty child
+            free(temp);
         }
-        if (node == NULL)
-            return;
-        balance(node);
-        return;
+        else
+        {
+            // node with two children: Get the inorder
+            // successor (smallest in the right subtree)
+            node* temp = minValueNode(root->right);
+
+            // Copy the inorder successor's
+            // data to this node
+            root->key = temp->key;
+
+            // Delete the inorder successor
+            root->right = remove(root->right,
+                                     temp->key);
+        }
+    }
+
+    // If the tree had only one node
+    // then return
+    if (root == NULL)
+        return root;
+
+    // STEP 2: UPDATE HEIGHT OF THE CURRENT NODE
+    root->height = 1 + max(height(root->left),
+                           height(root->right));
+
+    // STEP 3: GET THE BALANCE FACTOR OF
+    // THIS NODE (to check whether this
+    // node became unbalanced)
+    int balance = getBalance(root);
+
+    // If this node becomes unbalanced,
+    // then there are 4 cases
+
+    // Left Left Case
+    if (balance > 1 &&
+        getBalance(root->left) >= 0)
+        return rightRotate(root);
+
+    // Left Right Case
+    if (balance > 1 &&
+        getBalance(root->left) < 0)
+    {
+        root->left = leftRotate(root->left);
+        return rightRotate(root);
+    }
+
+    // Right Right Case
+    if (balance < -1 &&
+        getBalance(root->right) <= 0)
+        return leftRotate(root);
+
+    // Right Left Case
+    if (balance < -1 &&
+        getBalance(root->right) > 0)
+    {
+        root->right = rightRotate(root->right);
+        return leftRotate(root);
+    }
+
+    return root;
     }
 
 template<class T, class K>
@@ -397,6 +464,130 @@ node<T, K> *AvlTree<T, K>::findBiggerThan(node<T, K> *node, node<T, K> *closest,
         return(node->left,closest,min);
     }
 }
+
+
+/* Helper function that allocates a
+   new node with the given key and
+   NULL left and right pointers. */
+template<class T, class K>
+node<T, K> *AvlTree<T, K>::newNode(T data, K key) {
+    node* node = new node();
+    node->key = key;
+    node->data = data;
+    node->left = NULL;
+    node->right = NULL;
+    node->height = 1; // new node is initially
+    // added at leaf
+    return(node);
+}
+
+// A utility function to right
+// rotate subtree rooted with y
+// See the diagram given above.
+template<class T, class K>
+node<T, K> *AvlTree<T, K>::rightRotate(node<T, K> *y) {
+    node *x = y->left;
+    node *T2 = x->right;
+
+    // Perform rotation
+    x->right = y;
+    y->left = T2;
+
+    // Update heights
+    y->height = max(height(y->left),
+                    height(y->right)) + 1;
+    x->height = max(height(x->left),
+                    height(x->right)) + 1;
+
+    // Return new root
+    return x;
+}
+
+// A utility function to left
+// rotate subtree rooted with x
+// See the diagram given above.
+template<class T, class K>
+node<T, K> *AvlTree<T, K>::leftRotate(node<T, K> *x) {
+    node *y = x->right;
+    node *T2 = y->left;
+
+    // Perform rotation
+    y->left = x;
+    x->right = T2;
+
+    // Update heights
+    x->height = max(height(x->left),
+                    height(x->right)) + 1;
+    y->height = max(height(y->left),
+                    height(y->right)) + 1;
+
+    // Return new root
+    return y;
+}
+
+// Get Balance factor of node N
+template<class T, class K>
+int AvlTree<T, K>::getBalance(node<T, K> *N) {
+    if (N == NULL)
+        return 0;
+    return height(N->left) - height(N->right);
+}
+
+// Recursive function to insert a key
+// in the subtree rooted with node and
+// returns the new root of the subtree.
+template<class T, class K>
+node<T, K> *AvlTree<T, K>::insert(node<T,K> *node, T data, K key) {
+/* 1. Perform the normal BST insertion */
+    if (node == NULL)
+        return(newNode(data,key));
+
+    if (key < node->key)
+        node->left = insert(node->left, data,key);
+    else if (key > node->key)
+        node->right = insert(node->right,data, key);
+    else // Equal keys are not allowed in BST
+        return node;
+
+    /* 2. Update height of this ancestor node */
+    node->height = 1 + max(height(node->left),
+                           height(node->right));
+
+    /* 3. Get the balance factor of this ancestor
+        node to check whether this node became
+        unbalanced */
+    int balance = getBalance(node);
+
+    // If this node becomes unbalanced, then
+    // there are 4 cases
+
+    // Left Left Case
+    if (balance > 1 && key < node->left->key)
+        return rightRotate(node);
+
+    // Right Right Case
+    if (balance < -1 && key > node->right->key)
+        return leftRotate(node);
+
+    // Left Right Case
+    if (balance > 1 && key > node->left->key)
+    {
+        node->left = leftRotate(node->left);
+        return rightRotate(node);
+    }
+
+    // Right Left Case
+    if (balance < -1 && key < node->right->key)
+    {
+        node->right = rightRotate(node->right);
+        return leftRotate(node);
+    }
+
+    /* return the (unchanged) node pointer */
+    return node;
+}
+
+
 
 
 /*
