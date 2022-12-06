@@ -163,7 +163,7 @@ StatusType world_cup_t::update_player_stats(int playerId, int gamesPlayed,
         return StatusType::INVALID_INPUT;
     }
     player* tmp_player = new player;
-    if(!tmp_player){
+    if(tmp_player==NULL){
         delete tmp_player;
         return StatusType::ALLOCATION_ERROR;
     }
@@ -201,15 +201,9 @@ StatusType world_cup_t::play_match(int teamId1, int teamId2)
     if(teamId1 <= 0 || teamId2 <= 0 || teamId1 == teamId2){
         return StatusType::INVALID_INPUT;
     }
-    team* team1 = new team; //fix
-    team* team2 = new team; //fix
-    if(!team1||!team2){
-        delete team1;
-        delete team2;
-        return StatusType::ALLOCATION_ERROR;
-    }
-    team1 = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId1);
-    team2 = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId2);
+
+    team* team1 = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId1);
+    team* team2 = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId2);
     if(!team1 || !team2){
         delete team1;
         delete team2;

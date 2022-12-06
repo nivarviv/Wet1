@@ -227,18 +227,19 @@ void AvlTree<T,K>::remove(node<T,K>* node,K key) {
 
 template<class T, class K>
 T *AvlTree<T,K>::find_by_key(node<T,K>* node,K key) {
-        if (key < node->key)
-            find_by_key(node->left,key);
-        else if (key > node->key)
-            find_by_key(node->right,key);
-        else
-            return NULL;
-
-        if (key == node->key) {
-            T* tPtr= &(node->data);
-            return tPtr;
-        }
+    if(node==NULL){
+        return NULL;
     }
+    if (key == node->key) {
+        return node->data;
+    }
+    else{
+        if (key < node->key)
+            return find_by_key(node->left,key);
+        else if (key > node->key)
+            return find_by_key(node->right,key);
+    }
+}
 
 template<class T, class K>
 void AvlTree<T, K>::deleteTree(node *r) {
