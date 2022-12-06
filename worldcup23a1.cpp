@@ -351,7 +351,7 @@ output_t<int> world_cup_t::get_top_scorer(int teamId)
             output_t<int> out(StatusType::FAILURE);
             return out;
         }
-        output_t<int> out(m_top_scorer->getID());
+        output_t<int> out(m_top_scorer->getId());
         return out;
     }
     else{
