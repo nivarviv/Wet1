@@ -99,3 +99,8 @@ player::~player() {
 int player::getId() const{
     return m_playerId;
 }
+
+
+playerStatsDifferentOrder player::getDiffStats() const{
+    return m_stats_different;
+}
