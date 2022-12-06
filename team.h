@@ -16,7 +16,7 @@ private:
     int m_total_cards;
     int m_points;
     int m_num_games;
-    int m_teamId
+    int m_teamId;
     player* m_top_scorer;
     AvlTree<player, int> m_tree_by_id;
     AvlTree<player, playerStats> m_tree_by_stats;
@@ -40,9 +40,9 @@ public:
     void getArray(node<player,playerStats>** arr1);
     player* findPlayerById(int id);
     bool isTeamValid() const;
-    const AvlTree<player, int> getTree() const;
-    const AvlTree<player, playerStats> getTree() const;
-    const AvlTree<player, playerStatsDifferentOrder> getTree() const;
+    AvlTree<player, int>* getTreeId() const;
+    AvlTree<player, playerStats>* getTreeStats() const;
+    AvlTree<player, playerStatsDifferentOrder>* getTreeDiffStats() const;
     int getNumGoals();
     int getNumCards();
     void updatePoints(int pointsToAdd);

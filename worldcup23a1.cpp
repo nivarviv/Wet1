@@ -468,7 +468,7 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
     }
     AvlTree<team, int> knockout_tree = m_allowed_to_play_teams;// c'py c'tor
     team* arr_teams = new team[];
-
+    knockout_tree.storeInOrderRecursive()
 
 
 
