@@ -474,7 +474,7 @@ output_t<int> world_cup_t::get_closest_player(int playerId, int teamId)
     delete player1;
     return out;
 }
-//updated!
+//updated!!
 output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
 {
     if(minTeamId < 0 || maxTeamId < 0 || maxTeamId < minTeamId){

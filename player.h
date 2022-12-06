@@ -21,7 +21,7 @@ private:
     player* m_closest;
     player* m_pre;
     player* m_suc;
-    int m_teamGamesWO; // num games the team played without him
+    int m_teamGamesWO; // num games the team played without him!
 
 public:
     player(int playerId, team* playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper);

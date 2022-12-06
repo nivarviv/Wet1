@@ -84,7 +84,7 @@ team::~team() {
     delete m_top_scorer;
 }
 
-/*const AvlTree<player, int>* team::getTreeId() const {!
+/*const AvlTree<player, int>* team::getTreeId() const {!!
     return &m_tree_by_id;
 }*/
 

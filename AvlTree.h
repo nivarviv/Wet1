@@ -60,7 +60,7 @@ public:
 int bf(node *r);
 node *balance(node *r);*/
     /*  node *llRotation(node *parent);
-      node *rrRotation(node *parent);!
+      node *rrRotation(node *parent);!!
       node *rlRotation(node *parent);
       node *lrRotation(node *parent);*/
     /*   T* findSuc(node<T,K>* node,K stats);
