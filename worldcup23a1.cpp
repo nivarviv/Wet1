@@ -10,6 +10,8 @@ world_cup_t::world_cup_t()
     m_all_players_different_order=AvlTree<player,playerStatsDifferentOrder>();
     m_top_scorer = NULL;
     m_total_players = 0;
+    m_num_teams = 0;
+    m_num_eligible_to_play_teams = 0;
 }
 //updated
 world_cup_t::~world_cup_t()
@@ -32,6 +34,7 @@ StatusType world_cup_t::add_team(int teamId, int points)
     //check for exception
     m_all_teams.insert(m_all_teams.getRoot(),team1, teamId);
     delete tmp;
+    m_num_teams++;
 	return StatusType::SUCCESS;
 }
 //updated
@@ -52,6 +55,7 @@ StatusType world_cup_t::remove_team(int teamId)
     else{
         m_all_teams.remove(m_all_teams.getRoot(),teamId);
         delete team1;
+        m_num_teams--;
         return StatusType::SUCCESS;
     }
 }
@@ -100,11 +104,13 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
         //changing pre and suc closest if needed
         (*pre).setClosest((*pre).closestOfTwo(pre->getClosest(),&newPlayer));
         (*suc).setClosest((*suc).closestOfTwo(suc->getClosest(),&newPlayer));
-
+        m_num_teams++;
         //check if team is allowed to play
         if((*tmp_team).isTeamValid()){
-            if(m_allowed_to_play_teams.find_by_key(m_allowed_to_play_teams.getRoot(),teamId)==NULL)
-                m_allowed_to_play_teams.insert(m_allowed_to_play_teams.getRoot(),(*tmp_team),teamId);
+            if(m_allowed_to_play_teams.find_by_key(m_allowed_to_play_teams.getRoot(),teamId)==NULL) {
+                m_allowed_to_play_teams.insert(m_allowed_to_play_teams.getRoot(), (*tmp_team), teamId);
+                m_num_eligible_to_play_teams++;
+            }
         }
         delete tmp_team;
     } catch (std::exception& e) {
@@ -468,12 +474,21 @@ output_t<int> world_cup_t::get_closest_player(int playerId, int teamId)
     delete player1;
     return out;
 }
+
 //todo:
 output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
 {
     if(minTeamId < 0 || maxTeamId < 0 || maxTeamId < minTeamId){
         return output_t<int>(StatusType::INVALID_INPUT);
     }
+    AvlTree<team, int> knockout_tree = m_allowed_to_play_teams;// c'py c'tor
+    team* arr_teams = new team[]
+
+
+
+
+
+
 	// TODO: Your code goes here
 	return 2;
 }

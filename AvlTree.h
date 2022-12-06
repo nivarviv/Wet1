@@ -486,4 +486,21 @@ AvlTree *AvlTree<T, K>::sortedArrayToBST(node* root, node **A, int start, int en
 }*/
 
 
+
+
+
+
+
+
+//todo: copy constructor in case we dont have already
+
+
+
+
+
+
+
+
+
+
 #endif //WET1_AVLTREE_H
