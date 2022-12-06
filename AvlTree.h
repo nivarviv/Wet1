@@ -35,7 +35,8 @@ public:
     ~AvlTree();
     void insert(node<T,K>* node,T value, K key);
     node<T,K> * minValueNode(node<T,K>* node)
-    void remove(node<T,K>* node, K key);
+    node<T,K> * removeHelper(node<T,K>* node, K key);
+
     T *find_by_key(node<T,K>* node,K key);
     void deleteTree(node *r);
     void makeNearlyEmpty(node<T,K>* node, int *toDelete);
@@ -65,6 +66,7 @@ node *balance(node *r);*/
        T* findPre(node<T,K>* node,K stats);*/
     //  player* findSuc(node<T,K>* node, playerStats key);
 
+    void remove(node<T, K> *node, K key);
 }
 /////////////////////////////////////////////////////implementation//////////////////////////////////////////////////
 
@@ -192,7 +194,7 @@ node<T, K> *AvlTree<T, K>::minValueNode(node<T,K> *node) {
 // given root. It returns root of the
 // modified subtree.
 template<class T, class K>
-void AvlTree<T,K>::remove(node<T,K>* node,K key) {
+node<T,K> * AvlTree<T,K>::removeHelper(node<T,K>* node,K key) {
 
     // STEP 1: PERFORM STANDARD BST DELETE
     if (root == NULL)
@@ -202,13 +204,13 @@ void AvlTree<T,K>::remove(node<T,K>* node,K key) {
     // than the root's key, then it lies
     // in left subtree
     if ( key < root->key )
-        root->left = remove(root->left, key);
+        root->left = removeHelper(root->left, key);
 
         // If the key to be deleted is greater
         // than the root's key, then it lies
         // in right subtree
     else if( key > root->key )
-        root->right = remove(root->right, key);
+        root->right = removeHelper(root->right, key);
 
         // if key is same as root's key, then
         // This is the node to be deleted
@@ -244,7 +246,7 @@ void AvlTree<T,K>::remove(node<T,K>* node,K key) {
             root->key = temp->key;
 
             // Delete the inorder successor
-            root->right = remove(root->right,
+            root->right = removeHelper(root->right,
                                      temp->key);
         }
     }
@@ -531,6 +533,11 @@ int AvlTree<T, K>::getBalance(node<T, K> *N) {
     if (N == NULL)
         return 0;
     return height(N->left) - height(N->right);
+}
+
+template<class T, class K>
+void AvlTree<T, K>::remove(node<T, K> *node, K key) {
+    this->m_root=removeHelper(node,key);
 }
 
 // Recursive function to insert a key
