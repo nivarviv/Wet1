@@ -156,7 +156,6 @@ StatusType world_cup_t::remove_player(int playerId)
     return StatusType::SUCCESS;
 }
 
-//todo:
 StatusType world_cup_t::update_player_stats(int playerId, int gamesPlayed,
                                         int scoredGoals, int cardsReceived)
 {
