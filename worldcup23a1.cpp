@@ -483,17 +483,17 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
     }
     //todo: wrap it up in try and catch and in the catch return ALLOCATION
     try {
-        team* arr_team = NULL;
+        team** arr_team = NULL;
         arr_team = new team*[m_num_eligible_to_play_teams];
         for(int i = 0; i < m_num_eligible_to_play_teams; i++){
             arr_team[i] = NULL;
         }
-        m_allowed_to_play_teams.storeInOrderRecursiveByTerms(minTeamId, maxTeamId, m_allowed_to_play_teams.getRoot(), arr_teams);//probably need to implement in avltree unless there is a better soultion
+        m_allowed_to_play_teams.storeInOrderRecursiveByTerms(minTeamId,maxTeamId,m_allowed_to_play_teams.getRoot(),arr_team);//probably need to implement in avltree unless there is a better soultion
         AvlTree<team, int> knock_out_tree;
         int num_eligible_in_terms_teams = 0;
         for(int i = 0; i < m_num_eligible_to_play_teams; i++){
             if(arr_team[i] != NULL){
-                knock_out_tree.insert(knock_out_tree.getRoot(), arr_team[i], arr_team[i]->getId());
+                knock_out_tree.insert(knock_out_tree.getRoot(), *arr_team[i], arr_team[i]->getId());
                 num_eligible_in_terms_teams++;
             }
             else{

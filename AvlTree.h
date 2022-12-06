@@ -45,8 +45,8 @@ public:
     node<T,K>* getRoot();
     void storeInOrderRecursive(node<T, K> *pNode, node<T, K> **pNode1);
     void storeInOrderRecursiveKey(node<T, K> *pNode, int const *pNode1);
-    void storeInOrderRecursiveByTerms(int min, int max,node<T, K> *pNode, node<T, K> **pNode1);
-    void storeInOrderRecursiveByTermsHelper(int min, int max,node<T, K> *pNode, node<T, K> **pNode1);
+    void storeInOrderRecursiveByTerms(int min, int max,node<T, K> *pNode, T **pNode1);
+    void storeInOrderRecursiveByTermsHelper(int min, int max,node<T, K> *pNode, T **pNode1);
     void arrayToBST(node<T, K> *pNode, node<T, K> *pNode1[]);
     void successorPredecessor(node < T, K > * root, K val, T* pre, T* suc);
     node<T,K>* findBiggerThan(node<T, K> *node, node<T, K> *closest, int min);
@@ -435,19 +435,19 @@ void AvlTree<T, K>::successorPredecessor(node<T, K> *root, K val, T *pre, T *suc
     }
 
 template<class T, class K>
-void AvlTree<T, K>::storeInOrderRecursiveByTerms(int min, int max, node<T, K> *pNode, node<T, K> **pNode1) {
+void AvlTree<T, K>::storeInOrderRecursiveByTerms(int min, int max, node<T, K> *pNode, T **pNode1) {
     node<T,K>* closest=NULL;
     node<T,K>* minNode=findBiggerThan(node,closest,min);
     storeInOrderRecursiveByTermsHelper(min,max,minNode,pNode1);
 }
 
 template<class T, class K>
-void AvlTree<T, K>::storeInOrderRecursiveByTermsHelper(int min, int max, node<T, K> *pNode, node<T, K> **pNode1) {
+void AvlTree<T, K>::storeInOrderRecursiveByTermsHelper(int min, int max, node<T, K> *pNode, T **pNode1) {
     if(pNode == NULL || pNode->key>max || pNode->key<min)
         return;
-    storeInOrderRecursiveByTermsHelper(pNode->left,pNode1);
-    (*arr1)++ = node;
-    storeInOrderRecursiveByTermsHelper(pNode->right,pNode1);
+    storeInOrderRecursiveByTermsHelper(min,max,pNode->left,pNode1);
+    (*arr1)++ = node->data;
+    storeInOrderRecursiveByTermsHelper(min,max,pNode->right,pNode1);
     return;
 }
 
