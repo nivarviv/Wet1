@@ -17,6 +17,7 @@ public:
     ~playerStats() = default;
     bool operator<(const playerStats& ps) const;
     bool operator>(const playerStats& ps) const;
+    bool operator==(const playerStats& ps) const;
 };
 
 

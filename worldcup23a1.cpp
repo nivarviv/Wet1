@@ -80,21 +80,14 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
     }
     try {
         m_total_players++;
-        player newPlayer;
-        newPlayer.addNewPlayer(playerId,tmp_team,gamesPlayed,goals,cards,goalKeeper);
+        player newPlayer(playerId,teamId,tmp_team,gamesPlayed,goals,cards,goalKeeper);
         playerStats newPlayerStats= newPlayer.getMyStats();
-       // playerStatsDifferentOrder newPlayerDiffStats = newPlayer.getDiffStats();
-
         if(newPlayerStats > m_top_scorer->getMyStats()){
             m_top_scorer = &newPlayer;
         }
-
-
         tmp_team->addPlayer(&newPlayer,newPlayerStats,playerId);
         m_all_players_goals.insert(m_all_players_goals.getRoot(),newPlayer,newPlayerStats);
         m_all_players_id.insert(m_all_players_id.getRoot(),newPlayer,playerId);
-        m_all_players_different_order.insert(m_all_players_different_order.getRoot(),newPlayer,newPlayerDiffStats);
-
         if(newPlayerStats > tmp_team->getTopScorerStats()){
             tmp_team->setTopScorer(&newPlayer);
         }
@@ -210,7 +203,7 @@ StatusType world_cup_t::update_player_stats(int playerId, int gamesPlayed,
         return StatusType::FAILURE;
     }
 
-    team* tmp_team = m_all_teams.find_by_key(m_all_teams.getRoot(),tmp_player->getMyTeam());
+    team* tmp_team = m_all_teams.find_by_key(m_all_teams.getRoot(),tmp_player->getTeamId());
     if(tmp_team == NULL) {
         delete tmp_team;
         return StatusType::FAILURE;
@@ -417,7 +410,7 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
 
 
     for (int player = 0; player < newTeam.getNumPlayers(); player++){
-        mergedArr[player]->data->setMyTeam(&newTeam);
+        mergedArr[player]->data.setMyTeam(&newTeam);
     }
 
 

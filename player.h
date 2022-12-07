@@ -10,6 +10,7 @@ class player {
 private:
     int m_playerId;
     team* m_my_team;
+    int m_teamId;
     int m_gamesPlayed;//before joining
     playerStats m_stats;
     int m_goals;
@@ -21,7 +22,8 @@ private:
     int m_teamGamesWO; // num games the team played without him!
 
 public:
-    player(int playerId, team* playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper);
+    player(int playerId,int teamId, team* playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper);
+    player();
     player addNewPlayer(int playerId, team* playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper);
     //player(const player&) = default;// I think we need to do it not by default due to there is memory allocation
     ~player();
@@ -42,7 +44,7 @@ public:
     void addCards(int cards);
     int getId() const;
     void setMyTeam(team* new_team);
-
+    int getTeamId();
 };
 
 

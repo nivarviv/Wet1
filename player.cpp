@@ -3,11 +3,10 @@
 //
 
 #include "player.h"
-#include <math.h>
 
 
-player::player(int playerId, team* playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper) :
-                m_playerId(playerId), m_my_team(playerTeam), m_gamesPlayed(gamesPlayed), m_goals(goals), m_cards(cards), m_goalKeeper(goalKeeper),
+player::player(int playerId,int teamId, team* playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper) :
+                m_playerId(playerId),m_teamId(teamId) ,m_my_team(playerTeam), m_gamesPlayed(gamesPlayed), m_goals(goals), m_cards(cards), m_goalKeeper(goalKeeper),
                 m_stats(playerStats(playerId, cards, goals)), m_closest(NULL), m_pre(NULL), m_suc(NULL), m_teamGamesWO(0)
                 {
     m_teamGamesWO = (*m_my_team).getNumGames();
@@ -68,7 +67,7 @@ player *player::getClosest() const{
 }
 
 player player::addNewPlayer(int playerId, team *playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper) {
-    player newPlayer=player(playerId, playerTeam, gamesPlayed, goals, cards, goalKeeper);
+    player newPlayer=player(playerId,m_teamId, playerTeam, gamesPlayed, goals, cards, goalKeeper);
     return newPlayer;
 }
 
@@ -103,3 +102,10 @@ int player::getId() const{
 void player::setMyTeam(team* new_team){
     m_my_team = new_team;
 }
+
+int player::getTeamId() {
+    return m_teamId;
+}
+
+player::player() : m_playerId(0),m_teamId(0) ,m_my_team(NULL), m_gamesPlayed(0), m_goals(0), m_cards(0), m_goalKeeper(false),
+                   m_stats(playerStats(0, 0, 0)), m_closest(NULL), m_pre(NULL), m_suc(NULL), m_teamGamesWO(0){}

@@ -6,24 +6,10 @@
 #define WET1_AVLTREE_H
 
 #include <iostream>
+#include "node.h"
 /*#include "team.h"
 #include "player.h"
 #include "playerStats.h"*/
-
-
-template<class T, class K>
-struct node {
-    T data;
-    K key;
-    int height;
-    node *right;
-    node *left;
-    node(T value, K key):data(value), key(key), height(1), right(NULL), left(NULL) {}
-    ~node(){
-        delete left;
-        delete right;
-    }
-};
 
 template<class T, class K>
 class AvlTree {
@@ -33,33 +19,33 @@ private:
 public:
     AvlTree();
     ~AvlTree();
-    node<T,K> * minValueNode(node<T,K>* node);
-    node<T,K> * removeHelper(node<T,K>* node, K key);
-    T *find_by_key(node<T,K>* node,K key);
-    void makeNearlyEmpty(node<T,K>* node, int *toDelete);
-    node<T,K>* createEmptyTree(node<T,K> *node,int height);
+    int height(node<T,K> *N);
+    node<T,K> * minValueNode(node<T,K>* root);
+    node<T,K> * removeHelper(node<T,K>* root, K key);
+    T *find_by_key(node<T,K>* root,K key);
+    void makeNearlyEmpty(node<T,K>* root, int *toDelete);
+    node<T,K>* createEmptyTree(node<T,K> *root,int height);
     void setRoot(node<T,K>* root);
     node<T,K>* getRoot();
-    void storeInOrderRecursive(node<T, K> *pNode, node<T, K> **pNode1);
-    void storeInOrderRecursiveKey(node<T, K> *pNode, int const *pNode1);
+    void storeInOrderRecursive(node<T, K> *root, node<T, K> **pNode1);
+    void storeInOrderRecursiveKey(node<T, K> *pNode, int *pNode1);
     void storeInOrderRecursiveByTerms(int min, int max,node<T, K> *pNode, T **pNode1);
     void storeInOrderRecursiveByTermsHelper(int min, int max,node<T, K> *pNode, T **pNode1);
     void arrayToBST(node<T, K> *pNode, node<T, K> *pNode1[]);
     void successorPredecessor(node < T, K > * root, K val, T* pre, T* suc);
-    node<T,K>* findBiggerThan(node<T, K> *node, node<T, K> *closest, int min);
     node<T,K>* newNode(T data, K key);
     node<T,K> *rightRotate(node<T,K> *y);
     node<T,K> *leftRotate(node<T,K> *x);
     int getBalance(node<T,K> *N);
-    node<T,K>* insert(node<T,K>* node, T data, K key);
+    node<T,K>* insert(node<T,K>* root, T data, K key);
     void deleteTree(node<T,K> *r);
-    void remove(node<T, K> *node, K key);
+    void remove(node<T, K> *root, K key);
     T* getBiggest(node<T, K> *root);
-    bool compareStats(node<T, K> *node, K key);
-    bool compareId(node<T, K> *node, int key);
-}
+    bool compareStats(node<T, K> *root, K key);
+    bool compareId(node<T, K> *root, int key);
+    node<T, K> *findBiggerThan(node<T, K> *root, node<T, K> *closest, int min);
+};
 /////////////////////////////////////////////////////implementation//////////////////////////////////////////////////
-
 template<class T, class K>
 AvlTree<T,K>::AvlTree() : m_root(NULL) {}
 
@@ -67,110 +53,19 @@ template<class T, class K>
 AvlTree<T,K>::~AvlTree() {
         deleteTree(this->m_root);
     }
-/*
-
-template<class T, class K>
-void AvlTree<T,K>::insert(node<T,K>* node,T value, K key) {
-        if (node==NULL)
-        {
-            node=new node(value, key);
-        }
-        else if (key < node->key) {
-            insert(node->left,value, key);
-            node = balance(node);
-        }
-        else if (key < node->key) {
-            insert(node->right,value, key);
-            node = balance(node);
-        }
-        else if (<K>key==node->key) {
-            return;
-        }
-    return;
-    }
-
-template<class T, class K>
-node *AvlTree<T,K>::balance(node *r) {
-        if (bf(r) > 1) {
-            if (bf(r->left) >= 0) {
-                r = llRotation(r);
-            } else {
-                r = lrRotation(r);
-            }
-        } else if (bf(r) < -1) {
-            if (bf(r->right) = 1) {
-                r = rlRotation(r);
-            } else {
-                r = rrRotation(r);
-            }
-        }
-        return r;
-    }
-
-template<class T, class K>
-int AvlTree<T,K>::height(node *r) {
-        if (r == NULL)
-            return 0;
-        return r->height;
-    }
-*/
 
 int max(int a, int b)
 {
     return (a > b)? a : b;
 }
-/*
-
-template<class T, class K>
-int AvlTree<T,K>::bf(node *r) {
-        int l_height = height(r->left);
-        int r_height = height(r->right);
-        int b_factor = l_height - r_height;
-        return b_factor;
-    }
-
-template<class T, class K>
-node *AvlTree<T,K>::llRotation(node *parent) {
-        node *leftSon;
-        leftSon = parent->left;
-        parent->left = leftSon->right;
-        leftSon->right = parent;
-        return leftSon;
-    }
-
-template<class T, class K>
-node *AvlTree<T,K>::rrRotation(node *parent) {
-        node *rightSon;
-        rightSon = parent->right;
-        parent->right = rightSon->left;
-        rightSon->left = parent;
-        return rightSon;
-    }
-
-template<class T, class K>
-node *AvlTree<T,K>::rlRotation(node *parent) {
-        node *rightSon;
-        rightSon = parent->right;
-        parent->right = ll_rotat(rightSon);
-        return rr_rotat(parent);
-    }
-
-template<class T, class K>
-node *AvlTree<T,K>::lrRotation(node *parent) {
-        node *leftSon;
-        leftSon = parent->left;
-        parent->left = rr_rotat(leftSon);
-        return ll_rotat(parent);
-    }
-*/
 
 /* Given a non-empty binary search tree,
 return the node with minimum key value
 found in that tree. Note that the entire
 tree does not need to be searched. */
 template<class T, class K>
-node<T, K> *AvlTree<T, K>::minValueNode(node<T,K> *node) {
-    node* current = node;
+node<T, K> *AvlTree<T, K>::minValueNode(node<T,K> *root) {
+    node<T,K>* current = root;
 
     /* loop down to find the leftmost leaf */
     while (current->left != NULL)
@@ -210,7 +105,7 @@ node<T,K> * AvlTree<T,K>::removeHelper(node<T,K>* root,K key) {
         if( (root->left == NULL) ||
             (root->right == NULL) )
         {
-            Node *temp = root->left ?
+            node<T,K> *temp = root->left ?
                          root->left :
                          root->right;
 
@@ -288,19 +183,19 @@ node<T,K> * AvlTree<T,K>::removeHelper(node<T,K>* root,K key) {
     }
 
 template<class T, class K>
-T *AvlTree<T,K>::find_by_key(node<T,K>* node,K key) {
-    if(node==NULL){
+T *AvlTree<T,K>::find_by_key(node<T,K>* root,K key) {
+    if(root==NULL){
         return NULL;
     }
-    if (key == node->key) {
-        return &node->data;
+    if (key == root->key) {
+        return &root->data;
     }
     else{
-        if (key < node->key){
-            return find_by_key(node->left,key);
+        if (key < root->key){
+            return find_by_key(root->left,key);
         }
-        else if (key > node->key){
-            return find_by_key(node->right,key);
+        else if (key > root->key){
+            return find_by_key(root->right,key);
         }
         else {
             return NULL;
@@ -329,41 +224,28 @@ void AvlTree<T, K>::arrayToBST(node<T,K>* pNode, node<T,K> *pNode1[]) {
 }
 
 template<class T, class K>
-void AvlTree<T, K>::makeNearlyEmpty(node<T,K> *node, int *toDelete) {
-    if(node==NULL)
+void AvlTree<T, K>::makeNearlyEmpty(node<T,K> *root, int *toDelete) {
+    if(root==NULL)
         return;
     if(*toDelete==0){
         return;
     }
-    makeNearlyEmpty(node->right,toDelete);
-    if(node->right==NULL && node->left==NULL){
-        delete node;
+    makeNearlyEmpty(root->right,toDelete);
+    if(root->right==NULL && root->left==NULL){
+        delete root;
     }
     *toDelete--;
-    makeNearlyEmpty(node->left,toDelete);
+    makeNearlyEmpty(root->left,toDelete);
 }
 
-/*template<class T, class K>
-AvlTree<T, K> AvlTree<T, K>::createEmptyTree(int height) {
-    AvlTree<T,K> tree = AvlTree<T,K>;
-    node* node=m_root;
-    if(height<=0)
-        return tree;
-    node=NULL;
-    node->left = createEmptyTree(height_needed-1);
-    node->right = createEmptyTree(height_needed-1);
-    return tree;;
-}*/
-
-
 template<class T, class K>
-node<T,K>* AvlTree<T, K>::createEmptyTree(node<T,K> *node,int height) {
+node<T,K>* AvlTree<T, K>::createEmptyTree(node<T,K> *root,int height) {
     if(height<=0)
-        return node;
-    node=new node(T(), K());
-    createEmptyTree(node->left,height-1);
-    createEmptyTree(node->right,height-1);
-    return node;
+        return root;
+    root=newNode(T(),K());
+    createEmptyTree(root->left,height-1);
+    createEmptyTree(root->right,height-1);
+    return root;
 }
 
 template<class T, class K>
@@ -377,20 +259,20 @@ node<T,K>* AvlTree<T, K>::getRoot() {
 }
 
 template<class T, class K>
-void AvlTree<T, K>::storeInOrderRecursive(node<T,K> *pNode, node<T,K> **pNode1) {
-    if(pNode == NULL)
+void AvlTree<T, K>::storeInOrderRecursive(node<T,K> *root, node<T,K> **pNode1) {
+    if(root == NULL)
         return;
-    storeInOrderRecursive(pNode->left,pNode1);
-    (*pNode1)++ = node;
-    storeInOrderRecursive(pNode->right,pNode1);
-    return;
+    storeInOrderRecursive(root->left,pNode1);
+    (*pNode1)++ = root;
+    storeInOrderRecursive(root->right,pNode1);
 }
 
 template<class T, class K>
 void AvlTree<T, K>::successorPredecessor(node<T, K> *root, K val, T *pre, T *suc) {
     // Base case
     if (root == NULL)  return ;
-    if (root->key == <K>val) {
+    K rootKey=root->key;
+    if (rootKey==val) {
         // go to the right most element in the left subtree, it will the
         // predecessor.
         if (root->left != NULL) {
@@ -398,7 +280,7 @@ void AvlTree<T, K>::successorPredecessor(node<T, K> *root, K val, T *pre, T *suc
             while (t->right != NULL) {
                 t = t->right;
             }
-            *pre = t->data;
+            pre = &t->data;
         }
         if (root->right != NULL) {
             // go to the left most element in the right subtree, it will
@@ -407,7 +289,7 @@ void AvlTree<T, K>::successorPredecessor(node<T, K> *root, K val, T *pre, T *suc
             while (t->left != NULL) {
                 t = t->left;
             }
-            *suc = t->data;
+            suc = &t->data;
         }
         return;
     }
@@ -416,15 +298,15 @@ void AvlTree<T, K>::successorPredecessor(node<T, K> *root, K val, T *pre, T *suc
         // situation when value matches with the root, it wont have
         // right subtree to find the successor, in that case we need
         // parent to be the successor
-            suc = root->data;
+            suc = &root->data;
             successorPredecessor(root->left,val,pre,suc);
         } else if (root->key < val) {
             // we make the root as predecessor because we might have a
             // situation when value matches with the root, it wont have
             // left subtree to find the predecessor, in that case we need
             // parent to be the predecessor.
-            pre = root->data;
-            successorPredecessor(root.right,val,pre,suc);
+            pre = &root->data;
+            successorPredecessor(root->right,val,pre,suc);
         }
     }
 
@@ -440,25 +322,24 @@ void AvlTree<T, K>::storeInOrderRecursiveByTermsHelper(int min, int max, node<T,
     if(pNode == NULL || pNode->key>max || pNode->key<min)
         return;
     storeInOrderRecursiveByTermsHelper(min,max,pNode->left,pNode1);
-    (*arr1)++ = node->data;
+    (*pNode1)++ = pNode->data;
     storeInOrderRecursiveByTermsHelper(min,max,pNode->right,pNode1);
-    return;
 }
 
 template<class T, class K>
-node<T, K> *AvlTree<T, K>::findBiggerThan(node<T, K> *node, node<T, K> *closest, int min) {
-    if(node==NULL){
+node<T, K> *AvlTree<T, K>::findBiggerThan(node<T, K> *root, node<T, K> *closest, int min) {
+    if(root==NULL){
         return closest;
     }
-    if(node->key==min){
-        return node;
+    if(root->key==min){
+        return root;
     }
-    else if(node->key<min){
-        return(node->right,closest,min);
+    else if(root->key<min){
+        return(root->right,closest,min);
     }
-    else if(node->key>min){
-        closest=node;
-        return(node->left,closest,min);
+    else if(root->key>min){
+        closest=root;
+        return(root->left,closest,min);
     }
 }
 
@@ -468,14 +349,14 @@ node<T, K> *AvlTree<T, K>::findBiggerThan(node<T, K> *node, node<T, K> *closest,
    NULL left and right pointers. */
 template<class T, class K>
 node<T, K> *AvlTree<T, K>::newNode(T data, K key) {
-    node<T,K>* node = new node();
-    node->key = key;
-    node->data = data;
-    node->left = NULL;
-    node->right = NULL;
-    node->height = 1; // new node is initially
+    node<T,K>* newNode = new node<T, K>();
+    newNode->key = key;
+    newNode->data = data;
+    newNode->left = NULL;
+    newNode->right = NULL;
+    newNode->height = 1; // new node is initially
     // added at leaf
-    return(node);
+    return(newNode);
 }
 
 // A utility function to right
@@ -531,72 +412,71 @@ int AvlTree<T, K>::getBalance(node<T, K> *N) {
 }
 
 template<class T, class K>
-void AvlTree<T, K>::remove(node<T, K> *node, K key) {
-    this->m_root=removeHelper(node,key);
+void AvlTree<T, K>::remove(node<T, K> *root, K key) {
+    this->m_root=removeHelper(root,key);
 }
 
 // Recursive function to insert a key
 // in the subtree rooted with node and
 // returns the new root of the subtree.
 template<class T, class K>
-node<T, K> *AvlTree<T, K>::insert(node<T,K> *node, T data, K key) {
+node<T, K> *AvlTree<T, K>::insert(node<T,K> *root, T data, K key) {
 /* 1. Perform the normal BST insertion */
-    if (node == NULL)
+    if (root == NULL)
         return(newNode(data,key));
 
-    if (key < node->key)
-        node->left = insert(node->left, data,key);
-    else if (key > node->key)
-        node->right = insert(node->right,data, key);
+    if (key < root->key)
+        root->left = insert(root->left, data,key);
+    else if (key > root->key)
+        root->right = insert(root->right,data, key);
     else // Equal keys are not allowed in BST
-        return node;
+        return root;
 
     /* 2. Update height of this ancestor node */
-    node->height = 1 + max(height(node->left),
-                           height(node->right));
+    root->height = 1 + max(height(root->left),
+                           height(root->right));
 
     /* 3. Get the balance factor of this ancestor
         node to check whether this node became
         unbalanced */
-    int balance = getBalance(node);
+    int balance = getBalance(root);
 
     // If this node becomes unbalanced, then
     // there are 4 cases
 
     // Left Left Case
-    if (balance > 1 && key < node->left->key)
-        return rightRotate(node);
+    if (balance > 1 && key < root->left->key)
+        return rightRotate(root);
 
     // Right Right Case
-    if (balance < -1 && key > node->right->key)
-        return leftRotate(node);
+    if (balance < -1 && key > root->right->key)
+        return leftRotate(root);
 
     // Left Right Case
-    if (balance > 1 && key > node->left->key)
+    if (balance > 1 && key > root->left->key)
     {
-        node->left = leftRotate(node->left);
-        return rightRotate(node);
+        root->left = leftRotate(root->left);
+        return rightRotate(root);
     }
 
     // Right Left Case
-    if (balance < -1 && key < node->right->key)
+    if (balance < -1 && key < root->right->key)
     {
-        node->right = rightRotate(node->right);
-        return leftRotate(node);
+        root->right = rightRotate(root->right);
+        return leftRotate(root);
     }
 
     /* return the (unchanged) node pointer */
-    return node;
+    return root;
 }
 
 template<class T, class K>
-void AvlTree<T, K>::storeInOrderRecursiveKey(node<T, K> *pNode, int const *pNode1) {
+void AvlTree<T, K>::storeInOrderRecursiveKey(node<T, K> *pNode, int *pNode1) {
     if(pNode == NULL)
         return;
     storeInOrderRecursiveKey(pNode->left,pNode1);
-    (*pNode1)++ = node->data->getId();
+    (*pNode1)++ = pNode->data.getId();
     storeInOrderRecursiveKey(pNode->right,pNode1);
-    return;
 }
 
 template<class T, class K>
@@ -607,148 +487,28 @@ T *AvlTree<T, K>::getBiggest(node<T, K> *root) {
     return getBiggest(root->right);
 }
 
-
-/*
 template<class T, class K>
-T *AvlTree<T, K>::findPre(node<T, K> *node, K stats,node<T, K> *pre) {
-    // Base case
-    if (node == NULL) return NULL;
-    // If key is present at root
-    if (node->key == <K>stats) {
-        // the maximum value in left subtree is predecessor
-        if (node->left != NULL) {
-            node * tmp = node->left;
-            while (tmp->right)
-                tmp = tmp->right;
-            return tmp->data;
-        } else
-            return NULL;
-    }
-    // If key is smaller than root's key, go to left subtree
-    if (root->key > stats)
-    {
-        findPre(node->left,stats);
-    }
-    else // go to right subtree
-    {
-        findPre(node->right,stats);
-    }
-}
-
-
-    template<class T, class K>
-    T * AvlTree<T, K>::findSuc(node < T, K > *node, K stats){
-        // Base case
-        if (node == NULL) return NULL;
-        // If key is present at root
-        if (node->key == <K>stats) {
-            // the minimum value in right subtree is successor
-            if (node->right != NULL) {
-                node * tmp = node->right;
-                while (tmp->left)
-                    tmp = tmp->left;
-                return tmp->data;
-            } else
-                return NULL;
-        }
-            // If key is smaller than root's key, go to left subtree
-            if (root->key > stats)
-            {
-                findSuc(node->left,stats);
-            }
-            else // go to right subtree
-            {
-                findSuc(node->right,stats);
-            }
-    }
-*/
-
-
-template<class T, class K>
-bool AvlTree<T, K>::compareStats(node<T, K> *node, K key) {
-    if(<K>key==node->key){
+bool AvlTree<T, K>::compareStats(node<T, K> *root, K key) {
+    if(key==root->key){
         return true;
     }
     return false;
 }
 
 template<class T, class K>
-bool AvlTree<T, K>::compareId(node<T, K> *node, int key) {
-    if(key==node->key){
+bool AvlTree<T, K>::compareId(node<T, K> *root, int key) {
+    if(key==root->key){
         return true;
     }
     return false;
 }
 
-
-/*
-
+// A utility function to get height of the tree
 template<class T, class K>
-player *AvlTree<T, K>::findSuc(node *node, playerStats key) {
-// Base case
-    if (node == NULL)  return NULL;
-    // If key is present at root
-    if (node->key == key) {
-        // the minimum value in right subtree is successor
-        if (node->right != NULL) {
-            node * tmp = node->right;
-            while (tmp->left)
-                tmp = tmp->left;
-            return tmp->data;
-        } else
-            return NULL;
-    }
-    // If key is smaller than root's key, go to left subtree
-    if (root->key > key)
-    {
-        findSuc(node->left,key);
-    }
-    else // go to right subtree
-    {
-        findSuc(node->right,key);
-    }
+int AvlTree<T, K>::height(node<T, K> *N) {
+    if (N == NULL)
+        return 0;
+    return N->height;
 }
-
-*/
-
-
-
-
-
-/*template<class T, class K>
-AvlTree *AvlTree<T, K>::sortedArrayToBST(node* root, node **A, int start, int end) {
-    // continue while this branch has values to process
-    if(start > end)
-        return NULL;
-    AvlTree<T,K>* newTree = AvlTree<T,K>();
-    // Get the middle element and make it root
-    int mid = start + (end - start)/2;
-    root = newTree.insert(*A[mid]->data, *A[mid]->key);
-    // Recursively construct the left subtree
-    // and make it left child of root
-    sortedArrayToBST_helper(A, start, mid - 1);
-    // Recursively construct the right subtree
-    // and make it right child of root
-    sortedArrayToBST_helper(A, mid + 1, end);
-    return newTree;
-}*/
-
-
-
-
-
-
-
-
-//todo: copy constructor in case we dont have already
-
-
-
-
-
-
-
-
-
 
 #endif //WET1_AVLTREE_H

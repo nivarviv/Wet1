@@ -31,3 +31,15 @@ bool playerStats::operator<(const playerStats& ps) const{
 bool playerStats::operator>(const playerStats& ps) const{
     return (ps < *this);//this or *this?
 }
+
+bool playerStats::operator==(const playerStats &ps) const {
+    if(this->m_goals == ps.m_goals){
+        if(this->m_cards == ps.m_cards){
+            if(this->m_id == ps.m_id){
+                return true;
+            }
+        }
+    }
+    else
+        return false;
+}
