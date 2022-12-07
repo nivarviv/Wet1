@@ -34,7 +34,7 @@ public:
     AvlTree();
     ~AvlTree();
     void insert(node<T,K>* node,T value, K key);
-    node<T,K> * minValueNode(node<T,K>* node)
+    node<T,K> * minValueNode(node<T,K>* node);
     node<T,K> * removeHelper(node<T,K>* node, K key);
 
     T *find_by_key(node<T,K>* node,K key);
@@ -70,7 +70,7 @@ node *balance(node *r);*/
 
     void remove(node<T, K> *node, K key);
 
-}
+};
 /////////////////////////////////////////////////////implementation//////////////////////////////////////////////////
 
 template<class T, class K>
