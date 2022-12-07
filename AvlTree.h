@@ -412,7 +412,7 @@ void AvlTree<T, K>::successorPredecessor(node<T, K> *root, K val, T *pre, T *suc
             while (t->right != NULL) {
                 t = t->right;
             }
-            pre = t->data;
+            *pre = t->data;
         }
         if (root->right != NULL) {
             // go to the left most element in the right subtree, it will
@@ -421,7 +421,7 @@ void AvlTree<T, K>::successorPredecessor(node<T, K> *root, K val, T *pre, T *suc
             while (t->left != NULL) {
                 t = t->left;
             }
-            suc = t->data;
+            *suc = t->data;
         }
         return;
     }
