@@ -229,7 +229,7 @@ StatusType world_cup_t::update_player_stats(int playerId, int gamesPlayed,
 
 
 
-    if(tmp_player == m_all_players_goals->getBiggest(m_all_players_goals.getRoot())){
+    if(tmp_player == m_all_players_goals.getBiggest(m_all_players_goals.getRoot())){
         m_top_scorer = tmp_player;
     }
 

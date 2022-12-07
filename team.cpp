@@ -18,7 +18,6 @@ team::team(int teamId, int points)
     m_tree_by_id = AvlTree<player, int>();
     m_tree_by_stats = AvlTree<player, playerStats>();
     m_numGoalKeepers=0;
-    m_tree_by_diff_stats=AvlTree<player, playerStatsDifferentOrder>();
 }
 
 int team::getNumGames(){
@@ -110,7 +109,6 @@ void team::getArrayId(int const *arr1) {
 
 void team::deleteTeam() {
     m_tree_by_stats.deleteTree(m_tree_by_stats.getRoot());
-    m_tree_by_diff_stats.deleteTree(m_tree_by_diff_stats.getRoot());
     m_tree_by_id.deleteTree(m_tree_by_id.getRoot());
     m_num_players=0;
 }

@@ -17,7 +17,6 @@ private:
     int m_goals;
     int m_cards;
     bool m_goalKeeper;
-    playerStatsDifferentOrder m_stats_different;
     player* m_closest;
     player* m_pre;
     player* m_suc;
@@ -44,7 +43,7 @@ public:
     void addGames(int games_played);
     void addCards(int cards);
     int getId() const;
-    playerStatsDifferentOrder getDiffStats() const;
+
 };
 
 

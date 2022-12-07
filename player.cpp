@@ -8,7 +8,7 @@
 
 player::player(int playerId, team* playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper) :
                 m_playerId(playerId), m_my_team(playerTeam), m_gamesPlayed(gamesPlayed), m_goals(goals), m_cards(cards), m_goalKeeper(goalKeeper),
-                m_stats(playerStats(playerId, cards, goals)), m_closest(NULL), m_pre(NULL), m_suc(NULL), m_teamGamesWO(0), m_stats_different(playerId, cards, goals)
+                m_stats(playerStats(playerId, cards, goals)), m_closest(NULL), m_pre(NULL), m_suc(NULL), m_teamGamesWO(0)
                 {
     m_teamGamesWO = (*m_my_team).getNumGames();
                 }
@@ -100,7 +100,3 @@ int player::getId() const{
     return m_playerId;
 }
 
-
-playerStatsDifferentOrder player::getDiffStats() const{
-    return m_stats_different;
-}
