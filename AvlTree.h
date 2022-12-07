@@ -9,7 +9,6 @@
 #include "team.h"
 #include "player.h"
 #include "playerStats.h"
-#include "playerStatsDifferentOrder.h"
 
 template<class T, class K>
 struct node {
@@ -56,20 +55,8 @@ public:
     int getBalance(node<T,K> *N);
     node<T,K>* insert(node<T,K>* node, T data, K key);
     void deleteTree(node<T,K> *r);
-
-    /*  int height(node *r);
-int bf(node *r);
-node *balance(node *r);*/
-    /*  node *llRotation(node *parent);
-      node *rrRotation(node *parent);!!
-      node *rlRotation(node *parent);
-      node *lrRotation(node *parent);*/
-    /*   T* findSuc(node<T,K>* node,K stats);
-       T* findPre(node<T,K>* node,K stats);*/
-    //  player* findSuc(node<T,K>* node, playerStats key);
-
     void remove(node<T, K> *node, K key);
-
+    T* getBiggest(node<T, K> *root);
 }
 /////////////////////////////////////////////////////implementation//////////////////////////////////////////////////
 
@@ -335,8 +322,8 @@ void AvlTree<T, K>::arrayToBST(node<T,K>* pNode, node<T,K> *pNode1[]) {
     if(pNode=NULL)
         return;
     arrayToBST(pNode->left,pNode1);
-    pNode->data=**pNode1->data;
-    pNode->key=**pNode1->key;
+    pNode->data=*pNode1->data;
+    pNode->key=*pNode1->key;
     *pNode1++;
     arrayToBST(pNode->right,pNode1);
 }
@@ -613,8 +600,11 @@ void AvlTree<T, K>::storeInOrderRecursiveKey(node<T, K> *pNode, int const *pNode
 }
 
 template<class T, class K>
-void AvlTree<T, K>::deleteTree() {
-
+T *AvlTree<T, K>::getBiggest(node<T, K> *root) {
+    if(root==NULL){
+        return NULL;
+    }
+    return getBiggest(root->right);
 }
 
 

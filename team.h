@@ -12,7 +12,7 @@ class team {
 private:
     int m_num_players;
     bool m_has_goalkeeper;
-    int m_total_goals;
+    int m_has_goalkeeper;
     int m_total_cards;
     int m_points;
     int m_num_games;
@@ -21,7 +21,6 @@ private:
     AvlTree<player, int> m_tree_by_id;
     AvlTree<player, playerStats> m_tree_by_stats;
     int m_numGoalKeepers;
-    AvlTree<player, playerStatsDifferentOrder> m_tree_by_diff_stats;
 
     //
 
@@ -31,14 +30,12 @@ public:
     team(const team&) = default;//we don't want to allow that!!
     ~team();
     team& operator=(const team& other) = default;//we don't want to allow that
-    void addPlayer(player* player, playerStats stats,int id,playerStatsDifferentOrder diffStats);
-    void removePlayer((playerStats stats, int id, playerStatsDifferentOrder diffStats);
+    void addPlayer(player* player, playerStats stats,int id);
     int top_scorer_id() const;
     int getNumPlayers();
     int getNumPoints();
     void setTeamTree( AvlTree<player, playerStats> tree);
     void getArrayStats(node<player,playerStats>** arr1);
-    void getArrayDiffStats(int const *arr1);
     player* findPlayerById(int id);
     bool isTeamValid() const;
     int getNumGoals();
@@ -49,11 +46,8 @@ public:
     void deleteTeam();
     playerStats getTopScorerStats() const;
     void setTopScorer(player* player);
-
-    /* AvlTree<player, int>* getTreeId() const;
-    AvlTree<player, playerStats>* getTreeStats() const;
-    AvlTree<player, playerStatsDifferentOrder>* getTreeDiffStats() const;*/
-
+    void getArrayId(int const *arr1);
+    void removePlayer(playerStats stats, int id);
 };
 
 
