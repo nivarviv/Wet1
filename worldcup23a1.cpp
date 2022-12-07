@@ -227,6 +227,19 @@ StatusType world_cup_t::update_player_stats(int playerId, int gamesPlayed,
     m_all_players_goals.insert(m_all_players_goals.getRoot(),(*tmp_player),tmp_player->getMyStats());
     tmp_team->addPlayer(tmp_player,tmp_player->getMyStats(),playerId);
 
+
+
+    if(tmp_player == m_all_players_goals->getBiggest(m_all_players_goals.getRoot())){
+        m_top_scorer = tmp_player;
+    }
+
+
+
+    if(tmp_player == tmp_team->getTopNewScorer()){
+        tmp_team->setTopScorer(tmp_player);
+    }
+
+
     //change old player pre and suc:
     player* oldPre=tmp_player->getPre();
     player* oldSuc=tmp_player->getSuc();
