@@ -496,7 +496,7 @@ StatusType world_cup_t::get_all_players(int teamId, int *const output)
         delete tmp_team;
     }
     else
-        m_all_players_different_order.storeInOrderRecursiveKey(m_all_players_different_order.getRoot(), output);
+        m_all_players_goals.storeInOrderRecursiveKey(m_all_players_goals.getRoot(), output);
     return StatusType::SUCCESS;
 }
 
