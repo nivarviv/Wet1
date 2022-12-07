@@ -309,10 +309,15 @@ T *AvlTree<T,K>::find_by_key(node<T,K>* node,K key) {
         return &node->data;
     }
     else{
-        if (key < node->key)
+        if (key < node->key){
             return find_by_key(node->left,key);
-        else if (key > node->key)
+        }
+        else if (key > node->key){
             return find_by_key(node->right,key);
+        }
+        else {
+            return NULL;
+        }
     }
 }
 
