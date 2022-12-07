@@ -14,15 +14,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="added getBiggest">
-      <change afterPath="$PROJECT_DIR$/node.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AvlTree.h" beforeDir="false" afterPath="$PROJECT_DIR$/AvlTree.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/player.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/player.cpp" afterDir="false" />
+    <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="need to fix the function when inputting into arrays">
       <change beforePath="$PROJECT_DIR$/player.h" beforeDir="false" afterPath="$PROJECT_DIR$/player.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/playerStats.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/playerStats.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/playerStats.h" beforeDir="false" afterPath="$PROJECT_DIR$/playerStats.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worldcup23a1.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/worldcup23a1.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -343,7 +336,13 @@
       <option name="presentableId" value="LOCAL‎00040" />
       <updated>1670410106081</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL‎00041" summary="need to fix the function when inputting into arrays">
+      <created>1670422381416</created>
+      <option name="number" value="LOCAL‎00041" />
+      <option name="presentableId" value="LOCAL‎00041" />
+      <updated>1670422381416</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -384,7 +383,8 @@
     <MESSAGE value="changes to insert and remove" />
     <MESSAGE value="changes :)" />
     <MESSAGE value="fixed find by key" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed find by key" />
+    <MESSAGE value="need to fix the function when inputting into arrays" />
+    <option name="LAST_COMMIT_MESSAGE" value="need to fix the function when inputting into arrays" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

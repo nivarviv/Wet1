@@ -28,7 +28,7 @@ public:
     void setRoot(node<T,K>* root);
     node<T,K>* getRoot();
     void storeInOrderRecursive(node<T, K> *root, node<T, K> **pNode1);
-    void storeInOrderRecursiveKey(node<T, K> *pNode, int *pNode1);
+    void storeInOrderRecursiveKey(node<T, K> *pNode, int* const output);
     void storeInOrderRecursiveByTerms(int min, int max,node<T, K> *pNode, T **pNode1);
     void storeInOrderRecursiveByTermsHelper(int min, int max,node<T, K> *pNode, T **pNode1);
     void arrayToBST(node<T, K> *pNode, node<T, K> *pNode1[]);
@@ -471,12 +471,12 @@ node<T, K> *AvlTree<T, K>::insert(node<T,K> *root, T data, K key) {
 }
 
 template<class T, class K>
-void AvlTree<T, K>::storeInOrderRecursiveKey(node<T, K> *pNode, int *pNode1) {
+void AvlTree<T, K>::storeInOrderRecursiveKey(node<T, K> *pNode, int *const output) {
     if(pNode == NULL)
         return;
-    storeInOrderRecursiveKey(pNode->left,pNode1);
-    (*pNode1)++ = pNode->data.getId();
-    storeInOrderRecursiveKey(pNode->right,pNode1);
+    storeInOrderRecursiveKey(pNode->left,output);
+    (*output)++ = pNode->data.getId();
+    storeInOrderRecursiveKey(pNode->right,output);
 }
 
 template<class T, class K>

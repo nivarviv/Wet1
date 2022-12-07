@@ -25,7 +25,7 @@ public:
     player(int playerId,int teamId, team* playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper);
     player();
     player addNewPlayer(int playerId, team* playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper);
-    //player(const player&) = default;// I think we need to do it not by default due to there is memory allocation
+    //player(const player&) = default; //I think we need to do it not by default due to there is memory allocation
     ~player();
     player& operator=(const player& other) = default;
     int totalGames() const;

@@ -13,7 +13,7 @@ public:
     node *left;
     node *right;
     int height;
-    node() = default;
+    node();
     ~node(){
         delete left;
         delete right;
