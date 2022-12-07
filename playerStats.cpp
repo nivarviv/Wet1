@@ -40,6 +40,5 @@ bool playerStats::operator==(const playerStats &ps) const {
             }
         }
     }
-    else
-        return false;
+    return false;
 }

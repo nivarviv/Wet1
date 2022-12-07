@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
-    <generated>
-      <config projectName="wet1" targetName="wet1" />
-    </generated>
+    <generated />
   </component>
   <component name="CMakeSettings">
     <configurations>
@@ -14,8 +12,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="need to fix the function when inputting into arrays">
-      <change beforePath="$PROJECT_DIR$/player.h" beforeDir="false" afterPath="$PROJECT_DIR$/player.h" afterDir="false" />
+    <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment=".">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/playerStats.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/playerStats.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,7 +24,6 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -66,16 +64,6 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="wet1" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="wet1" TARGET_NAME="wet1" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="wet1" RUN_TARGET_NAME="wet1">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -88,30 +76,6 @@
       <workItem from="1669205829216" duration="18980000" />
       <workItem from="1669727405644" duration="3630000" />
       <workItem from="1669748706252" duration="35160000" />
-    </task>
-    <task id="LOCAL‎00001" summary="added AVL functions">
-      <created>1669206420865</created>
-      <option name="number" value="LOCAL‎00001" />
-      <option name="presentableId" value="LOCAL‎00001" />
-      <updated>1669206420865</updated>
-    </task>
-    <task id="LOCAL‎00002" summary="added AVL functions">
-      <created>1669329001699</created>
-      <option name="number" value="LOCAL‎00002" />
-      <option name="presentableId" value="LOCAL‎00002" />
-      <updated>1669329001699</updated>
-    </task>
-    <task id="LOCAL‎00003" summary="added AVL insert using key">
-      <created>1669390580698</created>
-      <option name="number" value="LOCAL‎00003" />
-      <option name="presentableId" value="LOCAL‎00003" />
-      <updated>1669390580698</updated>
-    </task>
-    <task id="LOCAL‎00004" summary="fixed balance">
-      <created>1669472550750</created>
-      <option name="number" value="LOCAL‎00004" />
-      <option name="presentableId" value="LOCAL‎00004" />
-      <updated>1669472550750</updated>
     </task>
     <task id="LOCAL‎00005" summary="added rotations">
       <created>1669474027258</created>
@@ -336,13 +300,98 @@
       <option name="presentableId" value="LOCAL‎00040" />
       <updated>1670410106081</updated>
     </task>
-    <task id="LOCAL‎00041" summary="need to fix the function when inputting into arrays">
-      <created>1670422381416</created>
-      <option name="number" value="LOCAL‎00041" />
-      <option name="presentableId" value="LOCAL‎00041" />
-      <updated>1670422381416</updated>
+    <task id="LOCAL-00041" summary=".">
+      <created>1670413846217</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1670413846217</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary=".">
+      <created>1670414056053</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1670414056053</updated>
+    </task>
+    <task id="LOCAL-00043" summary=".">
+      <created>1670414419454</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1670414419454</updated>
+    </task>
+    <task id="LOCAL-00044" summary=".">
+      <created>1670414595912</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1670414595912</updated>
+    </task>
+    <task id="LOCAL-00045" summary=".">
+      <created>1670414765117</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1670414765117</updated>
+    </task>
+    <task id="LOCAL-00046" summary=".">
+      <created>1670415656404</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1670415656404</updated>
+    </task>
+    <task id="LOCAL-00047" summary=".">
+      <created>1670416335858</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1670416335858</updated>
+    </task>
+    <task id="LOCAL-00048" summary=".">
+      <created>1670416493007</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1670416493007</updated>
+    </task>
+    <task id="LOCAL-00049" summary=".">
+      <created>1670416567996</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1670416567996</updated>
+    </task>
+    <task id="LOCAL-00050" summary=".">
+      <created>1670416852573</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1670416852573</updated>
+    </task>
+    <task id="LOCAL-00051" summary=".">
+      <created>1670416930967</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1670416930967</updated>
+    </task>
+    <task id="LOCAL-00052" summary=".">
+      <created>1670417298387</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1670417298387</updated>
+    </task>
+    <task id="LOCAL-00053" summary=".">
+      <created>1670417419838</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1670417419838</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -379,12 +428,11 @@
     <MESSAGE value="updated" />
     <MESSAGE value="started on closest" />
     <MESSAGE value="added dynmaicArray" />
-    <MESSAGE value="." />
     <MESSAGE value="changes to insert and remove" />
     <MESSAGE value="changes :)" />
     <MESSAGE value="fixed find by key" />
-    <MESSAGE value="need to fix the function when inputting into arrays" />
-    <option name="LAST_COMMIT_MESSAGE" value="need to fix the function when inputting into arrays" />
+    <MESSAGE value="." />
+    <option name="LAST_COMMIT_MESSAGE" value="." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -393,11 +441,6 @@
           <url>file://$USER_HOME$/CLionProjects/matam/ex3/Queue.h</url>
           <line>16</line>
           <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/node.h</url>
-          <line>12</line>
-          <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
