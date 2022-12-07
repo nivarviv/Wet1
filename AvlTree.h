@@ -243,7 +243,7 @@ node<T,K> * AvlTree<T,K>::removeHelper(node<T,K>* root,K key) {
         {
             // node with two children: Get the inorder
             // successor (smallest in the right subtree)
-            node* temp = minValueNode(root->right);
+            node<T,K>* temp = minValueNode(root->right);
 
             // Copy the inorder successor's
             // data to this node
@@ -382,7 +382,7 @@ node<T,K>* AvlTree<T, K>::createEmptyTree(node<T,K> *node,int height) {
 
 template<class T, class K>
 void AvlTree<T, K>::setRoot(node<T,K> *root) {
-    m_root=node;
+    m_root=root;
 }
 
 template<class T, class K>
@@ -408,7 +408,7 @@ void AvlTree<T, K>::successorPredecessor(node<T, K> *root, K val, T *pre, T *suc
         // go to the right most element in the left subtree, it will the
         // predecessor.
         if (root->left != NULL) {
-            node *t = root->left;
+            node<T,K> *t = root->left;
             while (t->right != NULL) {
                 t = t->right;
             }
@@ -417,7 +417,7 @@ void AvlTree<T, K>::successorPredecessor(node<T, K> *root, K val, T *pre, T *suc
         if (root->right != NULL) {
             // go to the left most element in the right subtree, it will
             // the successor.
-            node *t = root->right;
+            node<T,K> *t = root->right;
             while (t->left != NULL) {
                 t = t->left;
             }
@@ -482,7 +482,7 @@ node<T, K> *AvlTree<T, K>::findBiggerThan(node<T, K> *node, node<T, K> *closest,
    NULL left and right pointers. */
 template<class T, class K>
 node<T, K> *AvlTree<T, K>::newNode(T data, K key) {
-    node* node = new node();
+    node<T,K>* node = new node();
     node->key = key;
     node->data = data;
     node->left = NULL;
@@ -497,8 +497,8 @@ node<T, K> *AvlTree<T, K>::newNode(T data, K key) {
 // See the diagram given above.
 template<class T, class K>
 node<T, K> *AvlTree<T, K>::rightRotate(node<T, K> *y) {
-    node *x = y->left;
-    node *T2 = x->right;
+    node<T,K> *x = y->left;
+    node<T,K> *T2 = x->right;
 
     // Perform rotation
     x->right = y;
@@ -519,8 +519,8 @@ node<T, K> *AvlTree<T, K>::rightRotate(node<T, K> *y) {
 // See the diagram given above.
 template<class T, class K>
 node<T, K> *AvlTree<T, K>::leftRotate(node<T, K> *x) {
-    node *y = x->right;
-    node *T2 = y->left;
+    node<T,K> *y = x->right;
+    node<T,K> *T2 = y->left;
 
     // Perform rotation
     y->left = x;
