@@ -38,7 +38,6 @@ public:
     node<T,K> * removeHelper(node<T,K>* node, K key);
 
     T *find_by_key(node<T,K>* node,K key);
-    //void deleteTree(node *r);
     void makeNearlyEmpty(node<T,K>* node, int *toDelete);
     node<T,K>* createEmptyTree(node<T,K> *node,int height);
     void setRoot(node<T,K>* root);
@@ -56,6 +55,8 @@ public:
     int getBalance(node<T,K> *N);
     node<T,K>* insert(node<T,K>* node, T data, K key);
     void deleteTree(node<T,K> *r);
+    bool compareStats(node<T, K> *node, playerStats key);
+    bool compareId(node<T, K> *node, int key);
 
     /*  int height(node *r);
 int bf(node *r);
@@ -322,7 +323,7 @@ T *AvlTree<T,K>::find_by_key(node<T,K>* node,K key) {
 }
 
 template<class T, class K>
-void AvlTree<T, K>::deleteTree(node *r) {
+void AvlTree<T, K>::deleteTree(node<T,K> *r) {
     if (r != NULL) {
         deleteTree(r->left);
         deleteTree(r->right);
@@ -385,12 +386,12 @@ m_root=node;
 }
 
 template<class T, class K>
-node<T,K>* *AvlTree<T, K>::getRoot() {
+node<T,K>* AvlTree<T, K>::getRoot() {
     return m_root;
 }
 
 template<class T, class K>
-void AvlTree<T, K>::storeInOrderRecursive(node *pNode, node **pNode1) {
+void AvlTree<T, K>::storeInOrderRecursive(node<T,K> *pNode, node<T,K> **pNode1) {
     if(pNode == NULL)
         return;
     storeInOrderRecursive(pNode->left,pNode1);
@@ -444,7 +445,7 @@ void AvlTree<T, K>::successorPredecessor(node<T, K> *root, K val, T *pre, T *suc
 template<class T, class K>
 void AvlTree<T, K>::storeInOrderRecursiveByTerms(int min, int max, node<T, K> *pNode, T **pNode1) {
     node<T,K>* closest=NULL;
-    node<T,K>* minNode=findBiggerThan(node,closest,min);
+    node<T,K>* minNode=findBiggerThan(pNode,closest,min);
     storeInOrderRecursiveByTermsHelper(min,max,minNode,pNode1);
 }
 
@@ -612,10 +613,6 @@ void AvlTree<T, K>::storeInOrderRecursiveKey(node<T, K> *pNode, int const *pNode
     return;
 }
 
-template<class T, class K>
-void AvlTree<T, K>::deleteTree() {
-
-}
 
 
 /*
