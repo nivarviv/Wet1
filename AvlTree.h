@@ -344,7 +344,7 @@ void AvlTree<T, K>::arrayToBST(node<T,K>* pNode, node<T,K> *pNode1[]) {
 
 template<class T, class K>
 void AvlTree<T, K>::makeNearlyEmpty(node<T,K> *node, int *toDelete) {
-    if(node=NULL)
+    if(node==NULL)
         return;
     if(*toDelete==0){
         return;
@@ -382,7 +382,7 @@ node<T,K>* AvlTree<T, K>::createEmptyTree(node<T,K> *node,int height) {
 
 template<class T, class K>
 void AvlTree<T, K>::setRoot(node<T,K> *root) {
-m_root=node;
+    m_root=node;
 }
 
 template<class T, class K>
