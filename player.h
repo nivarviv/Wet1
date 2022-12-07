@@ -4,7 +4,6 @@
 
 #ifndef WET1_PLAYER_H
 #define WET1_PLAYER_H
-#include "playerStats.h"
 #include "team.h"
 
 class player {

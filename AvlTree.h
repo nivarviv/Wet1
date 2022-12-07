@@ -6,9 +6,10 @@
 #define WET1_AVLTREE_H
 
 #include <iostream>
-#include "team.h"
+/*#include "team.h"
 #include "player.h"
-#include "playerStats.h"
+#include "playerStats.h"*/
+
 
 template<class T, class K>
 struct node {
@@ -54,7 +55,7 @@ public:
     int getBalance(node<T,K> *N);
     node<T,K>* insert(node<T,K>* node, T data, K key);
     void deleteTree(node<T,K> *r);
-    bool compareStats(node<T, K> *node, playerStats key);
+    bool compareStats(node<T, K> *node, K key);
     bool compareId(node<T, K> *node, int key);
 
     /*  int height(node *r);
@@ -671,8 +672,8 @@ T *AvlTree<T, K>::findPre(node<T, K> *node, K stats,node<T, K> *pre) {
 
 
 template<class T, class K>
-bool AvlTree<T, K>::compareStats(node<T, K> *node, playerStats key) {
-    if(key==node->key){
+bool AvlTree<T, K>::compareStats(node<T, K> *node, K key) {
+    if(<K>key==node->key){
         return true;
     }
     return false;

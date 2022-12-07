@@ -4,7 +4,7 @@
 
 #ifndef WET1_TEAM_H
 #define WET1_TEAM_H
-#include "player.h"
+class player;
 #include "playerStats.h"
 #include "AvlTree.h"
 
