@@ -83,7 +83,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
         player newPlayer;
         newPlayer.addNewPlayer(playerId,tmp_team,gamesPlayed,goals,cards,goalKeeper);
         playerStats newPlayerStats= newPlayer.getMyStats();
-        playerStatsDifferentOrder newPlayerDiffStats = newPlayer.getDiffStats();
+       // playerStatsDifferentOrder newPlayerDiffStats = newPlayer.getDiffStats();
 
         if(newPlayerStats > m_top_scorer->getMyStats()){
             m_top_scorer = &newPlayer;
