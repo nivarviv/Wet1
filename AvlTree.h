@@ -197,7 +197,7 @@ node<T, K> *AvlTree<T, K>::minValueNode(node<T,K> *node) {
 // given root. It returns root of the
 // modified subtree.
 template<class T, class K>
-node<T,K> * AvlTree<T,K>::removeHelper(node<T,K>* node,K key) {
+node<T,K> * AvlTree<T,K>::removeHelper(node<T,K>* root,K key) {
 
     // STEP 1: PERFORM STANDARD BST DELETE
     if (root == NULL)

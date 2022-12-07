@@ -408,7 +408,18 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
 
     team1->getArrayStats(arr1);
     team2->getArrayStats(arr2);
+
+
+
     mergeArrays(arr1,arr2,team1->getNumPlayers(),team2->getNumPlayers(),mergedArr);
+
+    team newTeam=team(newTeamId,team1->getNumPoints()+team2->getNumPoints());
+
+
+    for (int player = 0; player < newTeam.getNumPlayers(); player++){
+        mergedArr[player]->data->setMyTeam(&newTeam);
+    }
+
 
     int height=((int)log2(team2->getNumPlayers()+team1->getNumPlayers()+1))-1;
     AvlTree<player,playerStats> unitedTree=AvlTree<player,playerStats>();
@@ -419,7 +430,7 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
     unitedTree.makeNearlyEmpty(root, &toDelete);
     unitedTree.arrayToBST(root,mergedArr);
 
-    team newTeam=team(newTeamId,team1->getNumPoints()+team2->getNumPoints());
+
     newTeam.setTeamTree(unitedTree);
     m_all_teams.insert(m_all_teams.getRoot(),newTeam,newTeamId);
     if(newTeam.isTeamValid()){

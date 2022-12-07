@@ -43,6 +43,7 @@ public:
     void addGames(int games_played);
     void addCards(int cards);
     int getId() const;
+    void setMyTeam(team* new_team);
 
 };
 

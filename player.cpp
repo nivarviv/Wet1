@@ -100,3 +100,6 @@ int player::getId() const{
     return m_playerId;
 }
 
+void player::setMyTeam(team* new_team){
+    m_my_team = new_team;
+}
