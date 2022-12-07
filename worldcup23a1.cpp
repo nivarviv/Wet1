@@ -117,13 +117,13 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
 }
 
 
-void world_cup_t::fixClosest(player *player) { //fix here?
+void world_cup_t::fixClosest(player *changePlayer) {
     class player* pre1;
     class player* suc1;
-    m_all_players_goals.successorPredecessor(m_all_players_goals.getRoot(),player->getMyStats(),pre1,suc1);
-    (*player).setPre(pre1);
-    (*player).setSuc(suc1);
-    (*player).setClosest((*player).closestOfTwo(pre1,suc1));
+    m_all_players_goals.successorPredecessor(m_all_players_goals.getRoot(),changePlayer->getMyStats(),pre1,suc1);
+    changePlayer->setPre(pre1);
+    changePlayer->setSuc(suc1);
+    changePlayer->setClosest(changePlayer->closestOfTwo(pre1,suc1));
 }
 
 
@@ -193,10 +193,12 @@ StatusType world_cup_t::update_player_stats(int playerId, int gamesPlayed,
         return StatusType::FAILURE;
     }
 
+    // remove player with old stats
     m_all_players_different_order.remove(m_all_players_different_order.getRoot(),tmp_player->getDiffStats());
     m_all_players_goals.remove(m_all_players_goals.getRoot(),tmp_player->getMyStats());
     tmp_team->removePlayer(tmp_player->getMyStats(),playerId,tmp_player->getDiffStats());
 
+    // add player with new stats
     tmp_player->addCards(cardsReceived);
     tmp_player->addGames(gamesPlayed);
     tmp_player->addGoals(scoredGoals);
@@ -204,8 +206,35 @@ StatusType world_cup_t::update_player_stats(int playerId, int gamesPlayed,
     m_all_players_different_order.insert(m_all_players_different_order.getRoot(),(*tmp_player),tmp_player->getDiffStats());
     tmp_team->addPlayer(tmp_player,tmp_player->getMyStats(),playerId,tmp_player->getDiffStats());
 
+    //change old player pre and suc:
+    player* oldPre=tmp_player->getPre();
+    player* oldSuc=tmp_player->getSuc();
+    if(oldPre->getClosest()==tmp_player){
+        fixClosest(oldPre);
+    }
+    if(oldSuc->getClosest()==tmp_player){
+        fixClosest(oldSuc);
+    }
+
+    //update player's pre+suc and closest:
+    fixClosest(tmp_player);
+
+    //update new stats' player's pre and suc:
+    player* newPre=tmp_player->getPre();
+    player* newSuc=tmp_player->getSuc();
+    if(newPre->getClosest()==tmp_player){
+        fixClosest(newPre);
+    }
+    if(newSuc->getClosest()==tmp_player){
+        fixClosest(newSuc);
+    }
+
     delete tmp_player;
     delete tmp_team;
+    delete oldPre;
+    delete oldSuc;
+    delete newPre;
+    delete newSuc;
 
     return StatusType::SUCCESS;
 }
@@ -590,4 +619,6 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
         return out;
     }
 }
+
+
 

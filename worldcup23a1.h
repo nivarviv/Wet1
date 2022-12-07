@@ -38,6 +38,7 @@ private:
     int m_num_teams;
     int m_num_eligible_to_play_teams;
 
+
 public:
 	// <DO-NOT-MODIFY> {
 	
@@ -76,7 +77,7 @@ public:
 	
 	// } </DO-NOT-MODIFY>
 
-    void fixClosest(player* player);
+    void fixClosest(player* changePlayer);
 };
 
 

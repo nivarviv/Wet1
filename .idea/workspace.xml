@@ -12,8 +12,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="changes :)">
+    <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="fixed find by key">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/worldcup23a1.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/worldcup23a1.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/worldcup23a1.h" beforeDir="false" afterPath="$PROJECT_DIR$/worldcup23a1.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -322,7 +324,13 @@
       <option name="presentableId" value="LOCAL‎00039" />
       <updated>1670349200619</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL‎00040" summary="fixed find by key">
+      <created>1670410106081</created>
+      <option name="number" value="LOCAL‎00040" />
+      <option name="presentableId" value="LOCAL‎00040" />
+      <updated>1670410106081</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -362,7 +370,8 @@
     <MESSAGE value="." />
     <MESSAGE value="changes to insert and remove" />
     <MESSAGE value="changes :)" />
-    <option name="LAST_COMMIT_MESSAGE" value="changes :)" />
+    <MESSAGE value="fixed find by key" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed find by key" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
