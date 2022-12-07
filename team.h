@@ -47,6 +47,8 @@ public:
     void addGamePlayed();
     int getId() const;
     void deleteTeam();
+    playerStats getTopScorerStats() const;
+    void setTopScorer(player* player);
 
     /* AvlTree<player, int>* getTreeId() const;
     AvlTree<player, playerStats>* getTreeStats() const;

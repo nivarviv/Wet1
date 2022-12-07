@@ -9,21 +9,21 @@ bool playerStatsDifferentOrder::operator<(const playerStatsDifferentOrder& ps) c
     if(this->m_goals < ps.m_goals){
         return true;
     }
-    else if(this->m_goals < ps.m_goals){
+    else if(this->m_goals > ps.m_goals){
         return false;
     }
     else{
-        if(this->m_cards < ps.m_cards){
+        if(this->m_cards > ps.m_cards){
             return true;
         }
-        else if(this->m_cards > ps.m_goals){
+        else if(this->m_cards < ps.m_goals){
             return false;
         }
         else{
-            if(this->m_id > ps.m_id){
+            if(this->m_id < ps.m_id){
                 return true;
             }
-            else if(this->m_id < ps.m_id){
+            else if(this->m_id > ps.m_id){
                 return false;
             }
         }

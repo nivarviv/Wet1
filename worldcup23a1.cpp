@@ -86,10 +86,19 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
         playerStats newPlayerStats= newPlayer.getMyStats();
         playerStatsDifferentOrder newPlayerDiffStats = newPlayer.getDiffStats();
 
+        if(newPlayerStats > m_top_scorer->getMyStats()){
+            m_top_scorer = &newPlayer;
+        }
+
+
         tmp_team->addPlayer(&newPlayer,newPlayerStats,playerId,newPlayerDiffStats);
         m_all_players_goals.insert(m_all_players_goals.getRoot(),newPlayer,newPlayerStats);
         m_all_players_id.insert(m_all_players_id.getRoot(),newPlayer,playerId);
         m_all_players_different_order.insert(m_all_players_different_order.getRoot(),newPlayer,newPlayerDiffStats);
+
+        if(newPlayerStats > tmp_team->getTopScorerStats()){
+            tmp_team->setTopScorer(&newPlayer);
+        }
 
         player* pre;
         player* suc;
@@ -156,6 +165,8 @@ StatusType world_cup_t::remove_player(int playerId)
         m_allowed_to_play_teams.remove(m_allowed_to_play_teams.getRoot(),tmp->getId());
         m_num_eligible_to_play_teams--;
     }
+
+    
 
     //remove player from other trees:
     m_all_players_id.remove(m_all_players_id.getRoot(),playerId);
@@ -520,7 +531,6 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
         output_t<int> out(StatusType::INVALID_INPUT);
         return out;
     }
-    //todo: wrap it up in try and catch and in the catch return ALLOCATION
     try {
         team** arr_team = NULL;
         arr_team = new team*[m_num_eligible_to_play_teams];

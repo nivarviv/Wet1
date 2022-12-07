@@ -123,8 +123,16 @@ void team::getArrayDiffStats(int const *arr1) {
 }
 
 void team::deleteTeam() {
-m_tree_by_stats.deleteTree(m_tree_by_stats.getRoot());
-m_tree_by_diff_stats.deleteTree(m_tree_by_diff_stats.getRoot());
-m_tree_by_id.deleteTree(m_tree_by_id.getRoot());
-m_num_players=0;
+    m_tree_by_stats.deleteTree(m_tree_by_stats.getRoot());
+    m_tree_by_diff_stats.deleteTree(m_tree_by_diff_stats.getRoot());
+    m_tree_by_id.deleteTree(m_tree_by_id.getRoot());
+    m_num_players=0;
+}
+
+playerStats team::getTopScorerStats() const{
+    return m_top_scorer->getMyStats();
+}
+
+void team::setTopScorer(player* player){
+    m_top_scorer = player;
 }

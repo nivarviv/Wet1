@@ -7,14 +7,14 @@ bool playerStats::operator<(const playerStats& ps) const{
     if(this->m_goals < ps.m_goals){
         return true;
     }
-    else if(this->m_goals < ps.m_goals){
+    else if(this->m_goals > ps.m_goals){
         return false;
     }
     else{
-       if(this->m_cards < ps.m_cards){
+       if(this->m_cards > ps.m_cards){
            return true;
        }
-       else if(this->m_cards > ps.m_goals){
+       else if(this->m_cards < ps.m_cards){
            return false;
        }
        else{
