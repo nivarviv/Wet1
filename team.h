@@ -49,10 +49,11 @@ public:
     playerStats getTopScorerStats() const;
     player* getTopScorer() const;
     void setTopScorer(player* player);
-    player* getTopNewScorer() const;
+    player* getTopNewScorer();
+    void getArrayId(int const *arr1);
 
     /* AvlTree<player, int>* getTreeId() const;
-    AvlTree<player, playerStats>* getTreeStats() const;
+    AvlTree<player, playerStats>* getTreeStats() const;*/
 
 };
 

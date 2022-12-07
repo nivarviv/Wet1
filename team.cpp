@@ -138,6 +138,6 @@ player* team::getTopScorer() const{
 }
 
 
-player* team::getTopNewScorer() const{
+player* team::getTopNewScorer(){
     return m_tree_by_stats.getBiggest(m_tree_by_stats.getRoot());
 }
