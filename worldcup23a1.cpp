@@ -83,6 +83,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
         player newPlayer;
         newPlayer.addNewPlayer(playerId,tmp_team,gamesPlayed,goals,cards,goalKeeper);
         playerStats newPlayerStats= newPlayer.getMyStats();
+        playerStatsDifferentOrder newPlayerDiffStats = newPlayer.getDiffStats();
 
         if(newPlayerStats > m_top_scorer->getMyStats()){
             m_top_scorer = &newPlayer;
@@ -92,6 +93,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
         tmp_team->addPlayer(&newPlayer,newPlayerStats,playerId);
         m_all_players_goals.insert(m_all_players_goals.getRoot(),newPlayer,newPlayerStats);
         m_all_players_id.insert(m_all_players_id.getRoot(),newPlayer,playerId);
+        m_all_players_different_order.insert(m_all_players_different_order.getRoot(),newPlayer,newPlayerDiffStats);
 
         if(newPlayerStats > tmp_team->getTopScorerStats()){
             tmp_team->setTopScorer(&newPlayer);
@@ -163,11 +165,25 @@ StatusType world_cup_t::remove_player(int playerId)
         m_num_eligible_to_play_teams--;
     }
 
-    
+
+
+    if(playerToDelete == tmp->getTopScorer()){
+        tmp->setTopScorer(tmp->getTopNewScorer());
+    }
+
+
+
 
     //remove player from other trees:
     m_all_players_id.remove(m_all_players_id.getRoot(),playerId);
     m_all_players_goals.remove(m_all_players_goals.getRoot(),(*playerToDelete).getMyStats());
+   // m_all_players_different_order.remove(m_all_players_different_order.getRoot(),(*playerToDelete).getDiffStats()); // add this helper func
+
+    if(playerToDelete == m_top_scorer){
+        m_top_scorer = m_all_players_goals.getBiggest(m_all_players_goals.getRoot());
+    }
+
+
     delete tmp;
     delete pre;
     delete suc;

@@ -18,6 +18,7 @@ team::team(int teamId, int points)
     m_tree_by_id = AvlTree<player, int>();
     m_tree_by_stats = AvlTree<player, playerStats>();
     m_numGoalKeepers=0;
+    m_tree_by_diff_stats=AvlTree<player, playerStatsDifferentOrder>();
 }
 
 int team::getNumGames(){
@@ -91,6 +92,13 @@ void team::addGamePlayed() {
     m_num_games++;
 }
 
+/*AvlTree<player, playerStats>* team::getTreeStats() const{
+    return m_tree_by_stats;
+}
+AvlTree<player, playerStatsDifferentOrder>* team::getTreeDiffStats() const{
+    return m_tree_for_all_players;
+}*/
+
 int team::getId() const {
     return m_teamId;
 }
@@ -101,10 +109,8 @@ void team::getArrayId(int const *arr1) {
 }
 
 void team::deleteTeam() {
-m_tree_by_stats.deleteTree(m_tree_by_stats.getRoot());
-m_tree_by_id.deleteTree(m_tree_by_id.getRoot());
-m_num_players=0;
     m_tree_by_stats.deleteTree(m_tree_by_stats.getRoot());
+    m_tree_by_diff_stats.deleteTree(m_tree_by_diff_stats.getRoot());
     m_tree_by_id.deleteTree(m_tree_by_id.getRoot());
     m_num_players=0;
 }
@@ -126,4 +132,14 @@ void team::removePlayer(playerStats stats, int id) {
             m_has_goalkeeper= false;
         }
     }
+}
+
+
+player* team::getTopScorer() const{
+    return m_top_scorer;
+}
+
+
+player* team::getTopNewScorer() const{
+    return m_tree_by_stats.getBiggest(m_tree_by_stats.getRoot());
 }
