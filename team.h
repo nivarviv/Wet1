@@ -4,7 +4,7 @@
 
 #ifndef WET1_TEAM_H
 #define WET1_TEAM_H
-#include "player.h"
+class player;
 #include "playerStats.h"
 #include "AvlTree.h"
 
@@ -12,7 +12,7 @@ class team {
 private:
     int m_num_players;
     bool m_has_goalkeeper;
-    int m_has_goalkeeper;
+    int m_total_goals;
     int m_total_cards;
     int m_points;
     int m_num_games;
@@ -31,6 +31,8 @@ public:
     ~team();
     team& operator=(const team& other) = default;//we don't want to allow that
     void addPlayer(player* player, playerStats stats,int id);
+    void removePlayer(playerStats stats, int id);
+    void addPlayer(player* player, playerStats stats,int id);
     int top_scorer_id() const;
     int getNumPlayers();
     int getNumPoints();
@@ -45,9 +47,14 @@ public:
     int getId() const;
     void deleteTeam();
     playerStats getTopScorerStats() const;
+    player* getTopScorer() const;
     void setTopScorer(player* player);
+    player* getTopNewScorer();
     void getArrayId(int const *arr1);
-    void removePlayer(playerStats stats, int id);
+
+    /* AvlTree<player, int>* getTreeId() const;
+    AvlTree<player, playerStats>* getTreeStats() const;*/
+
 };
 
 

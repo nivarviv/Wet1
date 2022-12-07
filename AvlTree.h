@@ -6,9 +6,10 @@
 #define WET1_AVLTREE_H
 
 #include <iostream>
-#include "team.h"
+/*#include "team.h"
 #include "player.h"
-#include "playerStats.h"
+#include "playerStats.h"*/
+
 
 template<class T, class K>
 struct node {
@@ -32,12 +33,9 @@ private:
 public:
     AvlTree();
     ~AvlTree();
-    void insert(node<T,K>* node,T value, K key);
-    node<T,K> * minValueNode(node<T,K>* node)
+    node<T,K> * minValueNode(node<T,K>* node);
     node<T,K> * removeHelper(node<T,K>* node, K key);
-
     T *find_by_key(node<T,K>* node,K key);
-    //void deleteTree(node *r);
     void makeNearlyEmpty(node<T,K>* node, int *toDelete);
     node<T,K>* createEmptyTree(node<T,K> *node,int height);
     void setRoot(node<T,K>* root);
@@ -57,6 +55,8 @@ public:
     void deleteTree(node<T,K> *r);
     void remove(node<T, K> *node, K key);
     T* getBiggest(node<T, K> *root);
+    bool compareStats(node<T, K> *node, K key);
+    bool compareId(node<T, K> *node, int key);
 }
 /////////////////////////////////////////////////////implementation//////////////////////////////////////////////////
 
@@ -184,7 +184,7 @@ node<T, K> *AvlTree<T, K>::minValueNode(node<T,K> *node) {
 // given root. It returns root of the
 // modified subtree.
 template<class T, class K>
-node<T,K> * AvlTree<T,K>::removeHelper(node<T,K>* node,K key) {
+node<T,K> * AvlTree<T,K>::removeHelper(node<T,K>* root,K key) {
 
     // STEP 1: PERFORM STANDARD BST DELETE
     if (root == NULL)
@@ -229,7 +229,7 @@ node<T,K> * AvlTree<T,K>::removeHelper(node<T,K>* node,K key) {
         {
             // node with two children: Get the inorder
             // successor (smallest in the right subtree)
-            node* temp = minValueNode(root->right);
+            node<T,K>* temp = minValueNode(root->right);
 
             // Copy the inorder successor's
             // data to this node
@@ -309,7 +309,7 @@ T *AvlTree<T,K>::find_by_key(node<T,K>* node,K key) {
 }
 
 template<class T, class K>
-void AvlTree<T, K>::deleteTree(node *r) {
+void AvlTree<T, K>::deleteTree(node<T,K> *r) {
     if (r != NULL) {
         deleteTree(r->left);
         deleteTree(r->right);
@@ -330,7 +330,7 @@ void AvlTree<T, K>::arrayToBST(node<T,K>* pNode, node<T,K> *pNode1[]) {
 
 template<class T, class K>
 void AvlTree<T, K>::makeNearlyEmpty(node<T,K> *node, int *toDelete) {
-    if(node=NULL)
+    if(node==NULL)
         return;
     if(*toDelete==0){
         return;
@@ -368,16 +368,16 @@ node<T,K>* AvlTree<T, K>::createEmptyTree(node<T,K> *node,int height) {
 
 template<class T, class K>
 void AvlTree<T, K>::setRoot(node<T,K> *root) {
-m_root=node;
+    m_root=root;
 }
 
 template<class T, class K>
-node<T,K>* *AvlTree<T, K>::getRoot() {
+node<T,K>* AvlTree<T, K>::getRoot() {
     return m_root;
 }
 
 template<class T, class K>
-void AvlTree<T, K>::storeInOrderRecursive(node *pNode, node **pNode1) {
+void AvlTree<T, K>::storeInOrderRecursive(node<T,K> *pNode, node<T,K> **pNode1) {
     if(pNode == NULL)
         return;
     storeInOrderRecursive(pNode->left,pNode1);
@@ -394,20 +394,20 @@ void AvlTree<T, K>::successorPredecessor(node<T, K> *root, K val, T *pre, T *suc
         // go to the right most element in the left subtree, it will the
         // predecessor.
         if (root->left != NULL) {
-            node *t = root->left;
+            node<T,K> *t = root->left;
             while (t->right != NULL) {
                 t = t->right;
             }
-            pre = t->data;
+            *pre = t->data;
         }
         if (root->right != NULL) {
             // go to the left most element in the right subtree, it will
             // the successor.
-            node *t = root->right;
+            node<T,K> *t = root->right;
             while (t->left != NULL) {
                 t = t->left;
             }
-            suc = t->data;
+            *suc = t->data;
         }
         return;
     }
@@ -431,7 +431,7 @@ void AvlTree<T, K>::successorPredecessor(node<T, K> *root, K val, T *pre, T *suc
 template<class T, class K>
 void AvlTree<T, K>::storeInOrderRecursiveByTerms(int min, int max, node<T, K> *pNode, T **pNode1) {
     node<T,K>* closest=NULL;
-    node<T,K>* minNode=findBiggerThan(node,closest,min);
+    node<T,K>* minNode=findBiggerThan(pNode,closest,min);
     storeInOrderRecursiveByTermsHelper(min,max,minNode,pNode1);
 }
 
@@ -468,7 +468,7 @@ node<T, K> *AvlTree<T, K>::findBiggerThan(node<T, K> *node, node<T, K> *closest,
    NULL left and right pointers. */
 template<class T, class K>
 node<T, K> *AvlTree<T, K>::newNode(T data, K key) {
-    node* node = new node();
+    node<T,K>* node = new node();
     node->key = key;
     node->data = data;
     node->left = NULL;
@@ -483,8 +483,8 @@ node<T, K> *AvlTree<T, K>::newNode(T data, K key) {
 // See the diagram given above.
 template<class T, class K>
 node<T, K> *AvlTree<T, K>::rightRotate(node<T, K> *y) {
-    node *x = y->left;
-    node *T2 = x->right;
+    node<T,K> *x = y->left;
+    node<T,K> *T2 = x->right;
 
     // Perform rotation
     x->right = y;
@@ -505,8 +505,8 @@ node<T, K> *AvlTree<T, K>::rightRotate(node<T, K> *y) {
 // See the diagram given above.
 template<class T, class K>
 node<T, K> *AvlTree<T, K>::leftRotate(node<T, K> *x) {
-    node *y = x->right;
-    node *T2 = y->left;
+    node<T,K> *y = x->right;
+    node<T,K> *T2 = y->left;
 
     // Perform rotation
     y->left = x;
@@ -665,8 +665,8 @@ T *AvlTree<T, K>::findPre(node<T, K> *node, K stats,node<T, K> *pre) {
 
 
 template<class T, class K>
-bool AvlTree<T, K>::compareStats(node<T, K> *node, playerStats key) {
-    if(key==node->key){
+bool AvlTree<T, K>::compareStats(node<T, K> *node, K key) {
+    if(<K>key==node->key){
         return true;
     }
     return false;
