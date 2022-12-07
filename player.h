@@ -6,7 +6,6 @@
 #define WET1_PLAYER_H
 #include "playerStats.h"
 #include "team.h"
-#include "playerStatsDifferentOrder.h"
 
 class player {
 private:
