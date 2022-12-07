@@ -32,7 +32,6 @@ private:
     AvlTree<team, int> m_allowed_to_play_teams;
     AvlTree<player, int> m_all_players_id;
     AvlTree<player, playerStats> m_all_players_goals;
-    AvlTree<player, playerStatsDifferentOrder> m_all_players_different_order;
     player* m_top_scorer;
     int m_total_players;
     int m_num_teams;

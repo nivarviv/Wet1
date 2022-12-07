@@ -7,7 +7,6 @@ world_cup_t::world_cup_t()
     m_allowed_to_play_teams = AvlTree<team, int>();
     m_all_players_id = AvlTree<player, int>();
     m_all_players_goals = AvlTree<player, playerStats>();
-    m_all_players_different_order=AvlTree<player,playerStatsDifferentOrder>();
     m_top_scorer = NULL;
     m_total_players = 0;
     m_num_teams = 0;
@@ -84,17 +83,15 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
         player newPlayer;
         newPlayer.addNewPlayer(playerId,tmp_team,gamesPlayed,goals,cards,goalKeeper);
         playerStats newPlayerStats= newPlayer.getMyStats();
-        playerStatsDifferentOrder newPlayerDiffStats = newPlayer.getDiffStats();
 
         if(newPlayerStats > m_top_scorer->getMyStats()){
             m_top_scorer = &newPlayer;
         }
 
 
-        tmp_team->addPlayer(&newPlayer,newPlayerStats,playerId,newPlayerDiffStats);
+        tmp_team->addPlayer(&newPlayer,newPlayerStats,playerId);
         m_all_players_goals.insert(m_all_players_goals.getRoot(),newPlayer,newPlayerStats);
         m_all_players_id.insert(m_all_players_id.getRoot(),newPlayer,playerId);
-        m_all_players_different_order.insert(m_all_players_different_order.getRoot(),newPlayer,newPlayerDiffStats);
 
         if(newPlayerStats > tmp_team->getTopScorerStats()){
             tmp_team->setTopScorer(&newPlayer);
@@ -171,7 +168,6 @@ StatusType world_cup_t::remove_player(int playerId)
     //remove player from other trees:
     m_all_players_id.remove(m_all_players_id.getRoot(),playerId);
     m_all_players_goals.remove(m_all_players_goals.getRoot(),(*playerToDelete).getMyStats());
-    m_all_players_different_order.remove(m_all_players_different_order.getRoot(),(*playerToDelete).getDiffStats()); // add this helper func
     delete tmp;
     delete pre;
     delete suc;
@@ -205,17 +201,15 @@ StatusType world_cup_t::update_player_stats(int playerId, int gamesPlayed,
     }
 
     // remove player with old stats
-    m_all_players_different_order.remove(m_all_players_different_order.getRoot(),tmp_player->getDiffStats());
     m_all_players_goals.remove(m_all_players_goals.getRoot(),tmp_player->getMyStats());
-    tmp_team->removePlayer(tmp_player->getMyStats(),playerId,tmp_player->getDiffStats());
+    tmp_team->removePlayer(tmp_player->getMyStats(),playerId);
 
     // add player with new stats
     tmp_player->addCards(cardsReceived);
     tmp_player->addGames(gamesPlayed);
     tmp_player->addGoals(scoredGoals);
     m_all_players_goals.insert(m_all_players_goals.getRoot(),(*tmp_player),tmp_player->getMyStats());
-    m_all_players_different_order.insert(m_all_players_different_order.getRoot(),(*tmp_player),tmp_player->getDiffStats());
-    tmp_team->addPlayer(tmp_player,tmp_player->getMyStats(),playerId,tmp_player->getDiffStats());
+    tmp_team->addPlayer(tmp_player,tmp_player->getMyStats(),playerId);
 
     //change old player pre and suc:
     player* oldPre=tmp_player->getPre();
@@ -492,7 +486,7 @@ StatusType world_cup_t::get_all_players(int teamId, int *const output)
             return StatusType::FAILURE;
         }
 
-        tmp_team->getArrayDiffStats(output);
+        tmp_team->getArrayId(output);
         delete tmp_team;
     }
     else
