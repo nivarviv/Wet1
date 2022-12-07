@@ -7,6 +7,7 @@
 class player;
 #include "playerStats.h"
 #include "AvlTree.h"
+#include "node.h"
 
 class team {
 private:
@@ -32,7 +33,6 @@ public:
     team& operator=(const team& other) = default;//we don't want to allow that
     void addPlayer(player* player, playerStats stats,int id);
     void removePlayer(playerStats stats, int id);
-    void addPlayer(player* player, playerStats stats,int id);
     int top_scorer_id() const;
     int getNumPlayers();
     int getNumPoints();
