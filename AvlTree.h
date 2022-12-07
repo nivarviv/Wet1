@@ -33,7 +33,7 @@ private:
 public:
     AvlTree();
     ~AvlTree();
-    void insert(node<T,K>* node,T value, K key);
+    //void insert(node<T,K>* node,T value, K key);
     node<T,K> * minValueNode(node<T,K>* node);
     node<T,K> * removeHelper(node<T,K>* node, K key);
 
