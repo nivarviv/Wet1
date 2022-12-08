@@ -4,8 +4,9 @@
 
 #ifndef WET1_PLAYER_H
 #define WET1_PLAYER_H
+#include "playerStats.h"
 class team;
-class playerStats;
+
 
 class player {
 private:

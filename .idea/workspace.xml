@@ -16,7 +16,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/player.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/player.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/player.h" beforeDir="false" afterPath="$PROJECT_DIR$/player.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/team.h" beforeDir="false" afterPath="$PROJECT_DIR$/team.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/team.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/team.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,12 +78,6 @@
       <workItem from="1669205829216" duration="18980000" />
       <workItem from="1669727405644" duration="3630000" />
       <workItem from="1669748706252" duration="35160000" />
-    </task>
-    <task id="LOCAL‎00008" summary="added player ctor">
-      <created>1669481065513</created>
-      <option name="number" value="LOCAL‎00008" />
-      <option name="presentableId" value="LOCAL‎00008" />
-      <updated>1669481065513</updated>
     </task>
     <task id="LOCAL‎00009" summary="added team funcs">
       <created>1669577265772</created>
@@ -396,7 +390,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670496751841</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary=".">
+      <created>1670498431334</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1670498431334</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

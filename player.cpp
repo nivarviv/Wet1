@@ -4,7 +4,7 @@
 
 #include "player.h"
 #include "team.h"
-#include "playerStats.h"
+
 
 
 player::player(int playerId,int teamId, team* playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper) :
