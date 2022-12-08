@@ -5,6 +5,7 @@
 #ifndef WET1_PLAYER_H
 #define WET1_PLAYER_H
 class team;
+class playerStats;
 
 class player {
 private:
