@@ -20,3 +20,8 @@ public:
     }
 };
 #endif //WORLDCUP23A1_CPP_NODE_H
+
+
+
+
+//todo: implement operator=

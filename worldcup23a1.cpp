@@ -18,6 +18,49 @@ world_cup_t::~world_cup_t()
     delete m_top_scorer;
 }
 
+
+void mergeArrays(playerStats* arr1[], playerStats* arr2[], int m, int n, playerStats* arr3[]){
+    int i = 0;
+    int j = 0;
+    int k = 0;
+    //Traverse both arrays
+    while (i<m && j<n){
+        //check if current element of first
+        //array is smaller than current element
+        //of second array. if yes, store first
+        //array element and increment first array
+        //index. Otherwise, do same with second array
+        if(arr1[i] < arr2[j]){
+            arr3[k++] = arr1[i++];
+        }
+        else{
+            arr3[k++] = arr2[j++];
+        }
+    }
+}
+
+void mergeArrays(player* arr1[], player* arr2[], int m, int n, player* arr3[]){
+    int i = 0;
+    int j = 0;
+    int k = 0;
+    //Traverse both arrays
+    while (i<m && j<n){
+        //check if current element of first
+        //array is smaller than current element
+        //of second array. if yes, store first
+        //array element and increment first array
+        //index. Otherwise, do same with second array
+        if(arr1[i] < arr2[j]){
+            arr3[k++] = arr1[i++];
+        }
+        else{
+            arr3[k++] = arr2[j++];
+        }
+    }
+}
+
+
+
 StatusType world_cup_t::add_team(int teamId, int points)
 {
     if(teamId <= 0 || points < 0){
@@ -655,6 +698,5 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
         return out;
     }
 }
-
 
 

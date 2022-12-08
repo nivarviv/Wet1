@@ -121,7 +121,7 @@ void team::setTopScorer(player* player){
     m_top_scorer = player;
 }
 void team::removePlayer(playerStats stats, int id) {
-    player* tmp = m_tree_by_stats.find_by_key(m_tree_by_stats.getRoot(), id);
+    player* tmp = m_tree_by_id.find_by_key(m_tree_by_id.getRoot(), id);
     if(tmp->isGoalKeeper()){
         m_numGoalKeepers--;
         if(m_numGoalKeepers == 0){
@@ -131,7 +131,7 @@ void team::removePlayer(playerStats stats, int id) {
     m_tree_by_stats.remove(m_tree_by_stats.getRoot(),stats);
     m_tree_by_id.remove(m_tree_by_id.getRoot(),id);
     m_num_players--;
-
+    delete tmp;
 }
 
 
