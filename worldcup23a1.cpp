@@ -52,6 +52,9 @@ StatusType world_cup_t::remove_team(int teamId)
     }
     else{
         m_all_teams.remove(m_all_teams.getRoot(),teamId);
+        if(team1->isTeamValid()){
+            m_allowed_to_play_teams.remove(m_allowed_to_play_teams.getRoot(),teamId);
+        }
         delete team1;
         m_num_teams--;
         return StatusType::SUCCESS;

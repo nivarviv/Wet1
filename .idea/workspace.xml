@@ -83,12 +83,6 @@
       <workItem from="1669727405644" duration="3630000" />
       <workItem from="1669748706252" duration="35160000" />
     </task>
-    <task id="LOCAL‎00006" summary="added rotations">
-      <created>1669474078835</created>
-      <option name="number" value="LOCAL‎00006" />
-      <option name="presentableId" value="LOCAL‎00006" />
-      <updated>1669474078835</updated>
-    </task>
     <task id="LOCAL‎00007" summary="added remove">
       <created>1669477952919</created>
       <option name="number" value="LOCAL‎00007" />
@@ -398,7 +392,13 @@
       <option name="project" value="LOCAL" />
       <updated>1670430913001</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL‎00055" summary="tree merge">
+      <created>1670489495389</created>
+      <option name="number" value="LOCAL‎00055" />
+      <option name="presentableId" value="LOCAL‎00055" />
+      <updated>1670489495390</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -439,7 +439,8 @@
     <MESSAGE value="changes :)" />
     <MESSAGE value="fixed find by key" />
     <MESSAGE value="." />
-    <option name="LAST_COMMIT_MESSAGE" value="." />
+    <MESSAGE value="tree merge" />
+    <option name="LAST_COMMIT_MESSAGE" value="tree merge" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
