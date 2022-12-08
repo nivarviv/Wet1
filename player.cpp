@@ -3,7 +3,7 @@
 //
 
 #include "player.h"
-
+#include "team.h"
 
 player::player(int playerId,int teamId, team* playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper) :
                 m_playerId(playerId),m_teamId(teamId) ,m_my_team(playerTeam), m_gamesPlayed(gamesPlayed), m_goals(goals), m_cards(cards), m_goalKeeper(goalKeeper),

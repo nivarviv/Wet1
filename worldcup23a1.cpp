@@ -345,7 +345,7 @@ output_t<int> world_cup_t::get_team_points(int teamId)
     ///to do: see how to handle bad alloc
     //these two might throw exceptions
 /*    wanted_team = new team;
-    team* wanted_team = new team; ///alloc?
+    team* wanted_team = new team; ///alloc??
     if(!wanted_team){
         output_t<int> out(StatusType::ALLOCATION_ERROR); //fix
         delete wanted_team;

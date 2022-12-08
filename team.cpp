@@ -4,7 +4,7 @@
 //
 
 #include "team.h"
-
+#include "player.h"
 team::team(int teamId, int points)
 {
     m_num_players=0;
