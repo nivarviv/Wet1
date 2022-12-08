@@ -47,9 +47,9 @@ public:
 
     void storeInorder(node<T,K>* root, T* inorder[],K* inorder2[], int *index_ptr);
     node<T,K>* sortedArrayToBST(T* playerArr[], K* keyArr[], int start, int end);
-    node<T,K>* mergeTrees(node<T,K> *root1, node<T,K> *root2, int size1, int size2);
-
-};
+    node<T,K>* mergeTrees(T** mergedTArr, K** mergedKArr,int size1, int size2);
+    void storeInorderTerms(int min, int max, node<T, K> *root, T** inorder ,int *index_ptr);
+    };
 /////////////////////////////////////////////////////implementation//////////////////////////////////////////////////
 template<class T, class K>
 AvlTree<T,K>::AvlTree() : m_root(NULL) {}
@@ -519,7 +519,7 @@ int AvlTree<T, K>::height(node<T, K> *N) {
 // A helper function that stores inorder
 // traversal of a tree rooted with node
 template<class T, class K>
-void AvlTree<T, K>::storeInorder(node<T, K> *root, T **inorder,K** inorder2, int *index_ptr) {
+void AvlTree<T, K>::storeInorder(node<T, K> *root, T** inorder,K** inorder2, int *index_ptr) {
     if (root == NULL)
         return;
 
@@ -561,7 +561,7 @@ node<T,K>* AvlTree<T, K>::sortedArrayToBST(T* playerArr[], K* keyArr[], int star
 template<class T, class K>
 T** merge(T* arr1[], T* arr2[], int m, int n) {
     // mergedArr[] is going to contain result
-    int *mergedArr = new int[m + n];
+    T *mergedArr = new int[m + n];
     int i = 0, j = 0, k = 0;
     // Traverse through both arrays
     while (i < m && j < n){
@@ -593,28 +593,45 @@ T** merge(T* arr1[], T* arr2[], int m, int n) {
 BSTs with roots as root1 and root2.
 m and n are the sizes of the trees respectively */
 template<class T, class K>
-node<T, K> *AvlTree<T, K>::mergeTrees(node<T, K> *root1, node<T, K> *root2, int size1, int size2) {
-        // Store inorder traversal of
+node<T, K> *AvlTree<T, K>::mergeTrees(T** mergedTArr, K** mergedKArr,int size1, int size2) {
+       /* // Store inorder traversal of
         // first tree in an array arr1[]
-        T *arrT1 = new T[size1];
-        K *arrK1 = new K[size1];
+        T* arrT1 = new T[size1];
+        K* arrK1 = new K[size1];
         int i = 0;
         storeInorder(root1, arrT1, arrK1, &i);
 
         // Store inorder traversal of second
         // tree in another array arr2[]
-        T *arrT2 = new T[size2];
-        K *arrK2 = new K[size2];
+        T* arrT2 = new T[size2];
+        K* arrK2 = new K[size2];
         int j = 0;
         storeInorder(root1, arrT2, arrK2, &j);
 
         // Merge the two sorted array into one
         T *mergedTArr = merge(arrT1, arrT2, size1, size2);
         K *mergedKArr = merge(arrK1, arrK2, size1, size2);
-
+*/
         // Construct a tree from the merged
         // array and return root of the tree
         return sortedArrayToBST(mergedTArr, mergedKArr, 0, size1 + size2 - 1);
     }
+
+
+template<class T, class K>
+void AvlTree<T, K>::storeInorderTerms(int min, int max, node<T, K> *root, T** inorder, int *index_ptr) {
+    if (root == NULL|| root->key>max || root->key<min)
+        return;
+
+    /* first recur on left child */
+    storeInorderTerms(min,max,root->left, inorder, index_ptr);
+
+    inorder[*index_ptr] = &(root->data);
+    (*index_ptr)++; // increase index for next entry
+
+    /* now recur on right child */
+    storeInorderTerms(min,max,root->right, inorder, index_ptr);
+}
+
 
 #endif //WET1_AVLTREE_H

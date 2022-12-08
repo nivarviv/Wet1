@@ -4,10 +4,9 @@
 
 #ifndef WET1_TEAM_H
 #define WET1_TEAM_H
-class player;
+#include "player.h"
 #include "playerStats.h"
 #include "AvlTree.h"
-#include "node.h"
 
 class team {
 private:
@@ -33,6 +32,7 @@ public:
     team& operator=(const team& other) = default;//we don't want to allow that
     void addPlayer(player* player, playerStats stats,int id);
     void removePlayer(playerStats stats, int id);
+    void addPlayer(player* player, playerStats stats,int id);
     int top_scorer_id() const;
     int getNumPlayers();
     int getNumPoints();
@@ -55,6 +55,7 @@ public:
     /* AvlTree<player, int>* getTreeId() const;
     AvlTree<player, playerStats>* getTreeStats() const;*/
 
+    void storeTree(player **arrT1, playerStats **arrK1);
 };
 
 

@@ -109,3 +109,22 @@ int player::getTeamId() {
 
 player::player() : m_playerId(0),m_teamId(0) ,m_my_team(NULL), m_gamesPlayed(0), m_goals(0), m_cards(0), m_goalKeeper(false),
                    m_stats(playerStats(0, 0, 0)), m_closest(NULL), m_pre(NULL), m_suc(NULL), m_teamGamesWO(0){}
+
+player &player::operator=(const player &other) {
+    if (this==&other){
+        return *this;
+    }
+    m_playerId=other.m_playerId;
+    m_my_team=other.m_my_team;
+    m_teamId=other.m_teamId;
+    m_gamesPlayed=other.m_gamesPlayed;
+    m_stats=other.m_stats;
+    m_goals=other.m_goals;
+    m_cards=other.m_cards;
+    m_goalKeeper=other.m_goalKeeper;
+    m_closest=other.m_closest;
+    m_pre=other.m_pre;
+    m_suc=other.m_suc;
+    m_teamGamesWO=other.m_teamGamesWO;
+    return *this;
+}

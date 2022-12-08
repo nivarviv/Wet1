@@ -80,7 +80,8 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
     }
     try {
         m_total_players++;
-        player newPlayer(playerId,teamId,tmp_team,gamesPlayed,goals,cards,goalKeeper);
+        player newPlayer;
+        newPlayer.addNewPlayer(playerId,teamId,tmp_team,gamesPlayed,goals,cards,goalKeeper);
         playerStats newPlayerStats= newPlayer.getMyStats();
         if(newPlayerStats > m_top_scorer->getMyStats()){
             m_top_scorer = &newPlayer;
@@ -359,33 +360,6 @@ output_t<int> world_cup_t::get_team_points(int teamId)
     return out;
 }
 
-//helper merge-sort
-void mergeArrays(node<player,playerStats>* arr1[], node<player,playerStats>* arr2[], int m,int n, node<player,playerStats>* arr3[]){
-    int i = 0;
-    int j = 0;
-    int k = 0;
-
-    // Traverse both array
-    while (i<m && j <n){
-        // Check if current element of first
-        // array is smaller than current element
-        // of second array. If yes, store first
-        // array element and increment first array
-        // index. Otherwise do same with second array
-        if (arr1[i] < arr2[j])
-            arr3[k++] = arr1[i++];
-        else
-            arr3[k++] = arr2[j++];
-    }
-
-    // Store remaining elements of first array
-    while (i < m)
-        arr3[k++] = arr1[i++];
-
-    // Store remaining elements of second array
-    while (j < n)
-        arr3[k++] = arr2[j++];
-}
 StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
 {
     if(newTeamId <= 0 || teamId1 <= 0 || teamId2 <= 0 || teamId1 == teamId2){
@@ -394,19 +368,35 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
 
     team* team1=m_all_teams.find_by_key(m_all_teams.getRoot(),teamId1);
     team* team2=m_all_teams.find_by_key(m_all_teams.getRoot(),teamId2);
-
+/*
     node<player,playerStats>* arr1[team1->getNumPlayers()];
     node<player,playerStats>* arr2[team2->getNumPlayers()];
     node<player,playerStats>* mergedArr[team2->getNumPlayers()+team1->getNumPlayers()];
 
     team1->getArrayStats(arr1);
     team2->getArrayStats(arr2);
-
-
-
-    mergeArrays(arr1,arr2,team1->getNumPlayers(),team2->getNumPlayers(),mergedArr);
-
+    */
+//////////////////////////////////////////////////// maybe?
+    player** arrT1 = new player*[team1->getNumPlayers()];
+    playerStats** arrK1 = new playerStats*[team1->getNumPlayers()];
+    team1->storeTree(arrT1,arrK1);
+    player** arrT2 = new player*[team2->getNumPlayers()];
+    playerStats** arrK2 = new playerStats*[team2->getNumPlayers()];
+    team2->storeTree(arrT2,arrK2);
+    player** mergedPlayer = new player*[team1->getNumPlayers()+team2->getNumPlayers()];
+    playerStats** mergedKeys = new playerStats*[team1->getNumPlayers()+team2->getNumPlayers()];
+    mergeArrays(arrT1,arrT2,team1->getNumPlayers(),team2->getNumPlayers(),mergedPlayer);
+    mergeArrays(arrK1,arrK2,team1->getNumPlayers(),team2->getNumPlayers(),mergedKeys);
     team newTeam=team(newTeamId,team1->getNumPoints()+team2->getNumPoints());
+    for (int player = 0; player < (team1->getNumPlayers()+team2->getNumPlayers()); player++){
+        mergedPlayer[player]->setMyTeam(&newTeam);
+    }
+    AvlTree<player, playerStats> unitedNewTree;
+    unitedNewTree.setRoot(unitedNewTree.mergeTrees(mergedPlayer,mergedKeys,team1->getNumPlayers(),team2->getNumPlayers()));
+    newTeam.setTeamTree(unitedNewTree);
+////////////////////////////////////////////////////
+    /*
+    mergeArrays(arr1,arr2,team1->getNumPlayers(),team2->getNumPlayers(),mergedArr);
 
 
     for (int player = 0; player < newTeam.getNumPlayers(); player++){
@@ -425,6 +415,8 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
 
 
     newTeam.setTeamTree(unitedTree);
+    */
+
     m_all_teams.insert(m_all_teams.getRoot(),newTeam,newTeamId);
     if(newTeam.isTeamValid()){
         m_allowed_to_play_teams.insert(m_allowed_to_play_teams.getRoot(),newTeam,newTeamId);
@@ -564,7 +556,11 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
         for(int i = 0; i < m_num_eligible_to_play_teams; i++){
             arr_team[i] = NULL;
         }
-        m_allowed_to_play_teams.storeInOrderRecursiveByTerms(minTeamId,maxTeamId,m_allowed_to_play_teams.getRoot(),arr_team);//probably need to implement in avltree unless there is a better soultion
+        //////////////////////////////////////////////////////// maybe?
+        int i=0;
+        m_allowed_to_play_teams.storeInorderTerms(minTeamId,maxTeamId,m_allowed_to_play_teams.getRoot(),arr_team,&i);
+        //m_allowed_to_play_teams.storeInOrderRecursiveByTerms(minTeamId,maxTeamId,m_allowed_to_play_teams.getRoot(),arr_team);//probably need to implement in avltree unless there is a better soultion
+        ///////////////////////////////////////////////////////
         AvlTree<team, int> knock_out_tree;
         int num_eligible_in_terms_teams = 0;
         for(int i = 0; i < m_num_eligible_to_play_teams; i++){

@@ -22,12 +22,12 @@ private:
     int m_teamGamesWO; // num games the team played without him!
 
 public:
-    player(int playerId,int teamId, team* playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper);
     player();
+    player(int playerId,int teamId, team* playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper);
     player addNewPlayer(int playerId, team* playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper);
     //player(const player&) = default; //I think we need to do it not by default due to there is memory allocation
     ~player();
-    player& operator=(const player& other) = default;
+    player& operator=(const player& other);
     int totalGames() const;
     team* getMyTeam() const;
     playerStats getMyStats() const;

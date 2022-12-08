@@ -37,11 +37,11 @@ int team::getNumPlayers()
     return m_num_players;
 }
 
-void team::getArrayStats(node<player,playerStats>** arr1)
+/*void team::getArrayStats(node<player,playerStats>** arr1)
 {
     node<player,playerStats>* root=m_tree_by_stats.getRoot();
     m_tree_by_stats.storeInOrderRecursive(root,arr1);
-}
+}*/
 
 void team::setTeamTree(AvlTree<player, playerStats> tree) {
     m_tree_by_stats=tree;
@@ -102,10 +102,10 @@ int team::getId() const {
     return m_teamId;
 }
 
-void team::getArrayId(int const *arr1) {
+/*void team::getArrayId(int const *arr1) {
     node<player,playerStats>* root=m_tree_by_stats.getRoot();
     m_tree_by_stats.storeInOrderRecursiveKey(root,arr1);
-}
+}*/
 
 void team::deleteTeam() {
     m_tree_by_stats.deleteTree(m_tree_by_stats.getRoot());
@@ -141,3 +141,14 @@ player* team::getTopScorer() const{
 player* team::getTopNewScorer(){
     return m_tree_by_stats.getBiggest(m_tree_by_stats.getRoot());
 }
+
+void team::storeTree(player **arrT1, playerStats **arrK1){
+    int i = 0;
+    m_tree_by_stats.storeInorder(m_tree_by_stats.getRoot(), arrT1, arrK1, &i);
+}
+/*
+
+AvlTree<player, playerStats> *team::getTreeStats() {
+    return &m_tree_by_stats;
+}
+*/
