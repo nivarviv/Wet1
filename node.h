@@ -24,4 +24,3 @@ public:
 
 
 
-//todo: implement operator=
