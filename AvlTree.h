@@ -480,7 +480,8 @@ void AvlTree<T, K>::storeInOrderRecursiveKey(node<T, K> *pNode, int *const outpu
     if(pNode == NULL)
         return;
     storeInOrderRecursiveKey(pNode->left,output);
-    (*output)++ = pNode->data.getId();
+    (*output) = pNode->data.getId();
+    (*output)++;
     storeInOrderRecursiveKey(pNode->right,output);
 }
 
@@ -543,7 +544,7 @@ node<T,K>* AvlTree<T, K>::sortedArrayToBST(T* playerArr[], K* keyArr[], int star
 
     /* Get the middle element and make it root */
     int mid = (start + end)/2;
-    node<T,K> *root = newNode(playerArr[mid],keyArr[mid]);
+    node<T,K> *root = newNode(*playerArr[mid],*keyArr[mid]);
 
     /* Recursively construct the left subtree and make it
     left child of root */

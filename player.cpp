@@ -69,7 +69,7 @@ player *player::getClosest() const{
 }
 
 player player::addNewPlayer(int playerId, team *playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper) {
-    player newPlayer=player(playerId,m_teamId, playerTeam, gamesPlayed, goals, cards, goalKeeper);
+    player newPlayer = player(playerId,playerTeam->getId(), playerTeam, gamesPlayed, goals, cards, goalKeeper);
     return newPlayer;
 }
 
