@@ -37,7 +37,7 @@ public:
     int getNumPlayers();
     int getNumPoints();
     void setTeamTree( AvlTree<player, playerStats> tree);
-    void getArrayStats(node<player,playerStats>** arr1);
+    //void getArrayStats(node<player,playerStats>** arr1);
     player* findPlayerById(int id);
     bool isTeamValid() const;
     int getNumGoals();
