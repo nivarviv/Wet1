@@ -15,7 +15,7 @@ player::player(int playerId,int teamId, team* playerTeam, int gamesPlayed, int g
 }
 
 int player::totalGames() const{
-    return m_gamesPlayed + (*m_my_team).getNumGames() - m_teamGamesWO;
+    return m_gamesPlayed + m_my_team->getNumGames() - m_teamGamesWO;
 }
 
 playerStats player::getMyStats() const{
