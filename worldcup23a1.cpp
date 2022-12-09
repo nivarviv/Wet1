@@ -15,9 +15,12 @@ world_cup_t::world_cup_t()
 
 world_cup_t::~world_cup_t()
 {
+    m_all_teams.deleteTree(m_all_teams.getRoot());
+    m_all_players_goals.deleteTree(m_all_players_goals.getRoot());
+    m_allowed_to_play_teams.deleteTree(m_allowed_to_play_teams.getRoot());
+    m_all_players_id.deleteTree(m_all_players_id.getRoot());
     delete m_top_scorer;
 }
-
 
 void mergeArrays(playerStats* arr1[], playerStats* arr2[], int m, int n, playerStats* arr3[]){
     int i = 0;
