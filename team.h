@@ -1,12 +1,12 @@
 //
 // Created by 97254 on 21/11/2022.
 //
-
+#include "AvlTree.h"
 #ifndef WET1_TEAM_H
 #define WET1_TEAM_H
 #include "player.h"
 #include "playerStats.h"
-#include "AvlTree.h"
+
 
 class team {
 private:
@@ -32,7 +32,7 @@ public:
     team& operator=(const team& other) = default;//we don't want to allow that
     void addPlayer(player* player, playerStats stats,int id);
     void removePlayer(playerStats stats, int id);
-   // void addPlayer(player* player, playerStats stats,int id);
+    // void addPlayer(player* player, playerStats stats,int id);
     int top_scorer_id() const;
     int getNumPlayers();
     int getNumPoints();
@@ -50,7 +50,7 @@ public:
     player* getTopScorer() const;
     void setTopScorer(player* player);
     player* getTopNewScorer();
-    void getArrayId(int const *arr1);
+    void getArrayId(int *const arr1);
 
     /* AvlTree<player, int>* getTreeId() const;
     AvlTree<player, playerStats>* getTreeStats() const;*/

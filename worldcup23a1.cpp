@@ -76,7 +76,7 @@ StatusType world_cup_t::add_team(int teamId, int points)
     m_all_teams.insert(m_all_teams.getRoot(),team1, teamId);
     delete tmp;
     m_num_teams++;
-	return StatusType::SUCCESS;
+    return StatusType::SUCCESS;
 }
 
 StatusType world_cup_t::remove_team(int teamId)
@@ -108,7 +108,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
                                    int goals, int cards, bool goalKeeper)
 {
     if(playerId <= 0 || teamId <= 0 || gamesPlayed < 0 || goals < 0 ||
-        cards < 0 || (gamesPlayed == 0 && (goals > 0 || cards > 0))){
+       cards < 0 || (gamesPlayed == 0 && (goals > 0 || cards > 0))){
         return StatusType::INVALID_INPUT;
     }
     player* tmp_player = m_all_players_id.find_by_key(m_all_players_id.getRoot(),playerId);
@@ -161,7 +161,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
     } catch (std::exception& e) {
         return StatusType::ALLOCATION_ERROR;
     }
-	return StatusType::SUCCESS;
+    return StatusType::SUCCESS;
 }
 
 
@@ -217,7 +217,7 @@ StatusType world_cup_t::remove_player(int playerId)
     //remove player from other trees:
     m_all_players_id.remove(m_all_players_id.getRoot(),playerId);
     m_all_players_goals.remove(m_all_players_goals.getRoot(),(*playerToDelete).getMyStats());
-   // m_all_players_different_order.remove(m_all_players_different_order.getRoot(),(*playerToDelete).getDiffStats()); // add this helper func
+    // m_all_players_different_order.remove(m_all_players_different_order.getRoot(),(*playerToDelete).getDiffStats()); // add this helper func
 
     if(playerToDelete == m_top_scorer){
         m_top_scorer = m_all_players_goals.getBiggest(m_all_players_goals.getRoot());
@@ -232,17 +232,17 @@ StatusType world_cup_t::remove_player(int playerId)
 }
 
 StatusType world_cup_t::update_player_stats(int playerId, int gamesPlayed,
-                                        int scoredGoals, int cardsReceived)
+                                            int scoredGoals, int cardsReceived)
 {
     if(playerId <= 0 || gamesPlayed < 0 || scoredGoals < 0 || cardsReceived < 0){
         return StatusType::INVALID_INPUT;
     }
     ///to do: see how to handle bad alloc
-  /*  auto* tmp_player = new player;
-    if(!tmp_player){
-        delete tmp_player;
-        return StatusType::ALLOCATION_ERROR;
-    }*/
+    /*  auto* tmp_player = new player;
+      if(!tmp_player){
+          delete tmp_player;
+          return StatusType::ALLOCATION_ERROR;
+      }*/
 
     player* tmp_player = m_all_players_id.find_by_key(m_all_players_id.getRoot(),playerId);
     if(tmp_player == NULL){
@@ -358,12 +358,12 @@ output_t<int> world_cup_t::get_num_played_games(int playerId)
         return out;
     }
     //todo: see how to handle bad alloc
-   /* player* player1 = new player*; ///alloc?
-    if(!player1){
-        delete player1;
-        output_t<int> out(StatusType::ALLOCATION_ERROR);
-        return out;
-    }*/
+    /* player* player1 = new player*; ///alloc?
+     if(!player1){
+         delete player1;
+         output_t<int> out(StatusType::ALLOCATION_ERROR);
+         return out;
+     }*/
 
     player* player1 = m_all_players_id.find_by_key(m_all_players_id.getRoot(),playerId);//returns null if haven't found
     if(player1 == NULL){
@@ -374,7 +374,7 @@ output_t<int> world_cup_t::get_num_played_games(int playerId)
 
     output_t<int> out(player1->totalGames());
     delete player1;
-	return out;
+    return out;
 }
 
 
@@ -471,7 +471,7 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
     team2->deleteTeam();
     remove_team(teamId1);
     remove_team(teamId2);
-	return StatusType::SUCCESS;
+    return StatusType::SUCCESS;
 }
 
 output_t<int> world_cup_t::get_top_scorer(int teamId)
@@ -556,7 +556,6 @@ StatusType world_cup_t::get_all_players(int teamId, int *const output)
             delete tmp_team;
             return StatusType::FAILURE;
         }
-
         tmp_team->getArrayId(output);
         delete tmp_team;
     }
@@ -635,12 +634,12 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
                 }
                 int second_team = curr_team+1;
                 int team1_points = arr_team[first_team]->getNumPoints(),
-                    team2_points = arr_team[second_team]->getNumPoints();
+                        team2_points = arr_team[second_team]->getNumPoints();
                 int team1_id = arr_team[first_team]->getId(),
-                    team2_id = arr_team[second_team]->getId();
+                        team2_id = arr_team[second_team]->getId();
                 play_match(team1_id, team2_id);
                 int curr_points_team1 = arr_team[first_team]->getNumPoints(),
-                    curr_points_team2 = arr_team[second_team]->getNumPoints();
+                        curr_points_team2 = arr_team[second_team]->getNumPoints();
                 if(team1_points + 3 == curr_points_team1 && team2_points == curr_points_team2){
                     unite_teams(team1_id, team2_id, team1_id);
                     arr_team[second_team] = NULL;//maybe need to create new array each while iteration in size/2

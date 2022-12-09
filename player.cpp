@@ -8,11 +8,11 @@
 
 
 player::player(int playerId,int teamId, team* playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper) :
-                m_playerId(playerId),m_teamId(teamId) ,m_my_team(playerTeam), m_gamesPlayed(gamesPlayed), m_goals(goals), m_cards(cards), m_goalKeeper(goalKeeper),
-                m_stats(playerStats(playerId, cards, goals)), m_closest(NULL), m_pre(NULL), m_suc(NULL), m_teamGamesWO(0)
-                {
+        m_playerId(playerId),m_teamId(teamId) ,m_my_team(playerTeam), m_gamesPlayed(gamesPlayed), m_goals(goals), m_cards(cards), m_goalKeeper(goalKeeper),
+        m_stats(playerStats(playerId, cards, goals)), m_closest(NULL), m_pre(NULL), m_suc(NULL), m_teamGamesWO(0)
+{
     m_teamGamesWO = (*m_my_team).getNumGames();
-                }
+}
 
 int player::totalGames() const{
     return m_gamesPlayed + (*m_my_team).getNumGames() - m_teamGamesWO;

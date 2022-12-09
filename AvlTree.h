@@ -11,6 +11,39 @@
 #include "player.h"
 #include "playerStats.h"*/
 
+//
+// Created by user on 07/12/2022.
+//
+
+#ifndef WORLDCUP23A1_CPP_NODE_H
+#define WORLDCUP23A1_CPP_NODE_H
+template<class T, class K>
+class node
+{
+public:
+    K key;
+    T data;
+    node *left;
+    node *right;
+    int height;
+    node();
+    ~node(){
+        delete left;
+        delete right;
+    }
+};
+#endif //WORLDCUP23A1_CPP_NODE_H
+
+
+
+
+
+
+
+
+
+
+
 template<class T, class K>
 class AvlTree {
 private:
@@ -45,24 +78,25 @@ public:
     bool compareId(node<T, K> *root, int key);
     node<T, K> *findBiggerThan(node<T, K> *root, node<T, K> *closest, int min);
 
+    int max2(int a, int b)
+    {
+        return (a > b)? a : b;
+    }
+
     void storeInorder(node<T,K>* root, T* inorder[],K* inorder2[], int *index_ptr);
     node<T,K>* sortedArrayToBST(T* playerArr[], K* keyArr[], int start, int end);
     node<T,K>* mergeTrees(T** mergedTArr, K** mergedKArr,int size1, int size2);
     void storeInorderTerms(int min, int max, node<T, K> *root, T** inorder ,int *index_ptr);
-    };
+};
 /////////////////////////////////////////////////////implementation//////////////////////////////////////////////////
 template<class T, class K>
 AvlTree<T,K>::AvlTree() : m_root(NULL) {}
 
 template<class T, class K>
 AvlTree<T,K>::~AvlTree() {
-        deleteTree(this->m_root);
-    }
-
-int max(int a, int b)
-{
-    return (a > b)? a : b;
+    deleteTree(this->m_root);
 }
+
 
 /* Given a non-empty binary search tree,
 return the node with minimum key value
@@ -111,8 +145,8 @@ node<T,K> * AvlTree<T,K>::removeHelper(node<T,K>* root,K key) {
             (root->right == NULL) )
         {
             node<T,K> *temp = root->left ?
-                         root->left :
-                         root->right;
+                              root->left :
+                              root->right;
 
             // No child case
             if (temp == NULL)
@@ -137,7 +171,7 @@ node<T,K> * AvlTree<T,K>::removeHelper(node<T,K>* root,K key) {
 
             // Delete the inorder successor
             root->right = removeHelper(root->right,
-                                     temp->key);
+                                       temp->key);
         }
     }
 
@@ -147,8 +181,8 @@ node<T,K> * AvlTree<T,K>::removeHelper(node<T,K>* root,K key) {
         return root;
 
     // STEP 2: UPDATE HEIGHT OF THE CURRENT NODE
-    root->height = 1 + max(height(root->left),
-                           height(root->right));
+    root->height = 1 + max2(height(root->left),
+                            height(root->right));
 
     // STEP 3: GET THE BALANCE FACTOR OF
     // THIS NODE (to check whether this
@@ -185,7 +219,7 @@ node<T,K> * AvlTree<T,K>::removeHelper(node<T,K>* root,K key) {
     }
 
     return root;
-    }
+}
 
 template<class T, class K>
 T *AvlTree<T,K>::find_by_key(node<T,K>* root,K key) {
@@ -303,17 +337,17 @@ void AvlTree<T, K>::successorPredecessor(node<T, K> *root, K val, T *pre, T *suc
         // situation when value matches with the root, it wont have
         // right subtree to find the successor, in that case we need
         // parent to be the successor
-            suc = &root->data;
-            successorPredecessor(root->left,val,pre,suc);
-        } else if (root->key < val) {
-            // we make the root as predecessor because we might have a
-            // situation when value matches with the root, it wont have
-            // left subtree to find the predecessor, in that case we need
-            // parent to be the predecessor.
-            pre = &root->data;
-            successorPredecessor(root->right,val,pre,suc);
-        }
+        suc = &root->data;
+        successorPredecessor(root->left,val,pre,suc);
+    } else if (root->key < val) {
+        // we make the root as predecessor because we might have a
+        // situation when value matches with the root, it wont have
+        // left subtree to find the predecessor, in that case we need
+        // parent to be the predecessor.
+        pre = &root->data;
+        successorPredecessor(root->right,val,pre,suc);
     }
+}
 
 template<class T, class K>
 void AvlTree<T, K>::storeInOrderRecursiveByTerms(int min, int max, node<T, K> *pNode, T **pNode1) {
@@ -377,10 +411,10 @@ node<T, K> *AvlTree<T, K>::rightRotate(node<T, K> *y) {
     y->left = T2;
 
     // Update heights
-    y->height = max(height(y->left),
-                    height(y->right)) + 1;
-    x->height = max(height(x->left),
-                    height(x->right)) + 1;
+    y->height = max2(height(y->left),
+                     height(y->right)) + 1;
+    x->height = max2(height(x->left),
+                     height(x->right)) + 1;
 
     // Return new root
     return x;
@@ -399,10 +433,10 @@ node<T, K> *AvlTree<T, K>::leftRotate(node<T, K> *x) {
     x->right = T2;
 
     // Update heights
-    x->height = max(height(x->left),
-                    height(x->right)) + 1;
-    y->height = max(height(y->left),
-                    height(y->right)) + 1;
+    x->height = max2(height(x->left),
+                     height(x->right)) + 1;
+    y->height = max2(height(y->left),
+                     height(y->right)) + 1;
 
     // Return new root
     return y;
@@ -438,8 +472,8 @@ node<T, K> *AvlTree<T, K>::insert(node<T,K> *root, T data, K key) {
         return root;
 
     /* 2. Update height of this ancestor node */
-    root->height = 1 + max(height(root->left),
-                           height(root->right));
+    root->height = 1 + max2(height(root->left),
+                            height(root->right));
 
     /* 3. Get the balance factor of this ancestor
         node to check whether this node became
@@ -595,28 +629,28 @@ BSTs with roots as root1 and root2.
 m and n are the sizes of the trees respectively */
 template<class T, class K>
 node<T, K> *AvlTree<T, K>::mergeTrees(T** mergedTArr, K** mergedKArr,int size1, int size2) {
-       /* // Store inorder traversal of
-        // first tree in an array arr1[]
-        T* arrT1 = new T[size1];
-        K* arrK1 = new K[size1];
-        int i = 0;
-        storeInorder(root1, arrT1, arrK1, &i);
+    /* // Store inorder traversal of
+     // first tree in an array arr1[]
+     T* arrT1 = new T[size1];
+     K* arrK1 = new K[size1];
+     int i = 0;
+     storeInorder(root1, arrT1, arrK1, &i);
 
-        // Store inorder traversal of second
-        // tree in another array arr2[]
-        T* arrT2 = new T[size2];
-        K* arrK2 = new K[size2];
-        int j = 0;
-        storeInorder(root1, arrT2, arrK2, &j);
+     // Store inorder traversal of second
+     // tree in another array arr2[]
+     T* arrT2 = new T[size2];
+     K* arrK2 = new K[size2];
+     int j = 0;
+     storeInorder(root1, arrT2, arrK2, &j);
 
-        // Merge the two sorted array into one
-        T *mergedTArr = merge(arrT1, arrT2, size1, size2);
-        K *mergedKArr = merge(arrK1, arrK2, size1, size2);
+     // Merge the two sorted array into one
+     T *mergedTArr = merge(arrT1, arrT2, size1, size2);
+     K *mergedKArr = merge(arrK1, arrK2, size1, size2);
 */
-        // Construct a tree from the merged
-        // array and return root of the tree
-        return sortedArrayToBST(mergedTArr, mergedKArr, 0, size1 + size2 - 1);
-    }
+    // Construct a tree from the merged
+    // array and return root of the tree
+    return sortedArrayToBST(mergedTArr, mergedKArr, 0, size1 + size2 - 1);
+}
 
 
 template<class T, class K>

@@ -102,10 +102,10 @@ int team::getId() const {
     return m_teamId;
 }
 
-/*void team::getArrayId(int const *arr1) {
+void team::getArrayId(int *const arr1) {
     node<player,playerStats>* root=m_tree_by_stats.getRoot();
     m_tree_by_stats.storeInOrderRecursiveKey(root,arr1);
-}*/
+}
 
 void team::deleteTeam() {
     m_tree_by_stats.deleteTree(m_tree_by_stats.getRoot());

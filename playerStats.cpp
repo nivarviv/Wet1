@@ -11,21 +11,21 @@ bool playerStats::operator<(const playerStats& ps) const{
         return false;
     }
     else{
-       if(this->m_cards > ps.m_cards){
-           return true;
-       }
-       else if(this->m_cards < ps.m_cards){
-           return false;
-       }
-       else{
-           if(this->m_id < ps.m_id){
-               return true;
-           }
-           else if(this->m_id > ps.m_id){
-               return false;
-           }
-           return true;
-       }
+        if(this->m_cards > ps.m_cards){
+            return true;
+        }
+        else if(this->m_cards < ps.m_cards){
+            return false;
+        }
+        else{
+            if(this->m_id < ps.m_id){
+                return true;
+            }
+            else if(this->m_id > ps.m_id){
+                return false;
+            }
+            return true;
+        }
     }
 }
 bool playerStats::operator>(const playerStats& ps) const{
