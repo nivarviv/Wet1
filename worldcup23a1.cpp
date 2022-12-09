@@ -194,13 +194,6 @@ StatusType world_cup_t::remove_player(int playerId)
     player* pre=playerToDelete->getPre();
     player* suc=playerToDelete->getSuc();
 
-    //fix deleted players pre and suc closest:
-    if(pre->getClosest()==playerToDelete){
-        fixClosest(pre);
-    }
-    if(suc->getClosest()==playerToDelete){
-        fixClosest(suc);
-    }
 
     //if team is not valid to play anymore - remove from tree and update the num of valid teams:
     (*tmp).removePlayer((*playerToDelete).getMyStats(),playerId);
@@ -210,13 +203,9 @@ StatusType world_cup_t::remove_player(int playerId)
     }
 
 
-
     if(playerToDelete == tmp->getTopScorer()){
         tmp->setTopScorer(tmp->getTopNewScorer());
     }
-
-
-
 
     //remove player from other trees:
     m_all_players_id.remove(m_all_players_id.getRoot(),playerId);
@@ -227,6 +216,13 @@ StatusType world_cup_t::remove_player(int playerId)
         m_top_scorer = m_all_players_goals.getBiggest(m_all_players_goals.getRoot());
     }
 
+    //fix deleted players pre and suc closest:
+    if(pre->getClosest()==playerToDelete){
+        fixClosest(pre);
+    }
+    if(suc->getClosest()==playerToDelete){
+        fixClosest(suc);
+    }
 
     delete tmp;
     delete pre;
