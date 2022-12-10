@@ -1,0 +1,3 @@
+"C:\Program Files\JetBrains\CLion 2021.2.3\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\Wet1.dir/objects.a
+C:\MinGW\bin\ar.exe cr CMakeFiles\Wet1.dir/objects.a @CMakeFiles\Wet1.dir\objects1.rsp
+C:\MinGW\bin\g++.exe -O3 -DNDEBUG -Wl,--whole-archive CMakeFiles\Wet1.dir/objects.a -Wl,--no-whole-archive -o Wet1.exe -Wl,--out-implib,libWet1.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\Wet1.dir\linklibs.rsp
