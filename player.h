@@ -15,7 +15,7 @@ private:
     team* m_my_team;
     int m_teamId;
     int m_gamesPlayed;//before joining
-    playerStats m_stats;
+    playerStats m_stats{};
     int m_goals;
     int m_cards;
     bool m_goalKeeper;
@@ -28,7 +28,7 @@ public:
     player();
     player(int playerId,int teamId, team* playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper);
     player addNewPlayer(int playerId, team* playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper);
-    //player(const player&) = default; //I think we need to do it not by default due to there is memory allocation
+    player(const player& other);
     ~player();
     player& operator=(const player& other);
     bool operator==(const player &p) const;

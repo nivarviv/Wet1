@@ -14,6 +14,8 @@ public:
     playerStats() = default;
     playerStats(int id, int cards, int goals): m_id(id), m_cards(cards), m_goals(goals){}
     ~playerStats() = default;
+    playerStats(const playerStats& other) = default;
+    playerStats& operator=(const playerStats& other)= default;
     bool operator<(const playerStats& ps) const;
     bool operator>(const playerStats& ps) const;
     bool operator==(const playerStats& ps) const;

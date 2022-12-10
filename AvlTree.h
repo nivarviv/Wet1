@@ -34,7 +34,9 @@ public:
 };
 
 template<class T, class K>
-node<T, K>::node(T m_data, K m_key) : key(m_key), data(m_data), right(nullptr), left(nullptr), height(1){}
+node<T, K>::node(T m_data, K m_key) : key(m_key), data(m_data), right(nullptr), left(nullptr), height(1){
+    std::cout<< "nodector";
+}
 
 #endif //WORLDCUP23A1_CPP_NODE_H
 
@@ -304,9 +306,9 @@ void AvlTree<T, K>::storeInOrderRecursive(node<T,K> *root, node<T,K> **pNode1) {
 template<class T, class K>
 void AvlTree<T, K>::successorPredecessor(node<T, K> *root, K val, T *pre, T *suc) {
     // Base case
-    if (root == nullptr)  return ;
+    if (root == nullptr)  return;
     K rootKey=root->key;
-    if (rootKey==val) {
+    if (root->key==val) {
         // go to the right most element in the left subtree, it will the
         // predecessor.
         if (root->left != nullptr) {
@@ -384,6 +386,7 @@ node<T, K> *AvlTree<T, K>::findBiggerThan(node<T, K> *root, node<T, K> *closest,
 template<class T, class K>
 node<T, K> *AvlTree<T, K>::newNode(T data, K key) {
     node<T,K>* newNode = new node<T, K>(data,key);
+    std::cout<< "new node";
     newNode->key = key;
     newNode->data = data;
     newNode->left = nullptr;
@@ -457,6 +460,7 @@ node<T, K> *AvlTree<T, K>::insertHelper(node<T,K> *root, T data, K key) {
 /* 1. Perform the normal BST insertion */
     if (root == nullptr){
         root=newNode(data,key); //maybe fix unchanging root?
+        std::cout<< "sadddd";
         return root;
     }
 

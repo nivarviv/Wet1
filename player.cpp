@@ -160,3 +160,18 @@ bool player::operator==(const player &p) const {
     }
     return false;
 }
+
+player::player(const player &other) {
+    m_playerId=other.m_playerId;
+    m_my_team=other.m_my_team;
+    m_teamId=other.m_teamId;
+    m_gamesPlayed=other.m_gamesPlayed;
+    m_stats=playerStats(other.m_playerId, other.m_cards, other.m_goals);
+    m_goals=other.m_goals;
+    m_cards=other.m_cards;
+    m_goalKeeper=other.m_goalKeeper;
+    m_closest=other.m_closest;
+    m_pre=other.m_pre;
+    m_suc=other.m_suc;
+    m_teamGamesWO=other.m_teamGamesWO;
+}

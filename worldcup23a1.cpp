@@ -130,8 +130,8 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
     }
     try {
         m_total_players++;
-        player newPlayer;
-        newPlayer.addNewPlayer(playerId,tmp_team,gamesPlayed,goals,cards,goalKeeper);
+        player newPlayer = player(playerId,teamId,tmp_team,gamesPlayed,goals,cards,goalKeeper);
+        //newPlayer.addNewPlayer(playerId,tmp_team,gamesPlayed,goals,cards,goalKeeper);
         playerStats newPlayerStats = newPlayer.getMyStats();
         if(m_top_scorer == nullptr){
             m_top_scorer = &newPlayer;
@@ -140,6 +140,8 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
             m_top_scorer = &newPlayer;
         }
         tmp_team->addPlayer(&newPlayer,newPlayerStats,playerId);
+        std::cout<< "here";
+
         m_all_players_goals.insert(m_all_players_goals.getRoot(),newPlayer,newPlayerStats);
         m_all_players_id.insert(m_all_players_id.getRoot(),newPlayer,playerId);
         if(newPlayerStats > tmp_team->getTopScorerStats()){

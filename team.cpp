@@ -53,6 +53,7 @@ player* team::findPlayerById(int id) {
 
 void team::addPlayer(player* player, playerStats stats,int id) {
     m_tree_by_stats.insert(m_tree_by_stats.getRoot(),(*player),stats);
+    std::cout<< "sad";
     m_tree_by_id.insert(m_tree_by_id.getRoot(),(*player),id);
     m_num_players++;
     if((*player).isGoalKeeper()){
