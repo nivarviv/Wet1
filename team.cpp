@@ -115,6 +115,10 @@ void team::deleteTeam() {
 }
 
 playerStats team::getTopScorerStats() const{
+    if(m_top_scorer == nullptr){
+        playerStats tmp(0, INT8_MAX, 0);
+        return tmp;
+    }
     return m_top_scorer->getMyStats();
 }
 

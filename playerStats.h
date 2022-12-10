@@ -5,7 +5,6 @@
 #ifndef WORLDCUP23A1_H_PLAYERSTATS_H
 #define WORLDCUP23A1_H_PLAYERSTATS_H
 
-
 class playerStats {
 private:
     int m_id;

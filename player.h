@@ -5,6 +5,7 @@
 #ifndef WET1_PLAYER_H
 #define WET1_PLAYER_H
 #include "playerStats.h"
+#include <iostream>
 class team;
 
 
@@ -33,6 +34,7 @@ public:
     int totalGames() const;
     team* getMyTeam() const;
     playerStats getMyStats() const;
+    player* closestOfTwoExist(player* pre, player* suc) const;
     player* closestOfTwo(player* pre, player* suc) const;
     void setClosest(player* player);
     void setPre(player* player);

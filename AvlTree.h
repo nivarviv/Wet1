@@ -219,24 +219,19 @@ node<T,K> * AvlTree<T,K>::removeHelper(node<T,K>* root,K key) {
 template<class T, class K>
 T *AvlTree<T,K>::find_by_key(node<T,K>* root,K key) {
     if(root== nullptr){
-        std::cout<< 'q';
         return nullptr;
     }
     if (key == root->key) {
-        std::cout<< 'e';
         return &root->data;
     }
     else{
         if (key < root->key){
-            std::cout<< 's';
             return find_by_key(root->left,key);
         }
         else if (key > root->key){
-            std::cout<< 'b';
             return find_by_key(root->right,key);
         }
         else {
-            std::cout<< 'p';
             return nullptr;
         }
     }
@@ -671,7 +666,6 @@ void AvlTree<T, K>::storeInorderTerms(int min, int max, node<T, K> *root, T** in
 
 template<class T, class K>
 void AvlTree<T, K>::insert(node<T, K> *root, T data, K key) {
-        std::cout << 't';
         m_root = insertHelper(root, data, key);
         return;
 }

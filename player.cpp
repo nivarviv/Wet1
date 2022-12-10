@@ -29,8 +29,28 @@ team* player::getMyTeam() const{
 void player::setClosest(player* player) {
     m_closest=player;
 }
+
+
+
+player* player::closestOfTwo(player* pre, player* suc) const{
+    if(pre == nullptr && suc == nullptr){
+        return nullptr;
+    }
+    else if(pre == nullptr && suc != nullptr){
+        std::cout<<'9';
+        return suc;
+    }
+    else if(pre != nullptr && suc == nullptr){
+        return pre;
+    }
+    else{
+        return closestOfTwoExist(pre, suc);
+    }
+}
+
+
 //need to check according to the new instructions
-player *player::closestOfTwo(player *pre, player *suc) const{
+player* player::closestOfTwoExist(player *pre, player *suc) const{
     if(abs(this->m_goals-pre->m_goals)<abs(this->m_goals-suc->m_goals)){
         return pre;
     }

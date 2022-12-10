@@ -71,15 +71,12 @@ StatusType world_cup_t::add_team(int teamId, int points)
     }
     team* tmp = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
     if(tmp != nullptr){
-        //todo: currently find_by_key always returns null_ptr, no matter what even if the team is suppose to be inside the tree
-        //todo:the root doesn't change even we constantly adding teams to the tree so basically back stage we probably dont add anything to the tree
-        std::cout<< 'w';
+        //std::cout<< 'w';
         tmp=nullptr;
         return StatusType::FAILURE;
     }
 
     team team1 = team(teamId, points);
-    //todo: each time you do the insert it checks if your root is null_ptr which he is at the start and then you just return new instance, but we dont care about instance here, all we want is that the team would be in the tree
     m_all_teams.insert(m_all_teams.getRoot(),team1, teamId);
     delete tmp;
     m_num_teams++;
@@ -122,42 +119,45 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
     player* tmp_player = m_all_players_id.find_by_key(m_all_players_id.getRoot(),playerId);
     // player already exist
     if(tmp_player != nullptr){
-        delete tmp_player;
+        tmp_player = nullptr;
         return StatusType::FAILURE;
     }
-    delete tmp_player;
+    //delete tmp_player;
     // team does not exist
     team* tmp_team = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
     if(tmp_team == nullptr){
-        delete tmp_team;
+        tmp_team = nullptr;
         return StatusType::FAILURE;
     }
     try {
         m_total_players++;
         player newPlayer;
         newPlayer.addNewPlayer(playerId,tmp_team,gamesPlayed,goals,cards,goalKeeper);
-        playerStats newPlayerStats= newPlayer.getMyStats();
-        if(newPlayerStats > m_top_scorer->getMyStats()){
+        playerStats newPlayerStats = newPlayer.getMyStats();
+        if(m_top_scorer == nullptr){
             m_top_scorer = &newPlayer;
         }
+        else if(m_top_scorer->getMyStats() < newPlayerStats){
+            m_top_scorer = &newPlayer;
+        }
+
         tmp_team->addPlayer(&newPlayer,newPlayerStats,playerId);
         m_all_players_goals.insert(m_all_players_goals.getRoot(),newPlayer,newPlayerStats);
         m_all_players_id.insert(m_all_players_id.getRoot(),newPlayer,playerId);
         if(newPlayerStats > tmp_team->getTopScorerStats()){
             tmp_team->setTopScorer(&newPlayer);
         }
-
         player* pre;
         player* suc;
         m_all_players_goals.successorPredecessor(m_all_players_goals.getRoot(),newPlayerStats,pre,suc);
         newPlayer.setPre(pre);
         newPlayer.setSuc(suc);
         newPlayer.setClosest(newPlayer.closestOfTwo(pre,suc));
-
         //changing pre and suc closest if needed
         (*pre).setClosest((*pre).closestOfTwo(pre->getClosest(),&newPlayer));
+        std::cout << '7';
         (*suc).setClosest((*suc).closestOfTwo(suc->getClosest(),&newPlayer));
-
+        std::cout << '8';
         //check if team is allowed to play
         if((*tmp_team).isTeamValid()){
             if(m_allowed_to_play_teams.find_by_key(m_allowed_to_play_teams.getRoot(),teamId)==nullptr) {
@@ -165,7 +165,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
                 m_num_eligible_to_play_teams++;
             }
         }
-        delete tmp_team;
+        //delete tmp_team;
     } catch (std::exception& e) {
         return StatusType::ALLOCATION_ERROR;
     }
