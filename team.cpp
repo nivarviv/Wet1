@@ -68,6 +68,7 @@ bool team::isTeamValid() const {
 }
 
 team::~team() {
+
     delete m_top_scorer;
 }
 
