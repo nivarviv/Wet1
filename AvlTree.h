@@ -451,7 +451,7 @@ int AvlTree<T, K>::getBalance(node<T, K> *N) {
 
 template<class T, class K>
 void AvlTree<T, K>::remove(node<T, K> *root, K key) {
-    this->m_root=removeHelper(root,key);
+    m_root=removeHelper(root,key);
 }
 
 // Recursive function to insert a key
@@ -671,14 +671,9 @@ void AvlTree<T, K>::storeInorderTerms(int min, int max, node<T, K> *root, T** in
 
 template<class T, class K>
 void AvlTree<T, K>::insert(node<T, K> *root, T data, K key) {
-    if(m_root== nullptr){
-        std::cout<< 't';
-        m_root= insertHelper(root,data,key);
-    }
-    else{
-        insertHelper(root,data,key);
-    }
-    return;
+        std::cout << 't';
+        m_root = insertHelper(root, data, key);
+        return;
 }
 
 
