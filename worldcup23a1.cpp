@@ -78,6 +78,7 @@ StatusType world_cup_t::add_team(int teamId, int points)
     }
 
     team team1 = team(teamId, points);
+    //todo: each time you do the insert it checks if your root is null_ptr which he is at the start and then you just return new instance, but we dont care about instance here, all we want is that the team would be in the tree
     m_all_teams.insert(m_all_teams.getRoot(),team1, teamId);
     delete tmp;
     m_num_teams++;
