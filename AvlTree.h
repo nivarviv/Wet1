@@ -456,7 +456,12 @@ template<class T, class K>
 node<T, K> *AvlTree<T, K>::insert(node<T,K> *root, T data, K key) {
 /* 1. Perform the normal BST insertion */
     if (root == nullptr){
-        root=newNode(data,key); //maybe fix unchanging root?
+        root=new node<T,K>(data,key); //maybe fix unchanging root?
+        root->key=key;
+        root->data=data;
+        root->left=NULL;
+        root->right=NULL;
+        root->height=1;
         return root;
     }
 

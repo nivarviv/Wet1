@@ -14,7 +14,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="fixed small things" />
+    <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="insert fix?">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvlTree.h" beforeDir="false" afterPath="$PROJECT_DIR$/AvlTree.h" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -88,18 +91,6 @@
       <workItem from="1669205829216" duration="18980000" />
       <workItem from="1669727405644" duration="3630000" />
       <workItem from="1669748706252" duration="35160000" />
-    </task>
-    <task id="LOCAL‎00018" summary="fixed math in toDelete">
-      <created>1669929304941</created>
-      <option name="number" value="LOCAL‎00018" />
-      <option name="presentableId" value="LOCAL‎00018" />
-      <updated>1669929304941</updated>
-    </task>
-    <task id="LOCAL‎00019" summary="updated">
-      <created>1669930372140</created>
-      <option name="number" value="LOCAL‎00019" />
-      <option name="presentableId" value="LOCAL‎00019" />
-      <updated>1669930372140</updated>
     </task>
     <task id="LOCAL‎00020" summary="updated">
       <created>1669930541903</created>
@@ -409,7 +400,19 @@
       <option name="presentableId" value="LOCAL‎00066" />
       <updated>1670630500321</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL‎00067" summary="fixed small things">
+      <created>1670631064078</created>
+      <option name="number" value="LOCAL‎00067" />
+      <option name="presentableId" value="LOCAL‎00067" />
+      <updated>1670631064078</updated>
+    </task>
+    <task id="LOCAL‎00068" summary="insert fix?">
+      <created>1670631454572</created>
+      <option name="number" value="LOCAL‎00068" />
+      <option name="presentableId" value="LOCAL‎00068" />
+      <updated>1670631454572</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -429,7 +432,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="added AVL functions" />
     <MESSAGE value="added AVL insert using key" />
     <MESSAGE value="fixed balance" />
     <MESSAGE value="added rotations" />
@@ -454,7 +456,8 @@
     <MESSAGE value="updated dtor" />
     <MESSAGE value="fixed order in remove player" />
     <MESSAGE value="fixed small things" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed small things" />
+    <MESSAGE value="insert fix?" />
+    <option name="LAST_COMMIT_MESSAGE" value="insert fix?" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
