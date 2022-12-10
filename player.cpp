@@ -37,7 +37,6 @@ player* player::closestOfTwo(player* pre, player* suc) const{
         return nullptr;
     }
     else if(pre == nullptr && suc != nullptr){
-        std::cout<<'9';
         return suc;
     }
     else if(pre != nullptr && suc == nullptr){
@@ -84,7 +83,7 @@ player *player::getSuc() const{
     return m_suc;
 }
 
-player *player::getClosest() const{
+player* player::getClosest() const{
     return m_closest;
 }
 
@@ -153,4 +152,11 @@ player &player::operator=(const player &other) {
 
 void player::updateStats() {
 m_stats=playerStats(m_playerId, m_cards, m_goals);
+}
+
+bool player::operator==(const player &p) const {
+    if(m_playerId == p.m_playerId){
+        return true;
+    }
+    return false;
 }

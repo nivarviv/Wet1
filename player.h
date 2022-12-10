@@ -31,6 +31,7 @@ public:
     //player(const player&) = default; //I think we need to do it not by default due to there is memory allocation
     ~player();
     player& operator=(const player& other);
+    bool operator==(const player &p) const;
     int totalGames() const;
     team* getMyTeam() const;
     playerStats getMyStats() const;

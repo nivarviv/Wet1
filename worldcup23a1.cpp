@@ -71,7 +71,6 @@ StatusType world_cup_t::add_team(int teamId, int points)
     }
     team* tmp = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
     if(tmp != nullptr){
-        //std::cout<< 'w';
         tmp=nullptr;
         return StatusType::FAILURE;
     }
@@ -147,17 +146,19 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
         if(newPlayerStats > tmp_team->getTopScorerStats()){
             tmp_team->setTopScorer(&newPlayer);
         }
-        player* pre;
-        player* suc;
+        player* pre = nullptr;
+        player* suc = nullptr;
         m_all_players_goals.successorPredecessor(m_all_players_goals.getRoot(),newPlayerStats,pre,suc);
         newPlayer.setPre(pre);
         newPlayer.setSuc(suc);
         newPlayer.setClosest(newPlayer.closestOfTwo(pre,suc));
         //changing pre and suc closest if needed
-        (*pre).setClosest((*pre).closestOfTwo(pre->getClosest(),&newPlayer));
-        std::cout << '7';
-        (*suc).setClosest((*suc).closestOfTwo(suc->getClosest(),&newPlayer));
-        std::cout << '8';
+        if(pre != nullptr){
+            pre->setClosest(pre->closestOfTwo(pre->getClosest(),&newPlayer));
+        }
+        if(suc != nullptr){
+            (*suc).setClosest((*suc).closestOfTwo(suc->getClosest(),&newPlayer));
+        }
         //check if team is allowed to play
         if((*tmp_team).isTeamValid()){
             if(m_allowed_to_play_teams.find_by_key(m_allowed_to_play_teams.getRoot(),teamId)==nullptr) {
