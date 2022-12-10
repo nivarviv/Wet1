@@ -139,7 +139,6 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
         else if(m_top_scorer->getMyStats() < newPlayerStats){
             m_top_scorer = &newPlayer;
         }
-
         tmp_team->addPlayer(&newPlayer,newPlayerStats,playerId);
         m_all_players_goals.insert(m_all_players_goals.getRoot(),newPlayer,newPlayerStats);
         m_all_players_id.insert(m_all_players_id.getRoot(),newPlayer,playerId);
