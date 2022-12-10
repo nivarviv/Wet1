@@ -64,8 +64,7 @@ public:
     node<T,K> *rightRotate(node<T,K> *y);
     node<T,K> *leftRotate(node<T,K> *x);
     int getBalance(node<T,K> *N);
-    void insert(node<T,K>* root, T data, K key);
-    node<T,K>* insertHelper(node<T,K>* root, T data, K key);
+    node<T,K>* insert(node<T,K>* root, T data, K key);
     void deleteTree(node<T,K> *r);
     void remove(node<T, K> *root, K key);
     T* getBiggest(node<T, K> *root);
@@ -454,10 +453,12 @@ void AvlTree<T, K>::remove(node<T, K> *root, K key) {
 // in the subtree rooted with node and
 // returns the new root of the subtree.
 template<class T, class K>
-node<T, K> *AvlTree<T, K>::insertHelper(node<T,K> *root, T data, K key) {
+node<T, K> *AvlTree<T, K>::insert(node<T,K> *root, T data, K key) {
 /* 1. Perform the normal BST insertion */
-    if (root == nullptr)
-        return(newNode(data,key));
+    if (root == nullptr){
+        root=newNode(data,key); //maybe fix unchanging root?
+        return root;
+    }
 
     if (key < root->key)
         root->left = insert(root->left, data,key);
@@ -663,11 +664,6 @@ void AvlTree<T, K>::storeInorderTerms(int min, int max, node<T, K> *root, T** in
     storeInorderTerms(min,max,root->right, inorder, index_ptr);
 }
 
-template<class T, class K>
-void AvlTree<T, K>::insert(node<T, K> *root, T data, K key) {
-    m_root=insertHelper(root,data,key);
-    return;
-}
 
 
 #endif //WET1_AVLTREE_H
