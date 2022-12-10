@@ -393,8 +393,7 @@ node<T, K> *AvlTree<T, K>::newNode(T data, K key) {
     newNode->data = data;
     newNode->left = nullptr;
     newNode->right = nullptr;
-    newNode->height = 1; // new node is initially
-    // added at leaf
+    newNode->height = 1; // new node is initially added at leaf
     return(newNode);
 }
 
