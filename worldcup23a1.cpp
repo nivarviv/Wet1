@@ -7,7 +7,7 @@ world_cup_t::world_cup_t()
     m_allowed_to_play_teams = AvlTree<team, int>();
     m_all_players_id = AvlTree<player, int>();
     m_all_players_goals = AvlTree<player, playerStats>();
-    m_top_scorer = NULL;
+    m_top_scorer = nullptr;
     m_total_players = 0;
     m_num_teams = 0;
     m_num_eligible_to_play_teams = 0;
@@ -70,7 +70,9 @@ StatusType world_cup_t::add_team(int teamId, int points)
         return StatusType::INVALID_INPUT;
     }
     team* tmp = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
-    if(tmp != NULL){
+    if(tmp != nullptr){
+        //todo: currently find_by_key always returns null_ptr, no matter what even if the team is suppose to be inside the tree
+        //todo:the root doesn't change even we constantly adding teams to the tree so basically back stage we probably dont add anything to the tree
         delete tmp;
         return StatusType::FAILURE;
     }
@@ -117,14 +119,14 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
     }
     player* tmp_player = m_all_players_id.find_by_key(m_all_players_id.getRoot(),playerId);
     // player already exist
-    if(tmp_player != NULL){
+    if(tmp_player != nullptr){
         delete tmp_player;
         return StatusType::FAILURE;
     }
     delete tmp_player;
     // team does not exist
     team* tmp_team = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
-    if(tmp_team == NULL){
+    if(tmp_team == nullptr){
         delete tmp_team;
         return StatusType::FAILURE;
     }
@@ -156,7 +158,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
 
         //check if team is allowed to play
         if((*tmp_team).isTeamValid()){
-            if(m_allowed_to_play_teams.find_by_key(m_allowed_to_play_teams.getRoot(),teamId)==NULL) {
+            if(m_allowed_to_play_teams.find_by_key(m_allowed_to_play_teams.getRoot(),teamId)==nullptr) {
                 m_allowed_to_play_teams.insert(m_allowed_to_play_teams.getRoot(), (*tmp_team), teamId);
                 m_num_eligible_to_play_teams++;
             }
@@ -185,7 +187,7 @@ StatusType world_cup_t::remove_player(int playerId)
         return StatusType::INVALID_INPUT;
     }
     player* playerToDelete = m_all_players_id.find_by_key(m_all_players_id.getRoot(),playerId);
-    if(playerToDelete == NULL){
+    if(playerToDelete == nullptr){
         delete playerToDelete;
         return StatusType::FAILURE;
     }
@@ -247,12 +249,13 @@ StatusType world_cup_t::update_player_stats(int playerId, int gamesPlayed,
       }*/
 
     player* tmp_player = m_all_players_id.find_by_key(m_all_players_id.getRoot(),playerId);
-    if(tmp_player == NULL){
+    if(tmp_player == nullptr){
         delete tmp_player;
         return StatusType::FAILURE;
     }
 
     team* tmp_team = m_all_teams.find_by_key(m_all_teams.getRoot(),tmp_player->getTeamId());
+   // if(tmp_team == nullptr) {
  /*   if(tmp_team == NULL) {
         delete tmp_team;
         return StatusType::FAILURE;
@@ -366,7 +369,7 @@ output_t<int> world_cup_t::get_num_played_games(int playerId)
      }*/
 
     player* player1 = m_all_players_id.find_by_key(m_all_players_id.getRoot(),playerId);//returns null if haven't found
-    if(player1 == NULL){
+    if(player1 == nullptr){
         delete player1;
         output_t<int> out(StatusType::FAILURE);
         return out;
@@ -396,7 +399,7 @@ output_t<int> world_cup_t::get_team_points(int teamId)
     }*/
 
     team* wanted_team = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
-    if(wanted_team == NULL){
+    if(wanted_team == nullptr){
         output_t<int> out(StatusType::FAILURE);
         delete wanted_team;
         return out;
@@ -497,7 +500,7 @@ output_t<int> world_cup_t::get_top_scorer(int teamId)
             return out;
         }*/
         team* team1 = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);//returns null if the team hasn't found
-        if(team1 == NULL){
+        if(team1 == nullptr){
             output_t<int> out(StatusType::FAILURE);
             delete team1;
             return out;
@@ -527,7 +530,7 @@ output_t<int> world_cup_t::get_all_players_count(int teamId)
             return out;
         }*/
         team* team1 = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
-        if(team1 == NULL){
+        if(team1 == nullptr){
             output_t<int> out(StatusType::FAILURE);
             delete team1;
             return out;
@@ -540,7 +543,7 @@ output_t<int> world_cup_t::get_all_players_count(int teamId)
 //updated
 StatusType world_cup_t::get_all_players(int teamId, int *const output)
 {
-    if(teamId == 0 || output == NULL){
+    if(teamId == 0 || output == nullptr){
         return StatusType::INVALID_INPUT;
     }
     if(teamId > 0) {
@@ -552,7 +555,7 @@ StatusType world_cup_t::get_all_players(int teamId, int *const output)
         }*/
 
         team *tmp_team = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
-        if (tmp_team == NULL) {
+        if (tmp_team == nullptr) {
             delete tmp_team;
             return StatusType::FAILURE;
         }
@@ -572,14 +575,14 @@ output_t<int> world_cup_t::get_closest_player(int playerId, int teamId)
         return out;
     }
     team* team1 = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
-    if(team1 == NULL){
+    if(team1 == nullptr){
         delete team1;
         output_t<int> out(StatusType::FAILURE);
         return out;
     }
     player* player1 = team1->findPlayerById(playerId);
     delete team1;
-    if(player1 == NULL){
+    if(player1 == nullptr){
         delete player1;
         output_t<int> out(StatusType::FAILURE);
         return out;
@@ -596,10 +599,10 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
         return out;
     }
     try {
-        team** arr_team = NULL;
+        team** arr_team = nullptr;
         arr_team = new team*[m_num_eligible_to_play_teams];
         for(int i = 0; i < m_num_eligible_to_play_teams; i++){
-            arr_team[i] = NULL;
+            arr_team[i] = nullptr;
         }
         //////////////////////////////////////////////////////// maybe?
         int i=0;
@@ -609,7 +612,7 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
         AvlTree<team, int> knock_out_tree;
         int num_eligible_in_terms_teams = 0;
         for(int i = 0; i < m_num_eligible_to_play_teams; i++){
-            if(arr_team[i] != NULL){
+            if(arr_team[i] != nullptr){
                 knock_out_tree.insert(knock_out_tree.getRoot(), *arr_team[i], arr_team[i]->getId());
                 num_eligible_in_terms_teams++;
             }
@@ -625,11 +628,11 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
         int playing_teams = num_eligible_in_terms_teams;
         while(playing_teams > 1){
             for(int curr_team = 0; curr_team < playing_teams-1; curr_team += 2){
-                while (arr_team[curr_team] == NULL && curr_team < playing_teams-1){
+                while (arr_team[curr_team] == nullptr && curr_team < playing_teams-1){
                     curr_team++;
                 }
                 int first_team = curr_team;
-                while (arr_team[curr_team+1] == NULL && curr_team + 1 < playing_teams){
+                while (arr_team[curr_team+1] == nullptr && curr_team + 1 < playing_teams){
                     curr_team++;
                 }
                 int second_team = curr_team+1;
@@ -642,13 +645,13 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
                         curr_points_team2 = arr_team[second_team]->getNumPoints();
                 if(team1_points + 3 == curr_points_team1 && team2_points == curr_points_team2){
                     unite_teams(team1_id, team2_id, team1_id);
-                    arr_team[second_team] = NULL;//maybe need to create new array each while iteration in size/2
+                    arr_team[second_team] = nullptr;//maybe need to create new array each while iteration in size/2
                     playing_teams--;//or put a for that take the next eligible team for the game? I think that's better
                     continue;
                 }
                 else if(team2_points + 3 == curr_points_team2 && team1_points == curr_points_team1){
                     unite_teams(team1_id, team2_id, team2_id);
-                    arr_team[first_team] = NULL;
+                    arr_team[first_team] = nullptr;
                     playing_teams--;
                     continue;
                 }
@@ -656,14 +659,14 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
                     if(team1_id > team2_id) {
                         unite_teams(team1_id, team2_id, team1_id);
                         playing_teams--;
-                        arr_team[second_team] = NULL;
+                        arr_team[second_team] = nullptr;
                         arr_team[first_team]->updatePoints(2);
                         continue;
                     }
                     else if(team2_id > team1_id){
                         unite_teams(team1_id, team2_id, team2_id);
                         playing_teams--;
-                        arr_team[first_team] = NULL;
+                        arr_team[first_team] = nullptr;
                         arr_team[second_team]->updatePoints(2);
                         continue;
                     }
@@ -683,7 +686,7 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
         }
         int winner;
         for (int curr = 0; curr < num_eligible_in_terms_teams; curr++){
-            if(arr_team[curr] != NULL){
+            if(arr_team[curr] != nullptr){
                 winner = arr_team[curr]->getId();
                 break;
             }
