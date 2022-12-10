@@ -47,6 +47,7 @@ public:
     int getId() const;
     void setMyTeam(team* new_team);
     int getTeamId();
+    void updateStats();
 };
 
 

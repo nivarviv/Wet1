@@ -130,3 +130,7 @@ player &player::operator=(const player &other) {
     m_teamGamesWO=other.m_teamGamesWO;
     return *this;
 }
+
+void player::updateStats() {
+m_stats=playerStats(m_playerId, m_cards, m_goals);
+}

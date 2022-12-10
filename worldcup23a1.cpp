@@ -198,8 +198,10 @@ StatusType world_cup_t::remove_player(int playerId)
     //if team is not valid to play anymore - remove from tree and update the num of valid teams:
     (*tmp).removePlayer((*playerToDelete).getMyStats(),playerId);
     if(!tmp->isTeamValid()){
-        m_allowed_to_play_teams.remove(m_allowed_to_play_teams.getRoot(),tmp->getId());
-        m_num_eligible_to_play_teams--;
+        if(m_allowed_to_play_teams.find_by_key(m_allowed_to_play_teams.getRoot(),tmp->getId())) {
+            m_allowed_to_play_teams.remove(m_allowed_to_play_teams.getRoot(),tmp->getId());
+            m_num_eligible_to_play_teams--;
+        }
     }
 
 
@@ -251,10 +253,10 @@ StatusType world_cup_t::update_player_stats(int playerId, int gamesPlayed,
     }
 
     team* tmp_team = m_all_teams.find_by_key(m_all_teams.getRoot(),tmp_player->getTeamId());
-    if(tmp_team == NULL) {
+ /*   if(tmp_team == NULL) {
         delete tmp_team;
         return StatusType::FAILURE;
-    }
+    }*/ //at this point if the player exists the group does too.
 
     // remove player with old stats
     m_all_players_goals.remove(m_all_players_goals.getRoot(),tmp_player->getMyStats());
@@ -264,6 +266,7 @@ StatusType world_cup_t::update_player_stats(int playerId, int gamesPlayed,
     tmp_player->addCards(cardsReceived);
     tmp_player->addGames(gamesPlayed);
     tmp_player->addGoals(scoredGoals);
+    tmp_player->updateStats();
     m_all_players_goals.insert(m_all_players_goals.getRoot(),(*tmp_player),tmp_player->getMyStats());
     tmp_team->addPlayer(tmp_player,tmp_player->getMyStats(),playerId);
 
@@ -296,12 +299,9 @@ StatusType world_cup_t::update_player_stats(int playerId, int gamesPlayed,
     //update new stats' player's pre and suc:
     player* newPre=tmp_player->getPre();
     player* newSuc=tmp_player->getSuc();
-    if(newPre->getClosest()==tmp_player){
-        fixClosest(newPre);
-    }
-    if(newSuc->getClosest()==tmp_player){
-        fixClosest(newSuc);
-    }
+    fixClosest(newPre);
+    fixClosest(newSuc);
+
 
     delete tmp_player;
     delete tmp_team;
