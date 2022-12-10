@@ -76,7 +76,7 @@ StatusType world_cup_t::add_team(int teamId, int points)
     }
 
     team team1 = team(teamId, points);
-    m_all_teams.insert(m_all_teams.getRoot(),team1, teamId);
+    m_all_teams.insert(m_all_teams.getRoot(),&team1, teamId);
     delete tmp;
     m_num_teams++;
     return StatusType::SUCCESS;
@@ -142,8 +142,8 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
         tmp_team->addPlayer(&newPlayer,newPlayerStats,playerId);
         std::cout<< "here";
 
-        m_all_players_goals.insert(m_all_players_goals.getRoot(),newPlayer,newPlayerStats);
-        m_all_players_id.insert(m_all_players_id.getRoot(),newPlayer,playerId);
+        m_all_players_goals.insert(m_all_players_goals.getRoot(),&newPlayer,newPlayerStats);
+        m_all_players_id.insert(m_all_players_id.getRoot(),&newPlayer,playerId);
         if(newPlayerStats > tmp_team->getTopScorerStats()){
             tmp_team->setTopScorer(&newPlayer);
         }
@@ -163,7 +163,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
         //check if team is allowed to play
         if((*tmp_team).isTeamValid()){
             if(m_allowed_to_play_teams.find_by_key(m_allowed_to_play_teams.getRoot(),teamId)==nullptr) {
-                m_allowed_to_play_teams.insert(m_allowed_to_play_teams.getRoot(), (*tmp_team), teamId);
+                m_allowed_to_play_teams.insert(m_allowed_to_play_teams.getRoot(), tmp_team, teamId);
                 m_num_eligible_to_play_teams++;
             }
         }
@@ -274,7 +274,7 @@ StatusType world_cup_t::update_player_stats(int playerId, int gamesPlayed,
     tmp_player->addGames(gamesPlayed);
     tmp_player->addGoals(scoredGoals);
     tmp_player->updateStats();
-    m_all_players_goals.insert(m_all_players_goals.getRoot(),(*tmp_player),tmp_player->getMyStats());
+    m_all_players_goals.insert(m_all_players_goals.getRoot(),tmp_player,tmp_player->getMyStats());
     tmp_team->addPlayer(tmp_player,tmp_player->getMyStats(),playerId);
 
 
@@ -470,9 +470,9 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
     newTeam.setTeamTree(unitedTree);
     */
 
-    m_all_teams.insert(m_all_teams.getRoot(),newTeam,newTeamId);
+    m_all_teams.insert(m_all_teams.getRoot(),&newTeam,newTeamId);
     if(newTeam.isTeamValid()){
-        m_allowed_to_play_teams.insert(m_allowed_to_play_teams.getRoot(),newTeam,newTeamId);
+        m_allowed_to_play_teams.insert(m_allowed_to_play_teams.getRoot(),&newTeam,newTeamId);
     }
     team1->deleteTeam();
     team2->deleteTeam();
@@ -617,7 +617,7 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
         int num_eligible_in_terms_teams = 0;
         for(int i = 0; i < m_num_eligible_to_play_teams; i++){
             if(arr_team[i] != nullptr){
-                knock_out_tree.insert(knock_out_tree.getRoot(), *arr_team[i], arr_team[i]->getId());
+                knock_out_tree.insert(knock_out_tree.getRoot(), arr_team[i], arr_team[i]->getId());
                 num_eligible_in_terms_teams++;
             }
             else{

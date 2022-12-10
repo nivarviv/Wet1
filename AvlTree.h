@@ -22,19 +22,20 @@ class node
 {
 public:
     K key;
-    T data;
+    T* data;
     node *left;
     node *right;
     int height;
-    node(T data, K key);
+    node(T* data, K key);
     ~node(){
         delete left;
         delete right;
+        delete data;
     }
 };
 
 template<class T, class K>
-node<T, K>::node(T m_data, K m_key) : key(m_key), data(m_data), right(nullptr), left(nullptr), height(1){
+node<T, K>::node(T* m_data, K m_key) : key(m_key), data(m_data), right(nullptr), left(nullptr), height(1){
     std::cout<< "nodector";
 }
 
@@ -62,12 +63,12 @@ public:
     void storeInOrderRecursiveByTermsHelper(int min, int max,node<T, K> *pNode, T **pNode1);
     //void arrayToBST(node<T, K> *pNode, node<T, K> *pNode1[]);
     void successorPredecessor(node < T, K > * root, K val, T* pre, T* suc);
-    node<T,K>* newNode(T data, K key);
+    node<T,K>* newNode(T* data, K key);
     node<T,K> *rightRotate(node<T,K> *y);
     node<T,K> *leftRotate(node<T,K> *x);
     int getBalance(node<T,K> *N);
-    void insert(node<T,K>* root, T data, K key);
-    node<T,K>* insertHelper(node<T,K>* root, T data, K key);
+    void insert(node<T,K>* root, T* data, K key);
+    node<T,K>* insertHelper(node<T,K>* root, T* data, K key);
     void deleteTree(node<T,K> *r);
     void remove(node<T, K> *root, K key);
     T* getBiggest(node<T, K> *root);
@@ -224,7 +225,7 @@ T *AvlTree<T,K>::find_by_key(node<T,K>* root,K key) {
         return nullptr;
     }
     if (key == root->key) {
-        return &root->data;
+        return root->data;
     }
     else{
         if (key < root->key){
@@ -316,7 +317,7 @@ void AvlTree<T, K>::successorPredecessor(node<T, K> *root, K val, T *pre, T *suc
             while (t->right != nullptr) {
                 t = t->right;
             }
-            pre = &t->data;
+            pre = t->data;
         }
         if (root->right != nullptr) {
             // go to the left most element in the right subtree, it will
@@ -325,7 +326,7 @@ void AvlTree<T, K>::successorPredecessor(node<T, K> *root, K val, T *pre, T *suc
             while (t->left != nullptr) {
                 t = t->left;
             }
-            suc = &t->data;
+            suc = t->data;
         }
         return;
     }
@@ -334,14 +335,14 @@ void AvlTree<T, K>::successorPredecessor(node<T, K> *root, K val, T *pre, T *suc
         // situation when value matches with the root, it wont have
         // right subtree to find the successor, in that case we need
         // parent to be the successor
-        suc = &root->data;
+        suc = root->data;
         successorPredecessor(root->left,val,pre,suc);
     } else if (root->key < val) {
         // we make the root as predecessor because we might have a
         // situation when value matches with the root, it wont have
         // left subtree to find the predecessor, in that case we need
         // parent to be the predecessor.
-        pre = &root->data;
+        pre = root->data;
         successorPredecessor(root->right,val,pre,suc);
     }
 }
@@ -358,7 +359,7 @@ void AvlTree<T, K>::storeInOrderRecursiveByTermsHelper(int min, int max, node<T,
     if(pNode == nullptr || pNode->key>max || pNode->key<min)
         return;
     storeInOrderRecursiveByTermsHelper(min,max,pNode->left,pNode1);
-    (*pNode1)++ = pNode->data;
+    (*pNode1)++ = *(pNode->data);
     storeInOrderRecursiveByTermsHelper(min,max,pNode->right,pNode1);
 }
 
@@ -384,7 +385,7 @@ node<T, K> *AvlTree<T, K>::findBiggerThan(node<T, K> *root, node<T, K> *closest,
    new node with the given key and
    NULL left and right pointers. */
 template<class T, class K>
-node<T, K> *AvlTree<T, K>::newNode(T data, K key) {
+node<T, K> *AvlTree<T, K>::newNode(T* data, K key) {
     node<T,K>* newNode = new node<T, K>(data,key);
     std::cout<< "new node";
     newNode->key = key;
@@ -456,7 +457,7 @@ void AvlTree<T, K>::remove(node<T, K> *root, K key) {
 // in the subtree rooted with node and
 // returns the new root of the subtree.
 template<class T, class K>
-node<T, K> *AvlTree<T, K>::insertHelper(node<T,K> *root, T data, K key) {
+node<T, K> *AvlTree<T, K>::insertHelper(node<T,K> *root, T* data, K key) {
 /* 1. Perform the normal BST insertion */
     if (root == nullptr){
         root=newNode(data,key); //maybe fix unchanging root?
@@ -514,7 +515,7 @@ void AvlTree<T, K>::storeInOrderRecursiveKey(node<T, K> *pNode, int *const outpu
     if(pNode == nullptr)
         return;
     storeInOrderRecursiveKey(pNode->left,output);
-    (*output) = pNode->data.getId();
+    (*output) = pNode->data->getId();
     (*output)++;
     storeInOrderRecursiveKey(pNode->right,output);
 }
@@ -561,7 +562,7 @@ void AvlTree<T, K>::storeInorder(node<T, K> *root, T** inorder,K** inorder2, int
     /* first recur on left child */
     storeInorder(root->left, inorder, inorder2, index_ptr);
 
-    inorder[*index_ptr] = &(root->data);
+    inorder[*index_ptr] = root->data;
     inorder2[*index_ptr] = &(root->key);
     (*index_ptr)++; // increase index for next entry
 
@@ -578,7 +579,7 @@ node<T,K>* AvlTree<T, K>::sortedArrayToBST(T* playerArr[], K* keyArr[], int star
 
     /* Get the middle element and make it root */
     int mid = (start + end)/2;
-    node<T,K> *root = newNode(*playerArr[mid],*keyArr[mid]);
+    node<T,K> *root = newNode(playerArr[mid],*(keyArr[mid]));
 
     /* Recursively construct the left subtree and make it
     left child of root */
@@ -661,7 +662,7 @@ void AvlTree<T, K>::storeInorderTerms(int min, int max, node<T, K> *root, T** in
     /* first recur on left child */
     storeInorderTerms(min,max,root->left, inorder, index_ptr);
 
-    inorder[*index_ptr] = &(root->data);
+    inorder[*index_ptr] = root->data;
     (*index_ptr)++; // increase index for next entry
 
     /* now recur on right child */
@@ -669,7 +670,7 @@ void AvlTree<T, K>::storeInorderTerms(int min, int max, node<T, K> *root, T** in
 }
 
 template<class T, class K>
-void AvlTree<T, K>::insert(node<T, K> *root, T data, K key) {
+void AvlTree<T, K>::insert(node<T, K> *root, T* data, K key) {
         m_root = insertHelper(root, data, key);
         return;
 }

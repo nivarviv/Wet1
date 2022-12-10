@@ -14,14 +14,11 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="insert fix?">
+    <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="no player, playerStats node">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AvlTree.h" beforeDir="false" afterPath="$PROJECT_DIR$/AvlTree.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/player.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/player.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/player.h" beforeDir="false" afterPath="$PROJECT_DIR$/player.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/playerStats.h" beforeDir="false" afterPath="$PROJECT_DIR$/playerStats.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/team.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/team.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worldcup23a1.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/worldcup23a1.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,12 +93,6 @@
       <workItem from="1669205829216" duration="18980000" />
       <workItem from="1669727405644" duration="3630000" />
       <workItem from="1669748706252" duration="35160000" />
-    </task>
-    <task id="LOCAL‎00025" summary="started on closest">
-      <created>1670020339292</created>
-      <option name="number" value="LOCAL‎00025" />
-      <option name="presentableId" value="LOCAL‎00025" />
-      <updated>1670020339292</updated>
     </task>
     <task id="LOCAL‎00026" summary="started on closest">
       <created>1670020871705</created>
@@ -417,7 +408,13 @@
       <option name="presentableId" value="LOCAL‎00073" />
       <updated>1670681017218</updated>
     </task>
-    <option name="localTasksCounter" value="74" />
+    <task id="LOCAL‎00074" summary="no player, playerStats node">
+      <created>1670703748012</created>
+      <option name="number" value="LOCAL‎00074" />
+      <option name="presentableId" value="LOCAL‎00074" />
+      <updated>1670703748012</updated>
+    </task>
+    <option name="localTasksCounter" value="75" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -437,7 +434,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="added AVL insert using key" />
     <MESSAGE value="fixed balance" />
     <MESSAGE value="added rotations" />
     <MESSAGE value="added remove" />
@@ -462,7 +458,8 @@
     <MESSAGE value="fixed order in remove player" />
     <MESSAGE value="fixed small things" />
     <MESSAGE value="insert fix?" />
-    <option name="LAST_COMMIT_MESSAGE" value="insert fix?" />
+    <MESSAGE value="no player, playerStats node" />
+    <option name="LAST_COMMIT_MESSAGE" value="no player, playerStats node" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

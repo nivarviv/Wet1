@@ -11,6 +11,7 @@ team::team(int teamId, int points)
     m_has_goalkeeper=false;
     m_total_goals=0;
     m_total_cards=0;
+    m_total_cards=0;
     m_points=points;
     m_num_games=0;
     m_teamId=teamId;
@@ -52,9 +53,9 @@ player* team::findPlayerById(int id) {
 }
 
 void team::addPlayer(player* player, playerStats stats,int id) {
-    m_tree_by_stats.insert(m_tree_by_stats.getRoot(),(*player),stats);
+    m_tree_by_id.insert(m_tree_by_id.getRoot(),player,id);
     std::cout<< "sad";
-    m_tree_by_id.insert(m_tree_by_id.getRoot(),(*player),id);
+    m_tree_by_stats.insert(m_tree_by_stats.getRoot(),player,stats);
     m_num_players++;
     if((*player).isGoalKeeper()){
         m_has_goalkeeper=true;
