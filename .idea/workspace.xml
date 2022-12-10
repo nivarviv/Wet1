@@ -14,11 +14,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="insert fix?">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AvlTree.h" beforeDir="false" afterPath="$PROJECT_DIR$/AvlTree.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worldcup23a1.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/worldcup23a1.cpp" afterDir="false" />
-    </list>
+    <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="insert fix?" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -92,12 +88,6 @@
       <workItem from="1669205829216" duration="18980000" />
       <workItem from="1669727405644" duration="3630000" />
       <workItem from="1669748706252" duration="35160000" />
-    </task>
-    <task id="LOCAL‎00021" summary="updated">
-      <created>1669930991092</created>
-      <option name="number" value="LOCAL‎00021" />
-      <option name="presentableId" value="LOCAL‎00021" />
-      <updated>1669930991092</updated>
     </task>
     <task id="LOCAL‎00022" summary="updated">
       <created>1669931049870</created>
@@ -413,7 +403,13 @@
       <option name="presentableId" value="LOCAL‎00069" />
       <updated>1670671104040</updated>
     </task>
-    <option name="localTasksCounter" value="70" />
+    <task id="LOCAL‎00070" summary="insert fix?">
+      <created>1670674468938</created>
+      <option name="number" value="LOCAL‎00070" />
+      <option name="presentableId" value="LOCAL‎00070" />
+      <updated>1670674468938</updated>
+    </task>
+    <option name="localTasksCounter" value="71" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

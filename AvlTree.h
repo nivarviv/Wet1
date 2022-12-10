@@ -676,6 +676,9 @@ void AvlTree<T, K>::insert(node<T, K> *root, T data, K key) {
         std::cout<< 't';
         m_root= insertHelper(root,data,key);
     }
+    else{
+        insertHelper(root,data,key);
+    }
     return;
 }
 
