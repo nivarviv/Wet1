@@ -64,7 +64,8 @@ public:
     node<T,K> *rightRotate(node<T,K> *y);
     node<T,K> *leftRotate(node<T,K> *x);
     int getBalance(node<T,K> *N);
-    node<T,K>* insert(node<T,K>* root, T data, K key);
+    void insert(node<T,K>* root, T data, K key);
+    node<T,K>* insertHelper(node<T,K>* root, T data, K key);
     void deleteTree(node<T,K> *r);
     void remove(node<T, K> *root, K key);
     T* getBiggest(node<T, K> *root);
@@ -218,19 +219,24 @@ node<T,K> * AvlTree<T,K>::removeHelper(node<T,K>* root,K key) {
 template<class T, class K>
 T *AvlTree<T,K>::find_by_key(node<T,K>* root,K key) {
     if(root== nullptr){
+        std::cout<< 'q';
         return nullptr;
     }
     if (key == root->key) {
+        std::cout<< 'e';
         return &root->data;
     }
     else{
         if (key < root->key){
+            std::cout<< 's';
             return find_by_key(root->left,key);
         }
         else if (key > root->key){
+            std::cout<< 'b';
             return find_by_key(root->right,key);
         }
         else {
+            std::cout<< 'p';
             return nullptr;
         }
     }
@@ -453,22 +459,17 @@ void AvlTree<T, K>::remove(node<T, K> *root, K key) {
 // in the subtree rooted with node and
 // returns the new root of the subtree.
 template<class T, class K>
-node<T, K> *AvlTree<T, K>::insert(node<T,K> *root, T data, K key) {
+node<T, K> *AvlTree<T, K>::insertHelper(node<T,K> *root, T data, K key) {
 /* 1. Perform the normal BST insertion */
     if (root == nullptr){
-        root=new node<T,K>(data,key); //maybe fix unchanging root?
-        root->key=key;
-        root->data=data;
-        root->left=NULL;
-        root->right=NULL;
-        root->height=1;
+        root=newNode(data,key); //maybe fix unchanging root?
         return root;
     }
 
     if (key < root->key)
-        root->left = insert(root->left, data,key);
+        root->left = insertHelper(root->left, data,key);
     else if (key > root->key)
-        root->right = insert(root->right,data, key);
+        root->right = insertHelper(root->right,data, key);
     else // Equal keys are not allowed in BST
         return root;
 
@@ -669,6 +670,14 @@ void AvlTree<T, K>::storeInorderTerms(int min, int max, node<T, K> *root, T** in
     storeInorderTerms(min,max,root->right, inorder, index_ptr);
 }
 
+template<class T, class K>
+void AvlTree<T, K>::insert(node<T, K> *root, T data, K key) {
+    if(m_root== nullptr){
+        std::cout<< 't';
+        m_root= insertHelper(root,data,key);
+    }
+    return;
+}
 
 
 #endif //WET1_AVLTREE_H

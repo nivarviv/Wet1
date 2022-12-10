@@ -1,6 +1,7 @@
 #include "worldcup23a1.h"
 #include <math.h>
 
+
 world_cup_t::world_cup_t()
 {
     m_all_teams = AvlTree<team, int>();
@@ -71,9 +72,11 @@ StatusType world_cup_t::add_team(int teamId, int points)
     }
     team* tmp = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
     if(tmp != nullptr){
+        std::cout<< 's';
         //todo: currently find_by_key always returns null_ptr, no matter what even if the team is suppose to be inside the tree
         //todo:the root doesn't change even we constantly adding teams to the tree so basically back stage we probably dont add anything to the tree
-        delete tmp;
+        std::cout<< 'w';
+        tmp=nullptr;
         return StatusType::FAILURE;
     }
 

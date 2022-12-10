@@ -17,6 +17,7 @@
     <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="insert fix?">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AvlTree.h" beforeDir="false" afterPath="$PROJECT_DIR$/AvlTree.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/worldcup23a1.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/worldcup23a1.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +70,7 @@
         <option name="CLION.EXTERNAL.BUILD" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Wet1" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Wet1" TARGET_NAME="Wet1" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Wet1" RUN_TARGET_NAME="Wet1">
+    <configuration name="Wet1" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" REDIRECT_INPUT_PATH="$PROJECT_DIR$/test.in" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Wet1" TARGET_NAME="Wet1" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Wet1" RUN_TARGET_NAME="Wet1">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -91,12 +92,6 @@
       <workItem from="1669205829216" duration="18980000" />
       <workItem from="1669727405644" duration="3630000" />
       <workItem from="1669748706252" duration="35160000" />
-    </task>
-    <task id="LOCAL‎00020" summary="updated">
-      <created>1669930541903</created>
-      <option name="number" value="LOCAL‎00020" />
-      <option name="presentableId" value="LOCAL‎00020" />
-      <updated>1669930541903</updated>
     </task>
     <task id="LOCAL‎00021" summary="updated">
       <created>1669930991092</created>
@@ -412,7 +407,13 @@
       <option name="presentableId" value="LOCAL‎00068" />
       <updated>1670631454572</updated>
     </task>
-    <option name="localTasksCounter" value="69" />
+    <task id="LOCAL‎00069" summary="insert fix?">
+      <created>1670671104040</created>
+      <option name="number" value="LOCAL‎00069" />
+      <option name="presentableId" value="LOCAL‎00069" />
+      <updated>1670671104040</updated>
+    </task>
+    <option name="localTasksCounter" value="70" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
