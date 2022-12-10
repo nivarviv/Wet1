@@ -9,7 +9,7 @@
 
 player::player(int playerId,int teamId, team* playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper) :
         m_playerId(playerId),m_teamId(teamId) ,m_my_team(playerTeam), m_gamesPlayed(gamesPlayed), m_goals(goals), m_cards(cards), m_goalKeeper(goalKeeper),
-        m_stats(playerStats(playerId, cards, goals)), m_closest(NULL), m_pre(NULL), m_suc(NULL), m_teamGamesWO(0)
+        m_stats(playerStats(playerId, cards, goals)), m_closest(nullptr), m_pre(nullptr), m_suc(nullptr), m_teamGamesWO(0)
 {
     m_teamGamesWO = (*m_my_team).getNumGames();
 }
@@ -109,8 +109,8 @@ int player::getTeamId() {
     return m_teamId;
 }
 
-player::player() : m_playerId(0),m_teamId(0) ,m_my_team(NULL), m_gamesPlayed(0), m_goals(0), m_cards(0), m_goalKeeper(false),
-                   m_stats(playerStats(0, 0, 0)), m_closest(NULL), m_pre(NULL), m_suc(NULL), m_teamGamesWO(0){}
+player::player() : m_playerId(0),m_teamId(0) ,m_my_team(nullptr), m_gamesPlayed(0), m_goals(0), m_cards(0), m_goalKeeper(false),
+                   m_stats(playerStats(0, 0, 0)), m_closest(nullptr), m_pre(nullptr), m_suc(nullptr), m_teamGamesWO(0){}
 
 player &player::operator=(const player &other) {
     if (this==&other){
