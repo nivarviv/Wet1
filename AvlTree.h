@@ -37,7 +37,6 @@ public:
 
 template<class T, class K>
 node<T, K>::node(std::shared_ptr<T> m_data, K m_key) : key(m_key), data(m_data), right(nullptr), left(nullptr), height(1){
-    //std::cout<< "nodector";
 }
 
 #endif //WORLDCUP23A1_CPP_NODE_H
@@ -229,7 +228,6 @@ std::shared_ptr<T> AvlTree<T,K>::find_by_key(node<T,K>* root,K key) {
     if(root== nullptr){
         return nullptr;
     }
-   // std::cout<<'2';
     if (key == root->key){
         return root->data;
     }
@@ -249,15 +247,11 @@ std::shared_ptr<T> AvlTree<T,K>::find_by_key(node<T,K>* root,K key) {
 template<class T, class K>
 void AvlTree<T, K>::deleteTree(node<T,K> *r) {
 
-    //std::cout<<"before ";
     if (r != nullptr) {
-        //std::cout<<"inside";
         deleteTree(r->left);
         deleteTree(r->right);
-      //  std::cout<<"last";
         remove(r, r->key);
     }
-    //std::cout<<"final";
 }
 
 /*template<class T, class K>
@@ -298,9 +292,7 @@ node<T,K>* AvlTree<T, K>::createEmptyTree(node<T,K> *root,int height) {
 
 template<class T, class K>
 void AvlTree<T, K>::setRoot(node<T,K> *root) {
-    std::cout<<"befire";
     m_root=root;
-    std::cout<<"after";
 
 }
 
@@ -401,7 +393,6 @@ node<T, K> *AvlTree<T, K>::findBiggerThan(node<T, K> *root, node<T, K> *closest,
 template<class T, class K>
 node<T, K> *AvlTree<T, K>::newNode(std::shared_ptr<T> data, K key) {
     node<T,K>* newNode = new node<T, K>(data,key);
-    //std::cout<< "new node";
     newNode->key = key;
     newNode->data = data;
     newNode->left = nullptr;
@@ -475,7 +466,6 @@ node<T, K> *AvlTree<T, K>::insertHelper(node<T,K> *root, std::shared_ptr<T> data
 /* 1. Perform the normal BST insertion */
     if (root == nullptr){
         root=newNode(data,key); //maybe fix unchanging root?
-        //std::cout<< "sadddd";
         return root;
     }
 
@@ -540,7 +530,6 @@ void AvlTree<T, K>::storeInOrderRecursiveKey(node<T, K> *root,int* index, int *c
    /* if(pNode == nullptr)
         return;
     storeInOrderRecursiveKey(pNode->left,index,output);
-    std::cout<<'1';
     output[*index++] = pNode->data->getId();
     storeInOrderRecursiveKey(pNode->right,index,output);*/
 }
@@ -637,7 +626,6 @@ node<T,K>* AvlTree<T, K>::sortedArrayToBSTId(std::shared_ptr<T> playerArr[], K k
     right child of root */
     root->right = sortedArrayToBSTId(playerArr,keyArr, mid+1, end);
 
-    std::cout<< "end";
     return root;
 }
 

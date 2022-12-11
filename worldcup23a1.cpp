@@ -179,8 +179,6 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
         }
         tmp_team->addPlayer(newPlayer,newPlayerStats,playerId);
         int num = tmp_team->getNumPlayers();
-       // std::cout<< num;
-
 
         m_all_players_goals.insert(m_all_players_goals.getRoot(),newPlayer,newPlayerStats);
         m_all_players_id.insert(m_all_players_id.getRoot(),newPlayer,playerId);
@@ -207,8 +205,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
                 m_num_eligible_to_play_teams++;
             }
         }
-        //std::cout<<newPlayer.totalGames();
-        //delete tmp_team;
+
     } catch (std::exception& e) {
         return StatusType::ALLOCATION_ERROR;
     }
@@ -423,7 +420,6 @@ output_t<int> world_cup_t::get_num_played_games(int playerId)
         output_t<int> out(StatusType::FAILURE);
         return out;
     }
-   // std::cout<<player1->getTeamId();
     output_t<int> out(player1->totalGames());
     player1 = nullptr;
     return out;
@@ -534,13 +530,10 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
     newTeam->setTeamTree(unitedNewTreeStats, unitedNewTreeId);
  */
 
-    // std::cout<<'6';
     unitedNewTreeStats.setRoot(unitedNewTreeStats.mergeTrees(mergedPlayer,mergedKeys,team1->getNumPlayers(),team2->getNumPlayers()));
     unitedNewTreeId.setRoot(unitedNewTreeId.mergeTrees(mergedPlayer,mergedID,team1->getNumPlayers(),team2->getNumPlayers()));
 
-    // std::cout<<'4';
     newTeam->setTeamTree(unitedNewTreeStats,unitedNewTreeId);
-   // std::cout<<'5';
 
 ////////////////////////////////////////////////////
     /*
@@ -687,7 +680,6 @@ output_t<int> world_cup_t::get_closest_player(int playerId, int teamId)
     }
     std::shared_ptr<team> team1 = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
     if(team1 == nullptr){
-        std::cout<<'2';
         output_t<int> out(StatusType::FAILURE);
         return out;
     }
@@ -706,12 +698,10 @@ output_t<int> world_cup_t::get_closest_player(int playerId, int teamId)
 
     std::shared_ptr<player> player1 = team1->findPlayerById(playerId);
     if(player1 == nullptr){
-        std::cout<<'1';
         output_t<int> out(StatusType::FAILURE);
         return out;
     }
     if(player1->getClosest() == nullptr){
-        std::cout<<'3';
         output_t<int> out(StatusType::FAILURE);
         return out;
     }
@@ -755,9 +745,7 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
                 break;
             }
         }*/
-        std::cout<<i;
         knock_out_tree.setRoot(knock_out_tree.sortedArrayToBSTId(arr_team,arr_ids,0,i-1));
-        std::cout<<'5';
         if(!i){
             output_t<int> out(StatusType::FAILURE);
             delete[] arr_team;

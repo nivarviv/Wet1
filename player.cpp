@@ -164,7 +164,6 @@ bool player::operator==(const player &p) const {
 }
 
 player::player(const player &other) {
-   // std::cout<< "playercopy";
     m_playerId=other.m_playerId;
     m_my_team=other.m_my_team;
     m_teamId=other.m_teamId;

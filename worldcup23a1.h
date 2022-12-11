@@ -38,6 +38,8 @@ private:
     int m_total_players;
     int m_num_teams;
     int m_num_eligible_to_play_teams;
+    team* teamArray;
+    player* playerArray;
 
 
 public:

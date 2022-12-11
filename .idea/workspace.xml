@@ -14,10 +14,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="team id tree">
+    <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="knockout">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AvlTree.h" beforeDir="false" afterPath="$PROJECT_DIR$/AvlTree.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worldcup23a1.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/worldcup23a1.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/worldcup23a1.h" beforeDir="false" afterPath="$PROJECT_DIR$/worldcup23a1.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -93,13 +91,7 @@
       <workItem from="1669205829216" duration="18980000" />
       <workItem from="1669727405644" duration="3630000" />
       <workItem from="1669748706252" duration="35160000" />
-      <workItem from="1670772847928" duration="13183000" />
-    </task>
-    <task id="LOCAL‎00028" summary="started on closest">
-      <created>1670023649745</created>
-      <option name="number" value="LOCAL‎00028" />
-      <option name="presentableId" value="LOCAL‎00028" />
-      <updated>1670023649745</updated>
+      <workItem from="1670772847928" duration="15482000" />
     </task>
     <task id="LOCAL‎00029" summary="started on closest">
       <created>1670064501926</created>
@@ -415,7 +407,13 @@
       <option name="presentableId" value="LOCAL‎00076" />
       <updated>1670788902528</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <task id="LOCAL‎00077" summary="knockout">
+      <created>1670791588049</created>
+      <option name="number" value="LOCAL‎00077" />
+      <option name="presentableId" value="LOCAL‎00077" />
+      <updated>1670791588049</updated>
+    </task>
+    <option name="localTasksCounter" value="78" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -435,7 +433,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="added remove" />
     <MESSAGE value="added player ctor" />
     <MESSAGE value="added team funcs" />
     <MESSAGE value="some extra changes in world cup and few other" />
@@ -460,7 +457,8 @@
     <MESSAGE value="no player, playerStats node" />
     <MESSAGE value="changed T to T*" />
     <MESSAGE value="team id tree" />
-    <option name="LAST_COMMIT_MESSAGE" value="team id tree" />
+    <MESSAGE value="knockout" />
+    <option name="LAST_COMMIT_MESSAGE" value="knockout" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
