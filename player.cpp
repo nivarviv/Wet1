@@ -3,12 +3,14 @@
 //!
 
 #include "player.h"
+
+#include <utility>
 #include "team.h"
 
 
 
-player::player(int playerId,int teamId, team* playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper) :
-        m_playerId(playerId),m_teamId(teamId) ,m_my_team(playerTeam), m_gamesPlayed(gamesPlayed), m_goals(goals), m_cards(cards), m_goalKeeper(goalKeeper),
+player::player(int playerId,int teamId, std::shared_ptr<team> playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper) :
+        m_playerId(playerId),m_teamId(teamId) ,m_my_team(std::move(playerTeam)), m_gamesPlayed(gamesPlayed), m_goals(goals), m_cards(cards), m_goalKeeper(goalKeeper),
         m_stats(playerStats(playerId, cards, goals)), m_closest(nullptr), m_pre(nullptr), m_suc(nullptr), m_teamGamesWO(0)
 {
     m_teamGamesWO = (*m_my_team).getNumGames();
@@ -22,17 +24,17 @@ playerStats player::getMyStats() const{
     return m_stats;
 }
 
-team* player::getMyTeam() const{
+std::shared_ptr<team> player::getMyTeam() const{
     return m_my_team;
 }
 
-void player::setClosest(player* player) {
+void player::setClosest(std::shared_ptr<player> player) {
     m_closest=player;
 }
 
 
 
-player* player::closestOfTwo(player* pre, player* suc) const{
+std::shared_ptr<player> player::closestOfTwo(std::shared_ptr<player> pre, std::shared_ptr<player> suc) const{
     if(pre == nullptr && suc == nullptr){
         return nullptr;
     }
@@ -49,7 +51,7 @@ player* player::closestOfTwo(player* pre, player* suc) const{
 
 
 //need to check according to the new instructions
-player* player::closestOfTwoExist(player *pre, player *suc) const{
+std::shared_ptr<player> player::closestOfTwoExist(std::shared_ptr<player>pre, std::shared_ptr<player>suc) const{
     if(abs(this->m_goals-pre->m_goals)<abs(this->m_goals-suc->m_goals)){
         return pre;
     }
@@ -67,27 +69,27 @@ player* player::closestOfTwoExist(player *pre, player *suc) const{
     }
 }
 
-void player::setPre(player *player) {
+void player::setPre(std::shared_ptr<player>player) {
     m_pre=player;
 }
 
-void player::setSuc(player *player) {
+void player::setSuc(std::shared_ptr<player>player) {
     m_suc=player;
 }
 
-player *player::getPre() const{
+std::shared_ptr<player>player::getPre() const{
     return m_pre;
 }
 
-player *player::getSuc() const{
+std::shared_ptr<player>player::getSuc() const{
     return m_suc;
 }
 
-player* player::getClosest() const{
+std::shared_ptr<player> player::getClosest() {
     return m_closest;
 }
 
-player player::addNewPlayer(int playerId, team *playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper) {
+player player::addNewPlayer(int playerId, std::shared_ptr<team>playerTeam, int gamesPlayed, int goals, int cards, bool goalKeeper) {
     player newPlayer = player(playerId,playerTeam->getId(), playerTeam, gamesPlayed, goals, cards, goalKeeper);
     return newPlayer;
 }
@@ -109,10 +111,10 @@ void player::addGames(int games_played) {
 }
 
 player::~player() {
-    delete m_closest;
-    delete m_pre;
-    delete m_suc;
-    delete m_my_team;
+    //delete m_closest;
+    //delete m_pre;
+    //delete m_suc;
+ //   delete m_my_team;
 }
 
 
@@ -120,7 +122,7 @@ int player::getId() const{
     return m_playerId;
 }
 
-void player::setMyTeam(team* new_team){
+void player::setMyTeam(std::shared_ptr<team> new_team){
     m_my_team = new_team;
 }
 
@@ -151,7 +153,7 @@ player &player::operator=(const player &other) {
 }
 
 void player::updateStats() {
-m_stats=playerStats(m_playerId, m_cards, m_goals);
+    m_stats=playerStats(m_playerId, m_cards, m_goals);
 }
 
 bool player::operator==(const player &p) const {
@@ -162,7 +164,7 @@ bool player::operator==(const player &p) const {
 }
 
 player::player(const player &other) {
-    std::cout<< "playercopy";
+   // std::cout<< "playercopy";
     m_playerId=other.m_playerId;
     m_my_team=other.m_my_team;
     m_teamId=other.m_teamId;
@@ -175,4 +177,11 @@ player::player(const player &other) {
     m_pre=other.m_pre;
     m_suc=other.m_suc;
     m_teamGamesWO=other.m_teamGamesWO;
+}
+
+int player::getGoals() const{
+    return m_goals;
+}
+int player::getCards() const{
+    return m_cards;
 }

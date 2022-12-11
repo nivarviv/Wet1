@@ -9,6 +9,8 @@
 C:/Users/97254/OneDrive/Desktop/cs/wet1-data/Wet1/AvlTree.h
 iostream
 -
+memory
+-
 node.h
 C:/Users/97254/OneDrive/Desktop/cs/wet1-data/Wet1/node.h
 player.h
@@ -22,6 +24,8 @@ C:/Users/97254/OneDrive/Desktop/cs/wet1-data/Wet1/player.h
 playerStats.h
 C:/Users/97254/OneDrive/Desktop/cs/wet1-data/Wet1/playerStats.h
 iostream
+-
+memory
 -
 
 C:/Users/97254/OneDrive/Desktop/cs/wet1-data/Wet1/playerStats.h

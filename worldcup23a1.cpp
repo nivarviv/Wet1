@@ -19,7 +19,7 @@ world_cup_t::~world_cup_t()
     m_all_players_goals.deleteTree(m_all_players_goals.getRoot());
     m_allowed_to_play_teams.deleteTree(m_allowed_to_play_teams.getRoot());
     m_all_players_id.deleteTree(m_all_players_id.getRoot());
-    delete m_top_scorer;
+    //delete m_top_scorer;
 }
 
 void mergeArrays(playerStats* arr1[], playerStats* arr2[], int m, int n, playerStats* arr3[]){
@@ -40,9 +40,15 @@ void mergeArrays(playerStats* arr1[], playerStats* arr2[], int m, int n, playerS
             arr3[k++] = arr2[j++];
         }
     }
+    while (i<m){
+        arr3[k++]=arr1[i++];
+    }
+    while (j<n){
+        arr3[k++]=arr2[j++];
+    }
 }
 
-void mergeArrays(player* arr1[], player* arr2[], int m, int n, player* arr3[]){
+void mergeArrays(std::shared_ptr<player> arr1[], std::shared_ptr<player> arr2[], int m, int n, std::shared_ptr<player> arr3[]){
     int i = 0;
     int j = 0;
     int k = 0;
@@ -60,6 +66,12 @@ void mergeArrays(player* arr1[], player* arr2[], int m, int n, player* arr3[]){
             arr3[k++] = arr2[j++];
         }
     }
+    while (i<m){
+        arr3[k++]=arr1[i++];
+    }
+    while (j<n){
+        arr3[k++]=arr2[j++];
+    }
 }
 
 
@@ -69,14 +81,15 @@ StatusType world_cup_t::add_team(int teamId, int points)
     if(teamId <= 0 || points < 0){
         return StatusType::INVALID_INPUT;
     }
-    team* tmp = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
+    std::shared_ptr<team> tmp = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
     if(tmp != nullptr){
         tmp=nullptr;
         return StatusType::FAILURE;
     }
-
-    team team1 = team(teamId, points);
-    m_all_teams.insert(m_all_teams.getRoot(),&team1, teamId);
+    //std::shared_ptr<player> newPlayer(new player(playerId, teamId, tmp_team, gamesPlayed, goals, cards, goalKeeper));
+    std::shared_ptr<team> team1 (new team(teamId, points));
+    //todo:
+    m_all_teams.insert(m_all_teams.getRoot(),team1, teamId);
     tmp = nullptr;
     m_num_teams++;
     return StatusType::SUCCESS;
@@ -87,7 +100,7 @@ StatusType world_cup_t::remove_team(int teamId)
     if(teamId <= 0){
         return StatusType::INVALID_INPUT;
     }
-    team* team1 = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
+    std::shared_ptr<team> team1 = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
     if(team1 == nullptr){
         return StatusType::FAILURE;
     }
@@ -114,7 +127,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
        cards < 0 || (gamesPlayed == 0 && (goals > 0 || cards > 0))){
         return StatusType::INVALID_INPUT;
     }
-    player* tmp_player = m_all_players_id.find_by_key(m_all_players_id.getRoot(),playerId);
+    std::shared_ptr<player> tmp_player = m_all_players_id.find_by_key(m_all_players_id.getRoot(),playerId);
     // player already exist
     if(tmp_player != nullptr){
         tmp_player = nullptr;
@@ -122,43 +135,45 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
     }
     //delete tmp_player;
     // team does not exist
-    team* tmp_team = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
+    std::shared_ptr<team> tmp_team = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
     if(tmp_team == nullptr){
         tmp_team = nullptr;
         return StatusType::FAILURE;
     }
     try {
         m_total_players++;
-        player newPlayer = player(playerId,teamId,tmp_team,gamesPlayed,goals,cards,goalKeeper);
-
+        //player newPlayer = player(playerId,teamId,tmp_team,gamesPlayed,goals,cards,goalKeeper);
+        std::shared_ptr<player> newPlayer(new player(playerId, teamId, tmp_team, gamesPlayed, goals, cards, goalKeeper));
         //newPlayer.addNewPlayer(playerId,tmp_team,gamesPlayed,goals,cards,goalKeeper);
-        playerStats newPlayerStats = newPlayer.getMyStats();
+        playerStats newPlayerStats = newPlayer->getMyStats();
         if(m_top_scorer == nullptr){
-            m_top_scorer = &newPlayer;
+            m_top_scorer = newPlayer;
         }
         else if(m_top_scorer->getMyStats() < newPlayerStats){
-            m_top_scorer = &newPlayer;
+            m_top_scorer = newPlayer;
         }
-        tmp_team->addPlayer(&newPlayer,newPlayerStats,playerId);
-        //std::cout<< "here";
+        tmp_team->addPlayer(newPlayer,newPlayerStats,playerId);
+        int num = tmp_team->getNumPlayers();
+       // std::cout<< num;
 
-        m_all_players_goals.insert(m_all_players_goals.getRoot(),&newPlayer,newPlayerStats);
-        m_all_players_id.insert(m_all_players_id.getRoot(),&newPlayer,playerId);
+
+        m_all_players_goals.insert(m_all_players_goals.getRoot(),newPlayer,newPlayerStats);
+        m_all_players_id.insert(m_all_players_id.getRoot(),newPlayer,playerId);
         if(newPlayerStats > tmp_team->getTopScorerStats()){
-            tmp_team->setTopScorer(&newPlayer);
+            tmp_team->setTopScorer(newPlayer);
         }
-        player* pre = nullptr;
-        player* suc = nullptr;
+        std::shared_ptr<player> pre = nullptr;
+        std::shared_ptr<player> suc = nullptr;
         m_all_players_goals.successorPredecessor(m_all_players_goals.getRoot(),newPlayerStats,pre,suc);
-        newPlayer.setPre(pre);
-        newPlayer.setSuc(suc);
-        newPlayer.setClosest(newPlayer.closestOfTwo(pre,suc));
+        newPlayer->setPre(pre);
+        newPlayer->setSuc(suc);
+        newPlayer->setClosest(newPlayer->closestOfTwo(pre,suc));
         //changing pre and suc closest if needed
         if(pre != nullptr){
-            pre->setClosest(pre->closestOfTwo(pre->getClosest(),&newPlayer));
+            pre->setClosest(pre->closestOfTwo(pre->getClosest(),newPlayer));
         }
         if(suc != nullptr){
-            (*suc).setClosest((*suc).closestOfTwo(suc->getClosest(),&newPlayer));
+            (*suc).setClosest((*suc).closestOfTwo(suc->getClosest(),newPlayer));
         }
         //check if team is allowed to play
         if((*tmp_team).isTeamValid()){
@@ -175,9 +190,9 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
     return StatusType::SUCCESS;
 }
 
-void world_cup_t::fixClosest(player *changePlayer) {
-    class player* pre1;
-    class player* suc1;
+void world_cup_t::fixClosest(std::shared_ptr<player>changePlayer) {
+    class std::shared_ptr<player> pre1;
+    class std::shared_ptr<player> suc1;
     m_all_players_goals.successorPredecessor(m_all_players_goals.getRoot(),changePlayer->getMyStats(),pre1,suc1);
     changePlayer->setPre(pre1);
     changePlayer->setSuc(suc1);
@@ -190,15 +205,15 @@ StatusType world_cup_t::remove_player(int playerId)
     if(playerId <= 0){
         return StatusType::INVALID_INPUT;
     }
-    player* playerToDelete = m_all_players_id.find_by_key(m_all_players_id.getRoot(),playerId);
+    std::shared_ptr<player> playerToDelete = m_all_players_id.find_by_key(m_all_players_id.getRoot(),playerId);
     if(playerToDelete == nullptr){
-        delete playerToDelete;
+        //delete playerToDelete;
         return StatusType::FAILURE;
     }
 
-    team* tmp = playerToDelete->getMyTeam();
-    player* pre=playerToDelete->getPre();
-    player* suc=playerToDelete->getSuc();
+    std::shared_ptr<team> tmp = playerToDelete->getMyTeam();
+    std::shared_ptr<player> pre=playerToDelete->getPre();
+    std::shared_ptr<player> suc=playerToDelete->getSuc();
 
 
     //if team is not valid to play anymore - remove from tree and update the num of valid teams:
@@ -223,19 +238,19 @@ StatusType world_cup_t::remove_player(int playerId)
     if(playerToDelete == m_top_scorer){
         m_top_scorer = m_all_players_goals.getBiggest(m_all_players_goals.getRoot());
     }
-
     //fix deleted players pre and suc closest:
-    if(pre->getClosest()==playerToDelete){
+    if(pre != nullptr && pre->getClosest()==playerToDelete){
         fixClosest(pre);
     }
-    if(suc->getClosest()==playerToDelete){
+    if(suc != nullptr && suc->getClosest()==playerToDelete){
         fixClosest(suc);
     }
 
-    delete tmp;
-    delete pre;
-    delete suc;
-    delete playerToDelete;
+
+    //delete tmp;
+    //delete pre;
+    //delete suc;
+    //delete playerToDelete;
     return StatusType::SUCCESS;
 }
 
@@ -252,12 +267,12 @@ StatusType world_cup_t::update_player_stats(int playerId, int gamesPlayed,
           return StatusType::ALLOCATION_ERROR;
       }*/
 
-    player* tmp_player = m_all_players_id.find_by_key(m_all_players_id.getRoot(),playerId);
+    std::shared_ptr<player> tmp_player = m_all_players_id.find_by_key(m_all_players_id.getRoot(),playerId);
     if(tmp_player == nullptr){
         return StatusType::FAILURE;
     }
 
-    team* tmp_team = m_all_teams.find_by_key(m_all_teams.getRoot(),tmp_player->getTeamId());
+    std::shared_ptr<team> tmp_team = m_all_teams.find_by_key(m_all_teams.getRoot(),tmp_player->getTeamId());
     if(tmp_team == nullptr){
         return StatusType::FAILURE;
     }
@@ -269,9 +284,7 @@ StatusType world_cup_t::update_player_stats(int playerId, int gamesPlayed,
 
     // remove player with old stats
     m_all_players_goals.remove(m_all_players_goals.getRoot(),tmp_player->getMyStats());
-    //std::cout<<'3';
     tmp_team->removePlayer(tmp_player->getMyStats(),playerId);
-
     // add player with new stats
     tmp_player->addCards(cardsReceived);
     tmp_player->addGames(gamesPlayed);
@@ -294,31 +307,37 @@ StatusType world_cup_t::update_player_stats(int playerId, int gamesPlayed,
 
 
     //change old player pre and suc:
-    player* oldPre=tmp_player->getPre();
-    player* oldSuc=tmp_player->getSuc();
-    if(oldPre->getClosest()==tmp_player){
-        fixClosest(oldPre);
+    std::shared_ptr<player> oldPre=tmp_player->getPre();
+    std::shared_ptr<player> oldSuc=tmp_player->getSuc();
+    if(oldPre != nullptr) {
+        if (oldPre->getClosest() == tmp_player) {
+            fixClosest(oldPre);
+        }
     }
-    if(oldSuc->getClosest()==tmp_player){
-        fixClosest(oldSuc);
+    if(oldSuc != nullptr) {
+        if (oldSuc->getClosest() == tmp_player) {
+            fixClosest(oldSuc);
+        }
     }
 
     //update player's pre+suc and closest:
     fixClosest(tmp_player);
 
     //update new stats' player's pre and suc:
-    player* newPre=tmp_player->getPre();
-    player* newSuc=tmp_player->getSuc();
-    fixClosest(newPre);
-    fixClosest(newSuc);
-
-
-    delete tmp_player;
-    delete tmp_team;
-    delete oldPre;
-    delete oldSuc;
-    delete newPre;
-    delete newSuc;
+    std::shared_ptr<player> newPre=tmp_player->getPre();
+    std::shared_ptr<player> newSuc=tmp_player->getSuc();
+    if(newPre != nullptr){
+        fixClosest(newPre);
+    }
+    if(newSuc != nullptr){
+        fixClosest(newSuc);
+    }
+    //delete tmp_player;
+    //delete tmp_team;
+    //delete oldPre;
+    //delete oldSuc;
+    //delete newPre;
+    //delete newSuc;
 
     return StatusType::SUCCESS;
 }
@@ -329,8 +348,8 @@ StatusType world_cup_t::play_match(int teamId1, int teamId2)
     if(teamId1 <= 0 || teamId2 <= 0 || teamId1 == teamId2){
         return StatusType::INVALID_INPUT;
     }
-    team* team1 = m_allowed_to_play_teams.find_by_key(m_allowed_to_play_teams.getRoot(),teamId1);
-    team* team2 = m_allowed_to_play_teams.find_by_key(m_allowed_to_play_teams.getRoot(),teamId2);
+    std::shared_ptr<team> team1 = m_allowed_to_play_teams.find_by_key(m_allowed_to_play_teams.getRoot(),teamId1);
+    std::shared_ptr<team> team2 = m_allowed_to_play_teams.find_by_key(m_allowed_to_play_teams.getRoot(),teamId2);
     if(team1 == nullptr || team2 == nullptr){
         team1 = nullptr;
         team2 = nullptr;
@@ -367,14 +386,14 @@ output_t<int> world_cup_t::get_num_played_games(int playerId)
         return out;
     }
     //todo: see how to handle bad alloc
-    /* player* player1 = new player*; ///alloc?
+    /* std::shared_ptr<player> player1 = new std::shared_ptr<player>; ///alloc?
      if(!player1){
          delete player1;
          output_t<int> out(StatusType::ALLOCATION_ERROR);
          return out;
      }*/
 
-    player* player1 = m_all_players_id.find_by_key(m_all_players_id.getRoot(),playerId);//returns null if haven't found
+    std::shared_ptr<player> player1 = m_all_players_id.find_by_key(m_all_players_id.getRoot(),playerId);//returns null if haven't found
     if(player1 == nullptr){
         output_t<int> out(StatusType::FAILURE);
         return out;
@@ -396,14 +415,14 @@ output_t<int> world_cup_t::get_team_points(int teamId)
     ///to do: see how to handle bad alloc
     //these two might throw exceptions
 /*    wanted_team = new team;
-    team* wanted_team = new team; ///alloc??
+    std::shared_ptr<team> wanted_team = new team; ///alloc??
     if(!wanted_team){
         output_t<int> out(StatusType::ALLOCATION_ERROR); //fix
         delete wanted_team;
         return out;
     }*/
 
-    team* wanted_team = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
+    std::shared_ptr<team> wanted_team = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
     if(wanted_team == nullptr){
         output_t<int> out(StatusType::FAILURE);
         return out;
@@ -419,9 +438,14 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
         return StatusType::INVALID_INPUT;
     }
 
-    team* team1=m_all_teams.find_by_key(m_all_teams.getRoot(),teamId1);
-    team* team2=m_all_teams.find_by_key(m_all_teams.getRoot(),teamId2);
-/*
+    std::shared_ptr<team> team1=m_all_teams.find_by_key(m_all_teams.getRoot(),teamId1);
+    std::shared_ptr<team> team2=m_all_teams.find_by_key(m_all_teams.getRoot(),teamId2);
+
+
+    if(team1 == nullptr || team2 == nullptr){
+        return StatusType::FAILURE;
+    }
+    /*
     node<player,playerStats>* arr1[team1->getNumPlayers()];
     node<player,playerStats>* arr2[team2->getNumPlayers()];
     node<player,playerStats>* mergedArr[team2->getNumPlayers()+team1->getNumPlayers()];
@@ -430,23 +454,38 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
     team2->getArrayStats(arr2);
     */
 //////////////////////////////////////////////////// maybe?
-    player** arrT1 = new player*[team1->getNumPlayers()];
+    std::shared_ptr<player>* arrT1 = new std::shared_ptr<player>[team1->getNumPlayers()];
     playerStats** arrK1 = new playerStats*[team1->getNumPlayers()];
     team1->storeTree(arrT1,arrK1);
-    player** arrT2 = new player*[team2->getNumPlayers()];
+    std::shared_ptr<player>* arrT2 = new std::shared_ptr<player>[team2->getNumPlayers()];
     playerStats** arrK2 = new playerStats*[team2->getNumPlayers()];
+
+
     team2->storeTree(arrT2,arrK2);
-    player** mergedPlayer = new player*[team1->getNumPlayers()+team2->getNumPlayers()];
+    std::shared_ptr<player>* mergedPlayer = new std::shared_ptr<player>[team1->getNumPlayers()+team2->getNumPlayers()];
     playerStats** mergedKeys = new playerStats*[team1->getNumPlayers()+team2->getNumPlayers()];
     mergeArrays(arrT1,arrT2,team1->getNumPlayers(),team2->getNumPlayers(),mergedPlayer);
+
+
     mergeArrays(arrK1,arrK2,team1->getNumPlayers(),team2->getNumPlayers(),mergedKeys);
-    team newTeam=team(newTeamId,team1->getNumPoints()+team2->getNumPoints());
+    //std::shared_ptr<player> newPlayer(new player(playerId, teamId, tmp_team, gamesPlayed, goals, cards, goalKeeper));
+    std::shared_ptr<team> newTeam(new team(newTeamId,team1->getNumPoints()+team2->getNumPoints()));
+
+
     for (int player = 0; player < (team1->getNumPlayers()+team2->getNumPlayers()); player++){
-        mergedPlayer[player]->setMyTeam(&newTeam);
+        if(mergedPlayer[player] == nullptr){
+            break;
+        }
+        mergedPlayer[player]->setMyTeam(newTeam);
     }
+
     AvlTree<player, playerStats> unitedNewTree;
+   // std::cout<<'6';
     unitedNewTree.setRoot(unitedNewTree.mergeTrees(mergedPlayer,mergedKeys,team1->getNumPlayers(),team2->getNumPlayers()));
-    newTeam.setTeamTree(unitedNewTree);
+   // std::cout<<'4';
+    newTeam->setTeamTree(unitedNewTree);
+   // std::cout<<'5';
+
 ////////////////////////////////////////////////////
     /*
     mergeArrays(arr1,arr2,team1->getNumPlayers(),team2->getNumPlayers(),mergedArr);
@@ -470,10 +509,15 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
     newTeam.setTeamTree(unitedTree);
     */
 
-    m_all_teams.insert(m_all_teams.getRoot(),&newTeam,newTeamId);
-    if(newTeam.isTeamValid()){
-        m_allowed_to_play_teams.insert(m_allowed_to_play_teams.getRoot(),&newTeam,newTeamId);
+    //std::cout<<'6';
+
+
+    m_all_teams.insert(m_all_teams.getRoot(),newTeam,newTeamId);
+    if(newTeam->isTeamValid()){
+        m_allowed_to_play_teams.insert(m_allowed_to_play_teams.getRoot(),newTeam,newTeamId);
     }
+
+
     team1->deleteTeam();
     team2->deleteTeam();
     remove_team(teamId1);
@@ -497,13 +541,13 @@ output_t<int> world_cup_t::get_top_scorer(int teamId)
     }
     else{
         ///to do: see how to handle bad alloc
-        /*team* team1 = new team; //fix
+        /*std::shared_ptr<team> team1 = new team; //fix
         if(!team1){
             output_t<int> out(StatusType::ALLOCATION_ERROR);
             delete team1;
             return out;
         }*/
-        team* team1 = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);//returns null if the team hasn't found
+        std::shared_ptr<team> team1 = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);//returns null if the team hasn't found
         if(team1 == nullptr){
             output_t<int> out(StatusType::FAILURE);
             return out;
@@ -526,13 +570,13 @@ output_t<int> world_cup_t::get_all_players_count(int teamId)
     }
     else{
         ///to do: see how to handle bad alloc
-        /*team* team1 = new team; //fix
+        /*std::shared_ptr<team> team1 = new team; //fix
         if(team1 == NULL){
             output_t<int> out(StatusType::ALLOCATION_ERROR);
             delete team1;
             return out;
         }*/
-        team* team1 = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
+        std::shared_ptr<team> team1 = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
         if(team1 == nullptr){
             output_t<int> out(StatusType::FAILURE);
             return out;
@@ -555,17 +599,31 @@ StatusType world_cup_t::get_all_players(int teamId, int *const output)
             delete tmp_team;
             return StatusType::ALLOCATION_ERROR;
         }*/
-
-        team *tmp_team = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
+        std::shared_ptr<team>tmp_team = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
         if (tmp_team == nullptr) {
-            delete tmp_team;
+            //delete tmp_team;
             return StatusType::FAILURE;
         }
-        tmp_team->getArrayId(output);
-        delete tmp_team;
+
+        std::shared_ptr<player>* playerArray = new std::shared_ptr<player>[tmp_team->getNumPlayers()];
+        tmp_team->storeTreeSingle(playerArray);
+        for(int player=0; player<tmp_team->getNumPlayers();player++){
+            output[player]=playerArray[player]->getId();
+        }
+
+        //tmp_team->getArrayId(output);
+    //    delete tmp_team;
     }
-    else
-        m_all_players_goals.storeInOrderRecursiveKey(m_all_players_goals.getRoot(), output);
+    else {
+        int index=0;
+        std::shared_ptr<player>* playerArray = new std::shared_ptr<player>[m_total_players];
+        m_all_players_goals.storeInorderSingle(m_all_players_goals.getRoot(),playerArray,&index);
+        for(int player=0; player<m_total_players;player++){
+            output[player]=playerArray[player]->getId();
+        }
+
+        //m_all_players_goals.storeInOrderRecursiveKey(m_all_players_goals.getRoot(), &index , output);
+    }
     return StatusType::SUCCESS;
 }
 
@@ -576,21 +634,24 @@ output_t<int> world_cup_t::get_closest_player(int playerId, int teamId)
         output_t<int> out(StatusType::INVALID_INPUT);
         return out;
     }
-    team* team1 = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
+    std::shared_ptr<team> team1 = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
     if(team1 == nullptr){
-        delete team1;
+        std::cout<<'2';
         output_t<int> out(StatusType::FAILURE);
         return out;
     }
-    player* player1 = team1->findPlayerById(playerId);
-    delete team1;
+    std::shared_ptr<player> player1 = team1->findPlayerById(playerId);
     if(player1 == nullptr){
-        delete player1;
+        std::cout<<'1';
+        output_t<int> out(StatusType::FAILURE);
+        return out;
+    }
+    if(player1->getClosest() == nullptr){
+        std::cout<<'3';
         output_t<int> out(StatusType::FAILURE);
         return out;
     }
     output_t<int> out(player1->getClosest()->getId());
-    delete player1;
     return out;
 }
 //updated!!
@@ -601,8 +662,8 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
         return out;
     }
     try {
-        team** arr_team = nullptr;
-        arr_team = new team*[m_num_eligible_to_play_teams];
+        std::shared_ptr<team>* arr_team = nullptr;
+        arr_team = new std::shared_ptr<team>[m_num_eligible_to_play_teams];
         for(int i = 0; i < m_num_eligible_to_play_teams; i++){
             arr_team[i] = nullptr;
         }

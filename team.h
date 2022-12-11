@@ -17,7 +17,7 @@ private:
     int m_points;
     int m_num_games;
     int m_teamId;
-    player* m_top_scorer;
+    std::shared_ptr<player> m_top_scorer;
     AvlTree<player, int> m_tree_by_id;
     AvlTree<player, playerStats> m_tree_by_stats;
     int m_numGoalKeepers;
@@ -30,7 +30,7 @@ public:
     team(const team&) = default;//we don't want to allow that!!
     ~team();
     team& operator=(const team& other) = default;//we don't want to allow that
-    void addPlayer(player* player, playerStats stats,int id);
+    void addPlayer(std::shared_ptr<player> player, playerStats stats,int id);
     void removePlayer(playerStats stats, int id);
     // void addPlayer(player* player, playerStats stats,int id);
     int top_scorer_id() const;
@@ -38,7 +38,7 @@ public:
     int getNumPoints();
     void setTeamTree( AvlTree<player, playerStats> tree);
     //void getArrayStats(node<player,playerStats>** arr1);
-    player* findPlayerById(int id);
+    std::shared_ptr<player> findPlayerById(int id);
     bool isTeamValid() const;
     int getNumGoals();
     int getNumCards();
@@ -47,15 +47,17 @@ public:
     int getId() const;
     void deleteTeam();
     playerStats getTopScorerStats() const;
-    player* getTopScorer() const;
-    void setTopScorer(player* player);
-    player* getTopNewScorer();
+    std::shared_ptr<player> getTopScorer() const;
+    void setTopScorer(std::shared_ptr<player> player);
+    std::shared_ptr<player> getTopNewScorer();
     void getArrayId(int *const arr1);
 
     /* AvlTree<player, int>* getTreeId() const;
     AvlTree<player, playerStats>* getTreeStats() const;*/
 
-    void storeTree(player **arrT1, playerStats **arrK1);
+    void storeTree(std::shared_ptr<player> *arrT1, playerStats **arrK1);
+    void storeTreeSingle(std::shared_ptr<player> *arrT1);
+
 };
 
 

@@ -34,7 +34,7 @@ private:
     AvlTree<team, int> m_allowed_to_play_teams;
     AvlTree<player, int> m_all_players_id;
     AvlTree<player, playerStats> m_all_players_goals;
-    player* m_top_scorer;
+    std::shared_ptr<player> m_top_scorer;
     int m_total_players;
     int m_num_teams;
     int m_num_eligible_to_play_teams;
@@ -78,7 +78,7 @@ public:
 
     // } </DO-NOT-MODIFY>
 
-    void fixClosest(player* changePlayer);
+    void fixClosest(std::shared_ptr<player> changePlayer);
 };
 
 

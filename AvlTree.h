@@ -6,6 +6,7 @@
 #define WET1_AVLTREE_H
 
 #include <iostream>
+#include <memory>
 #include "node.h"
 /*#include "team.h"
 #include "player.h"
@@ -22,20 +23,20 @@ class node
 {
 public:
     K key;
-    T* data;
+    std::shared_ptr<T> data;
     node *left;
     node *right;
     int height;
-    node(T* data, K key);
+    node(std::shared_ptr<T> data, K key);
     ~node(){
         delete left;
         delete right;
-        delete data;
+        //delete data;
     }
 };
 
 template<class T, class K>
-node<T, K>::node(T* m_data, K m_key) : key(m_key), data(m_data), right(nullptr), left(nullptr), height(1){
+node<T, K>::node(std::shared_ptr<T> m_data, K m_key) : key(m_key), data(m_data), right(nullptr), left(nullptr), height(1){
     //std::cout<< "nodector";
 }
 
@@ -52,26 +53,26 @@ public:
     int height(node<T,K> *N);
     node<T,K> * minValueNode(node<T,K>* root);
     node<T,K> * removeHelper(node<T,K>* root, K key);
-    T *find_by_key(node<T,K>* root,K key);
+    std::shared_ptr<T>find_by_key(node<T,K>* root,K key);
     //void makeNearlyEmpty(node<T,K>* root, int *toDelete);
     //node<T,K>* createEmptyTree(node<T,K> *root,int height);
     void setRoot(node<T,K>* root);
     node<T,K>* getRoot();
     void storeInOrderRecursive(node<T, K> *root, node<T, K> **pNode1);
-    void storeInOrderRecursiveKey(node<T, K> *pNode, int* const output);
-    void storeInOrderRecursiveByTerms(int min, int max,node<T, K> *pNode, T **pNode1);
-    void storeInOrderRecursiveByTermsHelper(int min, int max,node<T, K> *pNode, T **pNode1);
+    void storeInOrderRecursiveKey(node<T, K> *pNode,int* index, int* const output);
+    void storeInOrderRecursiveByTerms(int min, int max,node<T, K> *pNode, std::shared_ptr<T>*pNode1);
+    void storeInOrderRecursiveByTermsHelper(int min, int max,node<T, K> *pNode, std::shared_ptr<T>*pNode1);
     //void arrayToBST(node<T, K> *pNode, node<T, K> *pNode1[]);
-    void successorPredecessor(node < T, K > * root, K val, T* pre, T* suc);
-    node<T,K>* newNode(T* data, K key);
+    void successorPredecessor(node < T, K > * root, K val, std::shared_ptr<T> pre, std::shared_ptr<T> suc);
+    node<T,K>* newNode(std::shared_ptr<T> data, K key);
     node<T,K> *rightRotate(node<T,K> *y);
     node<T,K> *leftRotate(node<T,K> *x);
     int getBalance(node<T,K> *N);
-    void insert(node<T,K>* root, T* data, K key);
-    node<T,K>* insertHelper(node<T,K>* root, T* data, K key);
+    void insert(node<T,K>* root, std::shared_ptr<T> data, K key);
+    node<T,K>* insertHelper(node<T,K>* root, std::shared_ptr<T> data, K key);
     void deleteTree(node<T,K> *r);
     void remove(node<T, K> *root, K key);
-    T* getBiggest(node<T, K> *root);
+    std::shared_ptr<T> getBiggest(node<T, K> *root);
     bool compareStats(node<T, K> *root, K key);
     bool compareId(node<T, K> *root, int key);
     node<T, K> *findBiggerThan(node<T, K> *root, node<T, K> *closest, int min);
@@ -81,10 +82,11 @@ public:
         return (a > b)? a : b;
     }
 
-    void storeInorder(node<T,K>* root, T* inorder[],K* inorder2[], int *index_ptr);
-    node<T,K>* sortedArrayToBST(T* playerArr[], K* keyArr[], int start, int end);
-    node<T,K>* mergeTrees(T** mergedTArr, K** mergedKArr,int size1, int size2);
-    void storeInorderTerms(int min, int max, node<T, K> *root, T** inorder ,int *index_ptr);
+    void storeInorder(node<T,K>* root, std::shared_ptr<T> inorder[],K* inorder2[], int *index_ptr);
+    void storeInorderSingle(node<T,K>* root, std::shared_ptr<T> inorder[], int *index_ptr);
+    node<T,K>* sortedArrayToBST(std::shared_ptr<T> playerArr[], K* keyArr[], int start, int end);
+    node<T,K>* mergeTrees(std::shared_ptr<T>* mergedTArr, K** mergedKArr,int size1, int size2);
+    void storeInorderTerms(int min, int max, node<T, K> *root, std::shared_ptr<T>* inorder ,int *index_ptr);
 };
 /////////////////////////////////////////////////////implementation//////////////////////////////////////////////////
 template<class T, class K>
@@ -220,12 +222,12 @@ node<T,K> * AvlTree<T,K>::removeHelper(node<T,K>* root,K key) {
 }
 
 template<class T, class K>
-T *AvlTree<T,K>::find_by_key(node<T,K>* root,K key) {
+std::shared_ptr<T> AvlTree<T,K>::find_by_key(node<T,K>* root,K key) {
     if(root== nullptr){
         return nullptr;
     }
    // std::cout<<'2';
-    if (key == root->key) {
+    if (key == root->key){
         return root->data;
     }
     else{
@@ -243,11 +245,16 @@ T *AvlTree<T,K>::find_by_key(node<T,K>* root,K key) {
 
 template<class T, class K>
 void AvlTree<T, K>::deleteTree(node<T,K> *r) {
+
+    //std::cout<<"before ";
     if (r != nullptr) {
+        //std::cout<<"inside";
         deleteTree(r->left);
         deleteTree(r->right);
-        delete r;
+      //  std::cout<<"last";
+        remove(r, r->key);
     }
+    //std::cout<<"final";
 }
 
 /*template<class T, class K>
@@ -306,7 +313,7 @@ void AvlTree<T, K>::storeInOrderRecursive(node<T,K> *root, node<T,K> **pNode1) {
 }
 
 template<class T, class K>
-void AvlTree<T, K>::successorPredecessor(node<T, K> *root, K val, T *pre, T *suc) {
+void AvlTree<T, K>::successorPredecessor(node<T, K> *root, K val, std::shared_ptr<T> pre, std::shared_ptr<T> suc) {
     // Base case
     if (root == nullptr)  return;
     K rootKey=root->key;
@@ -349,14 +356,14 @@ void AvlTree<T, K>::successorPredecessor(node<T, K> *root, K val, T *pre, T *suc
 }
 
 template<class T, class K>
-void AvlTree<T, K>::storeInOrderRecursiveByTerms(int min, int max, node<T, K> *pNode, T **pNode1) {
+void AvlTree<T, K>::storeInOrderRecursiveByTerms(int min, int max, node<T, K> *pNode, std::shared_ptr<T>*pNode1) {
     node<T,K>* closest= nullptr;
     node<T,K>* minNode=findBiggerThan(pNode,closest,min);
     storeInOrderRecursiveByTermsHelper(min,max,minNode,pNode1);
 }
 
 template<class T, class K>
-void AvlTree<T, K>::storeInOrderRecursiveByTermsHelper(int min, int max, node<T, K> *pNode, T **pNode1) {
+void AvlTree<T, K>::storeInOrderRecursiveByTermsHelper(int min, int max, node<T, K> *pNode, std::shared_ptr<T>*pNode1) {
     if(pNode == nullptr || pNode->key>max || pNode->key<min)
         return;
     storeInOrderRecursiveByTermsHelper(min,max,pNode->left,pNode1);
@@ -386,7 +393,7 @@ node<T, K> *AvlTree<T, K>::findBiggerThan(node<T, K> *root, node<T, K> *closest,
    new node with the given key and
    NULL left and right pointers. */
 template<class T, class K>
-node<T, K> *AvlTree<T, K>::newNode(T* data, K key) {
+node<T, K> *AvlTree<T, K>::newNode(std::shared_ptr<T> data, K key) {
     node<T,K>* newNode = new node<T, K>(data,key);
     //std::cout<< "new node";
     newNode->key = key;
@@ -458,7 +465,7 @@ void AvlTree<T, K>::remove(node<T, K> *root, K key) {
 // in the subtree rooted with node and
 // returns the new root of the subtree.
 template<class T, class K>
-node<T, K> *AvlTree<T, K>::insertHelper(node<T,K> *root, T* data, K key) {
+node<T, K> *AvlTree<T, K>::insertHelper(node<T,K> *root, std::shared_ptr<T> data, K key) {
 /* 1. Perform the normal BST insertion */
     if (root == nullptr){
         root=newNode(data,key); //maybe fix unchanging root?
@@ -512,17 +519,28 @@ node<T, K> *AvlTree<T, K>::insertHelper(node<T,K> *root, T* data, K key) {
 }
 
 template<class T, class K>
-void AvlTree<T, K>::storeInOrderRecursiveKey(node<T, K> *pNode, int *const output) {
-    if(pNode == nullptr)
+void AvlTree<T, K>::storeInOrderRecursiveKey(node<T, K> *root,int* index, int *const output) {
+    if (root == nullptr)
         return;
-    storeInOrderRecursiveKey(pNode->left,output);
-    (*output) = pNode->data->getId();
-    (*output)++;
-    storeInOrderRecursiveKey(pNode->right,output);
+
+    /* first recur on left child */
+    storeInOrderRecursiveKey(root->left, index, output);
+
+    output[*index]=root->data->getId();
+    (*index)++; // increase index for next entry
+
+    /* now recur on right child */
+    storeInOrderRecursiveKey(root->right, index, output);
+   /* if(pNode == nullptr)
+        return;
+    storeInOrderRecursiveKey(pNode->left,index,output);
+    std::cout<<'1';
+    output[*index++] = pNode->data->getId();
+    storeInOrderRecursiveKey(pNode->right,index,output);*/
 }
 
 template<class T, class K>
-T *AvlTree<T, K>::getBiggest(node<T, K> *root) {
+std::shared_ptr<T>AvlTree<T, K>::getBiggest(node<T, K> *root) {
     if(root== nullptr){
         return nullptr;
     }
@@ -556,7 +574,7 @@ int AvlTree<T, K>::height(node<T, K> *N) {
 // A helper function that stores inorder
 // traversal of a tree rooted with node
 template<class T, class K>
-void AvlTree<T, K>::storeInorder(node<T, K> *root, T** inorder,K** inorder2, int *index_ptr) {
+void AvlTree<T, K>::storeInorder(node<T, K> *root, std::shared_ptr<T>* inorder,K** inorder2, int *index_ptr) {
     if (root == nullptr)
         return;
 
@@ -572,7 +590,7 @@ void AvlTree<T, K>::storeInorder(node<T, K> *root, T** inorder,K** inorder2, int
 }
 
 template<class T, class K>
-node<T,K>* AvlTree<T, K>::sortedArrayToBST(T* playerArr[], K* keyArr[], int start, int end)
+node<T,K>* AvlTree<T, K>::sortedArrayToBST(std::shared_ptr<T> playerArr[], K* keyArr[], int start, int end)
 {
     /* Base Case */
     if (start > end)
@@ -596,9 +614,9 @@ node<T,K>* AvlTree<T, K>::sortedArrayToBST(T* playerArr[], K* keyArr[], int star
 // A utility function to merge
 // two sorted arrays into one
 template<class T, class K>
-T** merge(T* arr1[], T* arr2[], int m, int n) {
+std::shared_ptr<T>* merge(std::shared_ptr<T> arr1[], std::shared_ptr<T> arr2[], int m, int n) {
     // mergedArr[] is going to contain result
-    T *mergedArr = new int[m + n];
+    std::shared_ptr<T>mergedArr = new int[m + n];
     int i = 0, j = 0, k = 0;
     // Traverse through both arrays
     while (i < m && j < n){
@@ -630,7 +648,7 @@ T** merge(T* arr1[], T* arr2[], int m, int n) {
 BSTs with roots as root1 and root2.
 m and n are the sizes of the trees respectively */
 template<class T, class K>
-node<T, K> *AvlTree<T, K>::mergeTrees(T** mergedTArr, K** mergedKArr,int size1, int size2) {
+node<T, K> *AvlTree<T, K>::mergeTrees(std::shared_ptr<T>* mergedTArr, K** mergedKArr,int size1, int size2) {
     /* // Store inorder traversal of
      // first tree in an array arr1[]
      T* arrT1 = new T[size1];
@@ -656,7 +674,7 @@ node<T, K> *AvlTree<T, K>::mergeTrees(T** mergedTArr, K** mergedKArr,int size1, 
 
 
 template<class T, class K>
-void AvlTree<T, K>::storeInorderTerms(int min, int max, node<T, K> *root, T** inorder, int *index_ptr) {
+void AvlTree<T, K>::storeInorderTerms(int min, int max, node<T, K> *root, std::shared_ptr<T>* inorder, int *index_ptr) {
     if (root == nullptr|| root->key>max || root->key<min)
         return;
 
@@ -671,10 +689,27 @@ void AvlTree<T, K>::storeInorderTerms(int min, int max, node<T, K> *root, T** in
 }
 
 template<class T, class K>
-void AvlTree<T, K>::insert(node<T, K> *root, T* data, K key) {
+void AvlTree<T, K>::insert(node<T, K> *root, std::shared_ptr<T> data, K key) {
         m_root = insertHelper(root, data, key);
         return;
 }
+
+template<class T, class K>
+void AvlTree<T, K>::storeInorderSingle(node<T, K> *root, std::shared_ptr<T> *inorder, int *index_ptr) {
+    if (root == nullptr)
+        return;
+
+    /* first recur on left child */
+    storeInorderSingle(root->left, inorder, index_ptr);
+
+    inorder[*index_ptr] = root->data;
+    (*index_ptr)++; // increase index for next entry
+
+    /* now recur on right child */
+    storeInorderSingle(root->right, inorder, index_ptr);
+}
+
+
 
 
 #endif //WET1_AVLTREE_H

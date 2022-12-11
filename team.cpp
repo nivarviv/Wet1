@@ -5,9 +5,10 @@
 
 #include "team.h"
 #include "player.h"
-team::team(int teamId, int points)
+team::team(int teamId, int points) : m_num_players(0), m_has_goalkeeper(false), m_total_goals(0), m_total_cards(0), m_points(points), m_num_games(0), m_teamId(teamId), m_top_scorer(
+        nullptr), m_tree_by_id(AvlTree<player, int>()), m_tree_by_stats(AvlTree<player, playerStats>()), m_numGoalKeepers(0)
 {
-    m_num_players=0;
+   /* m_num_players=0;
     m_has_goalkeeper=false;
     m_total_goals=0;
     m_total_cards=0;
@@ -18,7 +19,7 @@ team::team(int teamId, int points)
     m_top_scorer = nullptr; ///to do
     m_tree_by_id = AvlTree<player, int>();
     m_tree_by_stats = AvlTree<player, playerStats>();
-    m_numGoalKeepers=0;
+    m_numGoalKeepers=0;*/
 }
 
 int team::getNumGames(){
@@ -48,19 +49,21 @@ void team::setTeamTree(AvlTree<player, playerStats> tree) {
     m_tree_by_stats=tree;
 }
 
-player* team::findPlayerById(int id) {
+std::shared_ptr<player> team::findPlayerById(int id) {
     return m_tree_by_id.find_by_key(m_tree_by_id.getRoot(),id);
 }
 
-void team::addPlayer(player* player, playerStats stats,int id) {
+void team::addPlayer(std::shared_ptr<player> player, playerStats stats,int id) {
     m_tree_by_id.insert(m_tree_by_id.getRoot(),player,id);
-    //std::cout<< "sad";
+   // std::cout<< "sad";
     m_tree_by_stats.insert(m_tree_by_stats.getRoot(),player,stats);
     m_num_players++;
-    std::cout<< "another one";
+    //std::cout<< "another one";
     if((*player).isGoalKeeper()){
         m_has_goalkeeper=true;
     }
+    m_total_goals += player->getGoals();
+    m_total_cards += player->getCards();
 }
 
 bool team::isTeamValid() const {
@@ -72,7 +75,7 @@ bool team::isTeamValid() const {
 
 team::~team() {
 
-    delete m_top_scorer;
+    //delete m_top_scorer;
 }
 
 /*const AvlTree<player, int>* team::getTreeId() const {!!
@@ -108,7 +111,9 @@ int team::getId() const {
 
 void team::getArrayId(int *const arr1) {
     node<player,playerStats>* root=m_tree_by_stats.getRoot();
-    m_tree_by_stats.storeInOrderRecursiveKey(root,arr1);
+    int index=0;
+    m_tree_by_stats.storeInOrderRecursiveKey(m_tree_by_stats.getRoot(),&index,arr1);
+    std::cout<<'6';
 }
 
 void team::deleteTeam() {
@@ -125,12 +130,12 @@ playerStats team::getTopScorerStats() const{
     return m_top_scorer->getMyStats();
 }
 
-void team::setTopScorer(player* player){
+void team::setTopScorer(std::shared_ptr<player> player){
     m_top_scorer = player;
 }
 void team::removePlayer(playerStats stats, int id) {
     //std::cout<<'1';
-    player* tmp = m_tree_by_id.find_by_key(m_tree_by_id.getRoot(), id);
+    std::shared_ptr<player> tmp = m_tree_by_id.find_by_key(m_tree_by_id.getRoot(), id);
     if(tmp == nullptr){
         return;
     }
@@ -146,22 +151,27 @@ void team::removePlayer(playerStats stats, int id) {
     //std::cout<<'4';
     m_tree_by_id.remove(m_tree_by_id.getRoot(),id);
     m_num_players--;
-    delete tmp;
+    //delete tmp;
 }
 
 
-player* team::getTopScorer() const{
+std::shared_ptr<player> team::getTopScorer() const{
     return m_top_scorer;
 }
 
 
-player* team::getTopNewScorer(){
+std::shared_ptr<player> team::getTopNewScorer(){
     return m_tree_by_stats.getBiggest(m_tree_by_stats.getRoot());
 }
 
-void team::storeTree(player **arrT1, playerStats **arrK1){
+void team::storeTree(std::shared_ptr<player>*arrT1, playerStats **arrK1){
     int i = 0;
     m_tree_by_stats.storeInorder(m_tree_by_stats.getRoot(), arrT1, arrK1, &i);
+}
+
+void team::storeTreeSingle(std::shared_ptr<player> *arrT1) {
+    int i = 0;
+    m_tree_by_stats.storeInorderSingle(m_tree_by_stats.getRoot(), arrT1, &i);
 }
 /*
 

@@ -4,27 +4,81 @@ add_player 2 1 1 1 1 true
 add_player 3 1 1 1 1 false
 
 
-add_team works
-add_player works
-play_match works
+
+    std::shared_ptr<player>
+ptr.get()
 
 
 
-remove_team doesn't recognize that there is still players in the team and allows us to delete it
+
+
+add_team working!
+remove_team working!
+add_player working!
+play_match working!
+get_num_played_games working!
+get_team_points working!
+get_all_players_count working!
+get_all_players working!
+get_top_scorer working!
+remove_player working!
+update working!
+
+
+
+12 in 1
+11 in 2
+
+
+it probably all starts in the remove player:
 
 
 knockout seg fault
-update seg fault
-remove_player seg fault
+get_closest_player seg fault
+unite seg fault
 
 
-get_num_played_games wrong answer
-get_team_points wrong answer
-get_top_scorer wrong answer
 
-get_all_players_count wrong answer if we want the team's number but right answer if we want the total
-and it makes me think that maybe the values in the teams of the tree doesn't changes at all
+add_team 1 1
+add_player 1 1 1 1 1 true
+remove_player 1
 
 
-get_all_players failure
-get_closest failure
+
+
+
+
+
+
+
+
+
+
+
+
+
+void mergeArrays(std::shared_ptr<player> arr1[], std::shared_ptr<player> arr2[], int m, int n, std::shared_ptr<player> arr3[]){
+    int i = 0;
+    int j = 0;
+    int k = 0;
+    //Traverse both arrays
+    while (i<m && j<n){
+        //check if current element of first
+        //array is smaller than current element
+        //of second array. if yes, store first
+        //array element and increment first array
+        //index. Otherwise, do same with second array
+        if(arr1[i] < arr2[j]){
+            arr3[k++] = arr1[i++];
+        }
+        else{
+            arr3[k++] = arr2[j++];
+        }
+    }
+    while (i<m){
+        arr3[k++]=arr1[i++];
+    }
+    while (j<n){
+        arr3[k++]=arr2[j++];
+    }
+}
