@@ -298,7 +298,10 @@ node<T,K>* AvlTree<T, K>::createEmptyTree(node<T,K> *root,int height) {
 
 template<class T, class K>
 void AvlTree<T, K>::setRoot(node<T,K> *root) {
+    std::cout<<"befire";
     m_root=root;
+    std::cout<<"after";
+
 }
 
 template<class T, class K>
@@ -618,8 +621,9 @@ template<class T, class K>
 node<T,K>* AvlTree<T, K>::sortedArrayToBSTId(std::shared_ptr<T> playerArr[], K keyArr[], int start, int end)
 {
     /* Base Case */
-    if (start > end)
+    if (start > end){
         return nullptr;
+    }
 
     /* Get the middle element and make it root */
     int mid = (start + end)/2;
@@ -633,6 +637,7 @@ node<T,K>* AvlTree<T, K>::sortedArrayToBSTId(std::shared_ptr<T> playerArr[], K k
     right child of root */
     root->right = sortedArrayToBSTId(playerArr,keyArr, mid+1, end);
 
+    std::cout<< "end";
     return root;
 }
 
@@ -706,7 +711,7 @@ void AvlTree<T, K>::storeInorderTerms(int min, int max, node<T, K> *root, std::s
     /* first recur on left child */
     storeInorderTerms(min,max,root->left, inorder, index_ptr);
 
-    if(root->key<=max || root->key>=min){
+    if(root->key<=max && root->key>=min){
         inorder[*index_ptr] = root->data;
         (*index_ptr)++; // increase index for next entry
     }

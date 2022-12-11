@@ -179,6 +179,10 @@ void team::storeTreeSingleInt(int** array) {
     int i = 0;
     m_tree_by_id.storeInorderSingleInt(m_tree_by_id.getRoot(), array, &i);
 }
+
+AvlTree<player, int> team::getIdTree() const {
+    return m_tree_by_id;
+}
 /*
 
 AvlTree<player, playerStats> *team::getTreeStats() {

@@ -497,18 +497,42 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
     mergeArrays(arrID1,arrID2,team1->getNumPlayers(),team2->getNumPlayers(),mergedID);
 
     //std::shared_ptr<player> newPlayer(new player(playerId, teamId, tmp_team, gamesPlayed, goals, cards, goalKeeper));
-    std::shared_ptr<team> newTeam(new team(newTeamId,team1->getNumPoints()+team2->getNumPoints()));
 
 
-    for (int player = 0; player < (team1->getNumPlayers()+team2->getNumPlayers()); player++){
+
+    int size_team1 = team1->getNumPlayers(), size_team2 = team2->getNumPlayers();
+    int num_points1 = team1->getNumPoints(), num_points2 = team2->getNumPoints();
+
+
+
+
+    team1->deleteTeam();
+    team2->deleteTeam();
+    remove_team(teamId1);
+    remove_team(teamId2);
+
+
+
+
+
+
+    add_team(newTeamId,size_team1+size_team2);
+    std::shared_ptr<team> newTeam = m_all_teams.find_by_key(m_all_teams.getRoot(),newTeamId);
+    //std::shared_ptr<team> newTeam(new team(newTeamId,team1->getNumPoints()+team2->getNumPoints()));
+
+
+    for (int player = 0; player < (size_team1+size_team2); player++){
         if(mergedPlayer[player] == nullptr){
             break;
         }
         mergedPlayer[player]->setMyTeam(newTeam);
     }
-
     AvlTree<player, playerStats> unitedNewTreeStats;
     AvlTree<player, int> unitedNewTreeId;
+    //AvlTree<player, playerStats> unitedNewTree;
+   /* unitedNewTreeStats.setRoot(unitedNewTreeStats.mergeTrees(mergedPlayer,mergedKeys,size_team1,size_team2));
+    newTeam->setTeamTree(unitedNewTreeStats, unitedNewTreeId);
+ */
 
     // std::cout<<'6';
     unitedNewTreeStats.setRoot(unitedNewTreeStats.mergeTrees(mergedPlayer,mergedKeys,team1->getNumPlayers(),team2->getNumPlayers()));
@@ -541,7 +565,6 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
     newTeam.setTeamTree(unitedTree);
     */
 
-    //std::cout<<'6';
 
 
     m_all_teams.insert(m_all_teams.getRoot(),newTeam,newTeamId);
@@ -550,10 +573,6 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
     }
 
 
-    team1->deleteTeam();
-    team2->deleteTeam();
-    remove_team(teamId1);
-    remove_team(teamId2);
     return StatusType::SUCCESS;
 }
 //once again wrong number somehow :|
@@ -672,6 +691,19 @@ output_t<int> world_cup_t::get_closest_player(int playerId, int teamId)
         output_t<int> out(StatusType::FAILURE);
         return out;
     }
+    /*
+    std::shared_ptr<player> tmp = m_all_players_id.find_by_key(m_all_players_id.getRoot(), playerId);
+    if(tmp == nullptr){
+        output_t<int> out(StatusType::FAILURE);
+        return out;
+    }
+    if(tmp->getClosest() == nullptr){
+        output_t<int> out(StatusType::FAILURE);
+        return out;
+    }
+    output_t<int> out(tmp->getClosest()->getId());
+    return out;*/
+
     std::shared_ptr<player> player1 = team1->findPlayerById(playerId);
     if(player1 == nullptr){
         std::cout<<'1';
@@ -694,10 +726,12 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
         return out;
     }
     try {
-        std::shared_ptr<team>* arr_team = nullptr;
-        int* arr_ids = nullptr;
-        arr_team = new std::shared_ptr<team>[m_num_eligible_to_play_teams];
-        arr_ids = new int[m_num_eligible_to_play_teams];
+        //int* arr_ids = nullptr;
+        std::shared_ptr<team>* arr_team = new std::shared_ptr<team>[m_num_eligible_to_play_teams];
+        int* arr_ids = new int[m_num_eligible_to_play_teams];
+        //std::shared_ptr<team>* arr_team = nullptr;
+       // std::shared_ptr<team>* arr_team (new std::shared_ptr<team>[m_num_eligible_to_play_teams]);
+        //arr_team = new std::shared_ptr<team>[m_num_eligible_to_play_teams];
         for(int i = 0; i < m_num_eligible_to_play_teams; i++){
             arr_team[i] = nullptr;
             arr_ids[i]=0;
@@ -706,7 +740,7 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
         int i=0;
         m_allowed_to_play_teams.storeInorderTerms(minTeamId,maxTeamId,m_allowed_to_play_teams.getRoot(),arr_team,&i);
         for(int j = 0; j < i; j++){
-            arr_ids[j]=arr_team[j]->getId();
+            arr_ids[j]= (arr_team[j]->getId());
         }
         //m_allowed_to_play_teams.storeInOrderRecursiveByTerms(minTeamId,maxTeamId,m_allowed_to_play_teams.getRoot(),arr_team);//probably need to implement in avltree unless there is a better soultion
         ///////////////////////////////////////////////////////
@@ -721,7 +755,9 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
                 break;
             }
         }*/
-        knock_out_tree.setRoot(knock_out_tree.sortedArrayToBSTId(arr_team,arr_ids,0,i));
+        std::cout<<i;
+        knock_out_tree.setRoot(knock_out_tree.sortedArrayToBSTId(arr_team,arr_ids,0,i-1));
+        std::cout<<'5';
         if(!i){
             output_t<int> out(StatusType::FAILURE);
             delete[] arr_team;

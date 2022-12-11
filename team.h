@@ -37,6 +37,7 @@ public:
     int getNumPlayers();
     int getNumPoints();
     void setTeamTree( AvlTree<player, playerStats> treeStats,AvlTree<player, int> treeID);
+    AvlTree<player, int> getIdTree() const;
     //void getArrayStats(node<player,playerStats>** arr1);
     std::shared_ptr<player> findPlayerById(int id);
     bool isTeamValid() const;
