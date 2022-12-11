@@ -54,9 +54,10 @@ player* team::findPlayerById(int id) {
 
 void team::addPlayer(player* player, playerStats stats,int id) {
     m_tree_by_id.insert(m_tree_by_id.getRoot(),player,id);
-    std::cout<< "sad";
+    //std::cout<< "sad";
     m_tree_by_stats.insert(m_tree_by_stats.getRoot(),player,stats);
     m_num_players++;
+    std::cout<< "another one";
     if((*player).isGoalKeeper()){
         m_has_goalkeeper=true;
     }
@@ -128,14 +129,21 @@ void team::setTopScorer(player* player){
     m_top_scorer = player;
 }
 void team::removePlayer(playerStats stats, int id) {
+    //std::cout<<'1';
     player* tmp = m_tree_by_id.find_by_key(m_tree_by_id.getRoot(), id);
+    if(tmp == nullptr){
+        return;
+    }
+    //std::cout<<'9';
     if(tmp->isGoalKeeper()){
         m_numGoalKeepers--;
         if(m_numGoalKeepers == 0){
             m_has_goalkeeper = false;
         }
     }
+    //std::cout<<'3';
     m_tree_by_stats.remove(m_tree_by_stats.getRoot(),stats);
+    //std::cout<<'4';
     m_tree_by_id.remove(m_tree_by_id.getRoot(),id);
     m_num_players--;
     delete tmp;

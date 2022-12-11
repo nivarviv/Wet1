@@ -63,7 +63,7 @@ void mergeArrays(player* arr1[], player* arr2[], int m, int n, player* arr3[]){
 }
 
 
-
+//working!
 StatusType world_cup_t::add_team(int teamId, int points)
 {
     if(teamId <= 0 || points < 0){
@@ -77,7 +77,7 @@ StatusType world_cup_t::add_team(int teamId, int points)
 
     team team1 = team(teamId, points);
     m_all_teams.insert(m_all_teams.getRoot(),&team1, teamId);
-    delete tmp;
+    tmp = nullptr;
     m_num_teams++;
     return StatusType::SUCCESS;
 }
@@ -88,12 +88,11 @@ StatusType world_cup_t::remove_team(int teamId)
         return StatusType::INVALID_INPUT;
     }
     team* team1 = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
-    if(!team1){
-        delete team1;
+    if(team1 == nullptr){
         return StatusType::FAILURE;
     }
     if(team1->getNumPlayers()){
-        delete team1;
+        team1 = nullptr;
         return StatusType::FAILURE;
     }
     else{
@@ -102,12 +101,12 @@ StatusType world_cup_t::remove_team(int teamId)
             m_allowed_to_play_teams.remove(m_allowed_to_play_teams.getRoot(),teamId);
             m_num_eligible_to_play_teams--;
         }
-        delete team1;
+        team1 = nullptr;
         m_num_teams--;
         return StatusType::SUCCESS;
     }
 }
-
+//working!
 StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
                                    int goals, int cards, bool goalKeeper)
 {
@@ -131,6 +130,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
     try {
         m_total_players++;
         player newPlayer = player(playerId,teamId,tmp_team,gamesPlayed,goals,cards,goalKeeper);
+
         //newPlayer.addNewPlayer(playerId,tmp_team,gamesPlayed,goals,cards,goalKeeper);
         playerStats newPlayerStats = newPlayer.getMyStats();
         if(m_top_scorer == nullptr){
@@ -140,7 +140,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
             m_top_scorer = &newPlayer;
         }
         tmp_team->addPlayer(&newPlayer,newPlayerStats,playerId);
-        std::cout<< "here";
+        //std::cout<< "here";
 
         m_all_players_goals.insert(m_all_players_goals.getRoot(),&newPlayer,newPlayerStats);
         m_all_players_id.insert(m_all_players_id.getRoot(),&newPlayer,playerId);
@@ -167,13 +167,13 @@ StatusType world_cup_t::add_player(int playerId, int teamId, int gamesPlayed,
                 m_num_eligible_to_play_teams++;
             }
         }
+        //std::cout<<newPlayer.totalGames();
         //delete tmp_team;
     } catch (std::exception& e) {
         return StatusType::ALLOCATION_ERROR;
     }
     return StatusType::SUCCESS;
 }
-
 
 void world_cup_t::fixClosest(player *changePlayer) {
     class player* pre1;
@@ -254,11 +254,13 @@ StatusType world_cup_t::update_player_stats(int playerId, int gamesPlayed,
 
     player* tmp_player = m_all_players_id.find_by_key(m_all_players_id.getRoot(),playerId);
     if(tmp_player == nullptr){
-        delete tmp_player;
         return StatusType::FAILURE;
     }
 
     team* tmp_team = m_all_teams.find_by_key(m_all_teams.getRoot(),tmp_player->getTeamId());
+    if(tmp_team == nullptr){
+        return StatusType::FAILURE;
+    }
    // if(tmp_team == nullptr) {
  /*   if(tmp_team == NULL) {
         delete tmp_team;
@@ -267,6 +269,7 @@ StatusType world_cup_t::update_player_stats(int playerId, int gamesPlayed,
 
     // remove player with old stats
     m_all_players_goals.remove(m_all_players_goals.getRoot(),tmp_player->getMyStats());
+    //std::cout<<'3';
     tmp_team->removePlayer(tmp_player->getMyStats(),playerId);
 
     // add player with new stats
@@ -320,18 +323,17 @@ StatusType world_cup_t::update_player_stats(int playerId, int gamesPlayed,
     return StatusType::SUCCESS;
 }
 
-
+//working!
 StatusType world_cup_t::play_match(int teamId1, int teamId2)
 {
     if(teamId1 <= 0 || teamId2 <= 0 || teamId1 == teamId2){
         return StatusType::INVALID_INPUT;
     }
-
     team* team1 = m_allowed_to_play_teams.find_by_key(m_allowed_to_play_teams.getRoot(),teamId1);
     team* team2 = m_allowed_to_play_teams.find_by_key(m_allowed_to_play_teams.getRoot(),teamId2);
-    if(!team1 || !team2){
-        delete team1;
-        delete team2;
+    if(team1 == nullptr || team2 == nullptr){
+        team1 = nullptr;
+        team2 = nullptr;
         return StatusType::FAILURE;
     }
     int sum1 = team1->getNumPoints() + team1->getNumGoals() - team1->getNumCards();
@@ -352,11 +354,11 @@ StatusType world_cup_t::play_match(int teamId1, int teamId2)
         team1->addGamePlayed();
         team2->addGamePlayed();
     }
-    delete team1;
-    delete team2;
+    team1 = nullptr;
+    team2 = nullptr;
     return StatusType::SUCCESS;
 }
-
+//returns wrong number somehow
 output_t<int> world_cup_t::get_num_played_games(int playerId)
 {
 
@@ -374,17 +376,16 @@ output_t<int> world_cup_t::get_num_played_games(int playerId)
 
     player* player1 = m_all_players_id.find_by_key(m_all_players_id.getRoot(),playerId);//returns null if haven't found
     if(player1 == nullptr){
-        delete player1;
         output_t<int> out(StatusType::FAILURE);
         return out;
     }
-
+   // std::cout<<player1->getTeamId();
     output_t<int> out(player1->totalGames());
-    delete player1;
+    player1 = nullptr;
     return out;
 }
 
-
+//returns wrong number maybe we have a problem with the way we change memory? I'll think about it tomorrow, it's getting super late
 output_t<int> world_cup_t::get_team_points(int teamId)
 {
     if(teamId <= 0){
@@ -405,11 +406,10 @@ output_t<int> world_cup_t::get_team_points(int teamId)
     team* wanted_team = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
     if(wanted_team == nullptr){
         output_t<int> out(StatusType::FAILURE);
-        delete wanted_team;
         return out;
     }
     output_t<int> out(wanted_team->getNumPoints());
-    delete wanted_team;
+    wanted_team = nullptr;
     return out;
 }
 
@@ -480,7 +480,7 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
     remove_team(teamId2);
     return StatusType::SUCCESS;
 }
-
+//once again wrong number somehow :|
 output_t<int> world_cup_t::get_top_scorer(int teamId)
 {
     if(teamId == 0){
@@ -506,11 +506,10 @@ output_t<int> world_cup_t::get_top_scorer(int teamId)
         team* team1 = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);//returns null if the team hasn't found
         if(team1 == nullptr){
             output_t<int> out(StatusType::FAILURE);
-            delete team1;
             return out;
         }
         output_t<int> out(team1->top_scorer_id());
-        delete team1;
+        team1 = nullptr;
         return out;
     }
 }
@@ -536,11 +535,10 @@ output_t<int> world_cup_t::get_all_players_count(int teamId)
         team* team1 = m_all_teams.find_by_key(m_all_teams.getRoot(),teamId);
         if(team1 == nullptr){
             output_t<int> out(StatusType::FAILURE);
-            delete team1;
             return out;
         }
         output_t<int> out(team1->getNumPlayers());
-        delete team1;
+        team1 = nullptr;
         return out;
     }
 }
