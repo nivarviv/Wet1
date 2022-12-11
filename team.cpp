@@ -45,8 +45,9 @@ int team::getNumPlayers()
     m_tree_by_stats.storeInOrderRecursive(root,arr1);
 }*/
 
-void team::setTeamTree(AvlTree<player, playerStats> tree) {
-    m_tree_by_stats=tree;
+void team::setTeamTree(AvlTree<player, playerStats> treeStats,AvlTree<player, int> treeID) {
+    m_tree_by_stats=treeStats;
+    m_tree_by_id=treeID;
 }
 
 std::shared_ptr<player> team::findPlayerById(int id) {
@@ -172,6 +173,11 @@ void team::storeTree(std::shared_ptr<player>*arrT1, playerStats **arrK1){
 void team::storeTreeSingle(std::shared_ptr<player> *arrT1) {
     int i = 0;
     m_tree_by_stats.storeInorderSingle(m_tree_by_stats.getRoot(), arrT1, &i);
+}
+
+void team::storeTreeSingleInt(int** array) {
+    int i = 0;
+    m_tree_by_id.storeInorderSingleInt(m_tree_by_id.getRoot(), array, &i);
 }
 /*
 

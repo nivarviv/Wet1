@@ -21,6 +21,31 @@ world_cup_t::~world_cup_t()
     m_all_players_id.deleteTree(m_all_players_id.getRoot());
     //delete m_top_scorer;
 }
+void mergeArrays(int* arr1[], int* arr2[], int m, int n, int* arr3[]){
+    int i = 0;
+    int j = 0;
+    int k = 0;
+    //Traverse both arrays
+    while (i<m && j<n){
+        //check if current element of first
+        //array is smaller than current element
+        //of second array. if yes, store first
+        //array element and increment first array
+        //index. Otherwise, do same with second array
+        if(arr1[i] < arr2[j]){
+            arr3[k++] = arr1[i++];
+        }
+        else{
+            arr3[k++] = arr2[j++];
+        }
+    }
+    while (i<m){
+        arr3[k++]=arr1[i++];
+    }
+    while (j<n){
+        arr3[k++]=arr2[j++];
+    }
+}
 
 void mergeArrays(playerStats* arr1[], playerStats* arr2[], int m, int n, playerStats* arr3[]){
     int i = 0;
@@ -456,18 +481,21 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
 //////////////////////////////////////////////////// maybe?
     std::shared_ptr<player>* arrT1 = new std::shared_ptr<player>[team1->getNumPlayers()];
     playerStats** arrK1 = new playerStats*[team1->getNumPlayers()];
+    int** arrID1= new int*[team1->getNumPlayers()];
     team1->storeTree(arrT1,arrK1);
+    team1->storeTreeSingleInt(arrID1);
     std::shared_ptr<player>* arrT2 = new std::shared_ptr<player>[team2->getNumPlayers()];
     playerStats** arrK2 = new playerStats*[team2->getNumPlayers()];
-
-
+    int** arrID2= new int*[team2->getNumPlayers()];
+    team2->storeTreeSingleInt(arrID2);
     team2->storeTree(arrT2,arrK2);
     std::shared_ptr<player>* mergedPlayer = new std::shared_ptr<player>[team1->getNumPlayers()+team2->getNumPlayers()];
     playerStats** mergedKeys = new playerStats*[team1->getNumPlayers()+team2->getNumPlayers()];
+    int** mergedID= new int*[team1->getNumPlayers()+team2->getNumPlayers()];
     mergeArrays(arrT1,arrT2,team1->getNumPlayers(),team2->getNumPlayers(),mergedPlayer);
-
-
     mergeArrays(arrK1,arrK2,team1->getNumPlayers(),team2->getNumPlayers(),mergedKeys);
+    mergeArrays(arrID1,arrID2,team1->getNumPlayers(),team2->getNumPlayers(),mergedID);
+
     //std::shared_ptr<player> newPlayer(new player(playerId, teamId, tmp_team, gamesPlayed, goals, cards, goalKeeper));
     std::shared_ptr<team> newTeam(new team(newTeamId,team1->getNumPoints()+team2->getNumPoints()));
 
@@ -479,11 +507,15 @@ StatusType world_cup_t::unite_teams(int teamId1, int teamId2, int newTeamId)
         mergedPlayer[player]->setMyTeam(newTeam);
     }
 
-    AvlTree<player, playerStats> unitedNewTree;
-   // std::cout<<'6';
-    unitedNewTree.setRoot(unitedNewTree.mergeTrees(mergedPlayer,mergedKeys,team1->getNumPlayers(),team2->getNumPlayers()));
-   // std::cout<<'4';
-    newTeam->setTeamTree(unitedNewTree);
+    AvlTree<player, playerStats> unitedNewTreeStats;
+    AvlTree<player, int> unitedNewTreeId;
+
+    // std::cout<<'6';
+    unitedNewTreeStats.setRoot(unitedNewTreeStats.mergeTrees(mergedPlayer,mergedKeys,team1->getNumPlayers(),team2->getNumPlayers()));
+    unitedNewTreeId.setRoot(unitedNewTreeId.mergeTrees(mergedPlayer,mergedID,team1->getNumPlayers(),team2->getNumPlayers()));
+
+    // std::cout<<'4';
+    newTeam->setTeamTree(unitedNewTreeStats,unitedNewTreeId);
    // std::cout<<'5';
 
 ////////////////////////////////////////////////////

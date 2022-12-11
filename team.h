@@ -36,7 +36,7 @@ public:
     int top_scorer_id() const;
     int getNumPlayers();
     int getNumPoints();
-    void setTeamTree( AvlTree<player, playerStats> tree);
+    void setTeamTree( AvlTree<player, playerStats> treeStats,AvlTree<player, int> treeID);
     //void getArrayStats(node<player,playerStats>** arr1);
     std::shared_ptr<player> findPlayerById(int id);
     bool isTeamValid() const;
@@ -57,7 +57,7 @@ public:
 
     void storeTree(std::shared_ptr<player> *arrT1, playerStats **arrK1);
     void storeTreeSingle(std::shared_ptr<player> *arrT1);
-
+    void storeTreeSingleInt(int** array);
 };
 
 

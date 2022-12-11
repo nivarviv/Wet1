@@ -84,6 +84,7 @@ public:
 
     void storeInorder(node<T,K>* root, std::shared_ptr<T> inorder[],K* inorder2[], int *index_ptr);
     void storeInorderSingle(node<T,K>* root, std::shared_ptr<T> inorder[], int *index_ptr);
+    void storeInorderSingleInt(node<T, K> *root, int** array, int *index_ptr);
     node<T,K>* sortedArrayToBST(std::shared_ptr<T> playerArr[], K* keyArr[], int start, int end);
     node<T,K>* mergeTrees(std::shared_ptr<T>* mergedTArr, K** mergedKArr,int size1, int size2);
     void storeInorderTerms(int min, int max, node<T, K> *root, std::shared_ptr<T>* inorder ,int *index_ptr);
@@ -709,6 +710,22 @@ void AvlTree<T, K>::storeInorderSingle(node<T, K> *root, std::shared_ptr<T> *ino
     storeInorderSingle(root->right, inorder, index_ptr);
 }
 
+
+
+template<class T, class K>
+void AvlTree<T, K>::storeInorderSingleInt(node<T, K> *root, int** array, int *index_ptr) {
+    if (root == nullptr)
+        return;
+
+    /* first recur on left child */
+    storeInorderSingleInt(root->left, array, index_ptr);
+
+    array[*index_ptr] = &root->key;
+    (*index_ptr)++; // increase index for next entry
+
+    /* now recur on right child */
+    storeInorderSingleInt(root->right, array, index_ptr);
+}
 
 
 
