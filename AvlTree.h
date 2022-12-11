@@ -88,6 +88,8 @@ public:
     node<T,K>* sortedArrayToBST(std::shared_ptr<T> playerArr[], K* keyArr[], int start, int end);
     node<T,K>* mergeTrees(std::shared_ptr<T>* mergedTArr, K** mergedKArr,int size1, int size2);
     void storeInorderTerms(int min, int max, node<T, K> *root, std::shared_ptr<T>* inorder ,int *index_ptr);
+
+    node<T, K> *sortedArrayToBSTId(std::shared_ptr<T> *playerArr, K keyArr[], int start, int end);
 };
 /////////////////////////////////////////////////////implementation//////////////////////////////////////////////////
 template<class T, class K>
@@ -612,6 +614,28 @@ node<T,K>* AvlTree<T, K>::sortedArrayToBST(std::shared_ptr<T> playerArr[], K* ke
     return root;
 }
 
+template<class T, class K>
+node<T,K>* AvlTree<T, K>::sortedArrayToBSTId(std::shared_ptr<T> playerArr[], K keyArr[], int start, int end)
+{
+    /* Base Case */
+    if (start > end)
+        return nullptr;
+
+    /* Get the middle element and make it root */
+    int mid = (start + end)/2;
+    node<T,K> *root = newNode(playerArr[mid],(keyArr[mid]));
+
+    /* Recursively construct the left subtree and make it
+    left child of root */
+    root->left = sortedArrayToBSTId(playerArr,keyArr, start, mid-1);
+
+    /* Recursively construct the right subtree and make it
+    right child of root */
+    root->right = sortedArrayToBSTId(playerArr,keyArr, mid+1, end);
+
+    return root;
+}
+
 // A utility function to merge
 // two sorted arrays into one
 template<class T, class K>
@@ -676,14 +700,16 @@ node<T, K> *AvlTree<T, K>::mergeTrees(std::shared_ptr<T>* mergedTArr, K** merged
 
 template<class T, class K>
 void AvlTree<T, K>::storeInorderTerms(int min, int max, node<T, K> *root, std::shared_ptr<T>* inorder, int *index_ptr) {
-    if (root == nullptr|| root->key>max || root->key<min)
+    if (root == nullptr)
         return;
 
     /* first recur on left child */
     storeInorderTerms(min,max,root->left, inorder, index_ptr);
 
-    inorder[*index_ptr] = root->data;
-    (*index_ptr)++; // increase index for next entry
+    if(root->key<=max || root->key>=min){
+        inorder[*index_ptr] = root->data;
+        (*index_ptr)++; // increase index for next entry
+    }
 
     /* now recur on right child */
     storeInorderTerms(min,max,root->right, inorder, index_ptr);
@@ -726,6 +752,7 @@ void AvlTree<T, K>::storeInorderSingleInt(node<T, K> *root, int** array, int *in
     /* now recur on right child */
     storeInorderSingleInt(root->right, array, index_ptr);
 }
+
 
 
 

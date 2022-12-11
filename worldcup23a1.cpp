@@ -695,17 +695,23 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
     }
     try {
         std::shared_ptr<team>* arr_team = nullptr;
+        int* arr_ids = nullptr;
         arr_team = new std::shared_ptr<team>[m_num_eligible_to_play_teams];
+        arr_ids = new int[m_num_eligible_to_play_teams];
         for(int i = 0; i < m_num_eligible_to_play_teams; i++){
             arr_team[i] = nullptr;
+            arr_ids[i]=0;
         }
         //////////////////////////////////////////////////////// maybe?
         int i=0;
         m_allowed_to_play_teams.storeInorderTerms(minTeamId,maxTeamId,m_allowed_to_play_teams.getRoot(),arr_team,&i);
+        for(int j = 0; j < i; j++){
+            arr_ids[j]=arr_team[j]->getId();
+        }
         //m_allowed_to_play_teams.storeInOrderRecursiveByTerms(minTeamId,maxTeamId,m_allowed_to_play_teams.getRoot(),arr_team);//probably need to implement in avltree unless there is a better soultion
         ///////////////////////////////////////////////////////
         AvlTree<team, int> knock_out_tree;
-        int num_eligible_in_terms_teams = 0;
+        /*int num_eligible_in_terms_teams = 0;
         for(int i = 0; i < m_num_eligible_to_play_teams; i++){
             if(arr_team[i] != nullptr){
                 knock_out_tree.insert(knock_out_tree.getRoot(), arr_team[i], arr_team[i]->getId());
@@ -714,13 +720,14 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
             else{
                 break;
             }
-        }
-        if(!m_num_eligible_to_play_teams){
+        }*/
+        knock_out_tree.setRoot(knock_out_tree.sortedArrayToBSTId(arr_team,arr_ids,0,i));
+        if(!i){
             output_t<int> out(StatusType::FAILURE);
             delete[] arr_team;
             return out;
         }
-        int playing_teams = num_eligible_in_terms_teams;
+        int playing_teams = i;
         while(playing_teams > 1){
             for(int curr_team = 0; curr_team < playing_teams-1; curr_team += 2){
                 while (arr_team[curr_team] == nullptr && curr_team < playing_teams-1){
@@ -780,7 +787,7 @@ output_t<int> world_cup_t::knockout_winner(int minTeamId, int maxTeamId)
 
         }
         int winner;
-        for (int curr = 0; curr < num_eligible_in_terms_teams; curr++){
+        for (int curr = 0; curr < i; curr++){
             if(arr_team[curr] != nullptr){
                 winner = arr_team[curr]->getId();
                 break;
