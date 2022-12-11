@@ -63,7 +63,7 @@ void mergeArrays(player* arr1[], player* arr2[], int m, int n, player* arr3[]){
 }
 
 
-//working!
+//working!!
 StatusType world_cup_t::add_team(int teamId, int points)
 {
     if(teamId <= 0 || points < 0){

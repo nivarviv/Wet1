@@ -1,0 +1,30 @@
+add_team 1 1
+add_player 1 1 1 1 1 true
+add_player 2 1 1 1 1 true
+add_player 3 1 1 1 1 false
+
+
+add_team works
+add_player works
+play_match works
+
+
+
+remove_team doesn't recognize that there is still players in the team and allows us to delete it
+
+
+knockout seg fault
+update seg fault
+remove_player seg fault
+
+
+get_num_played_games wrong answer
+get_team_points wrong answer
+get_top_scorer wrong answer
+
+get_all_players_count wrong answer if we want the team's number but right answer if we want the total
+and it makes me think that maybe the values in the teams of the tree doesn't changes at all
+
+
+get_all_players failure
+get_closest failure
