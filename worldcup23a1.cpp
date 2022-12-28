@@ -10,6 +10,7 @@ world_cup_t::world_cup_t()
     m_top_scorer = nullptr;
     m_total_players = 0;
     m_num_teams = 0;
+    m_num_teams = 0;
     m_num_eligible_to_play_teams = 0;
 }
 
@@ -19,8 +20,8 @@ world_cup_t::~world_cup_t()
     m_all_players_goals.deleteTree(m_all_players_goals.getRoot());
     m_allowed_to_play_teams.deleteTree(m_allowed_to_play_teams.getRoot());
     m_all_players_id.deleteTree(m_all_players_id.getRoot());
-    //delete m_top_scorer;
 }
+
 void mergeArrays(int* arr1[], int* arr2[], int m, int n, int* arr3[]){
     int i = 0;
     int j = 0;
@@ -229,7 +230,6 @@ StatusType world_cup_t::remove_player(int playerId)
     }
     std::shared_ptr<player> playerToDelete = m_all_players_id.find_by_key(m_all_players_id.getRoot(),playerId);
     if(playerToDelete == nullptr){
-        //delete playerToDelete;
         return StatusType::FAILURE;
     }
 

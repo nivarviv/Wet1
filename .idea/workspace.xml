@@ -16,7 +16,7 @@
   <component name="ChangeListManager">
     <list default="true" id="289c56fa-fcc2-43b8-844a-3e4cb028a982" name="Changes" comment="knockout">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/worldcup23a1.h" beforeDir="false" afterPath="$PROJECT_DIR$/worldcup23a1.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/worldcup23a1.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/worldcup23a1.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +27,9 @@
     <option name="formatViaClangd" value="false" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="ExportToHTMLSettings">
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/../Wet1\exportToHTML" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -64,19 +67,9 @@
     <property name="settings.editor.selected.configurable" value="CPPToolchains" />
   </component>
   <component name="RunManager">
-    <configuration name="Wet1" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" REDIRECT_INPUT_PATH="$PROJECT_DIR$/test.in" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Wet1" TARGET_NAME="Wet1" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Wet1" RUN_TARGET_NAME="Wet1">
+    <configuration name="Wet1" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" REDIRECT_INPUT_PATH="$USER_HOME$/Downloads/tests1/randtest0.in" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Wet1" TARGET_NAME="Wet1" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Wet1" RUN_TARGET_NAME="Wet1">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
   </component>
@@ -91,13 +84,9 @@
       <workItem from="1669205829216" duration="18980000" />
       <workItem from="1669727405644" duration="3630000" />
       <workItem from="1669748706252" duration="35160000" />
-      <workItem from="1670772847928" duration="15482000" />
-    </task>
-    <task id="LOCAL‎00029" summary="started on closest">
-      <created>1670064501926</created>
-      <option name="number" value="LOCAL‎00029" />
-      <option name="presentableId" value="LOCAL‎00029" />
-      <updated>1670064501926</updated>
+      <workItem from="1670772847928" duration="15809000" />
+      <workItem from="1671297529658" duration="26000" />
+      <workItem from="1672241098506" duration="2344000" />
     </task>
     <task id="LOCAL‎00030" summary="started on closest">
       <created>1670066926872</created>
@@ -413,7 +402,13 @@
       <option name="presentableId" value="LOCAL‎00077" />
       <updated>1670791588049</updated>
     </task>
-    <option name="localTasksCounter" value="78" />
+    <task id="LOCAL‎00078" summary="knockout">
+      <created>1670794386499</created>
+      <option name="number" value="LOCAL‎00078" />
+      <option name="presentableId" value="LOCAL‎00078" />
+      <updated>1670794386499</updated>
+    </task>
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
